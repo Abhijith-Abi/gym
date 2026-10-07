@@ -703,7 +703,8 @@ export function ExerciseVisualFrames({
 }
 
 /**
- * Biomechanical high-contrast vector graphics showing clear exercise posture & movement lines
+ * Anatomical 3D-styled medical gym illustrations showing realistic body musculature
+ * with highlighted red active muscle contraction zones (matching professional gym exercise charts).
  */
 function BiomechanicGraphic({
   type,
@@ -712,571 +713,495 @@ function BiomechanicGraphic({
   type: GraphicType
   stage: 1 | 2 | 3
 }) {
-  const primaryColor = '#22c55e'
-  const accentColor = '#3b82f6'
-  const warningColor = '#f59e0b'
-  const bodyColor = '#e2e8f0'
+  const redActive = '#ef4444'
+  const redActiveLight = '#f87171'
+  const redActiveDark = '#b91c1c'
+  const bodyBase = '#94a3b8'
+  const bodyLight = '#cbd5e1'
+  const bodyDark = '#475569'
+  const jointColor = '#e2e8f0'
+  const barbellColor = '#38bdf8'
 
-  // 1. SQUAT / LEGS
-  if (type === 'squat') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-        
-        {stage === 1 && (
-          <g>
-            <circle cx="100" cy="22" r="10" fill={bodyColor} />
-            <line x1="100" y1="32" x2="100" y2="65" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <rect x="55" y="28" width="90" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="58" cy="30" r="8" fill={primaryColor} />
-            <circle cx="142" cy="30" r="8" fill={primaryColor} />
-            <line x1="100" y1="65" x2="88" y2="85" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="88" y1="85" x2="86" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="65" x2="112" y2="85" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="112" y1="85" x2="114" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <path d="M 155 35 L 155 65 M 150 58 L 155 65 L 160 58" stroke={warningColor} strokeWidth="2.5" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 2 && (
-          <g>
-            <circle cx="115" cy="45" r="10" fill={bodyColor} />
-            <line x1="115" y1="55" x2="90" y2="80" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <rect x="70" y="50" width="90" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="73" cy="52" r="8" fill={primaryColor} />
-            <circle cx="157" cy="52" r="8" fill={primaryColor} />
-            <line x1="90" y1="80" x2="120" y2="80" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="120" y1="80" x2="116" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="120" cy="80" r="12" stroke={accentColor} strokeWidth="2" strokeDasharray="3 3" />
-          </g>
-        )}
-
-        {stage === 3 && (
-          <g>
-            <circle cx="100" cy="20" r="10" fill={bodyColor} />
-            <line x1="100" y1="30" x2="100" y2="65" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <rect x="55" y="26" width="90" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="58" cy="28" r="8" fill={primaryColor} />
-            <circle cx="142" cy="28" r="8" fill={primaryColor} />
-            <line x1="100" y1="65" x2="88" y2="85" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="88" y1="85" x2="86" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="65" x2="112" y2="85" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="112" y1="85" x2="114" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <path d="M 160 70 L 160 30 M 155 38 L 160 30 L 165 38" stroke={primaryColor} strokeWidth="3" strokeLinecap="round" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 2. BENCH PRESS / CHEST
-  if (type === 'bench') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <rect x="40" y="75" width="120" height="12" rx="4" fill="#334155" />
-        <rect x="60" y="87" width="8" height="20" fill="#1e293b" />
-        <rect x="130" y="87" width="8" height="20" fill="#1e293b" />
-        
-        {stage === 1 && (
-          <g>
-            <circle cx="60" cy="65" r="9" fill={bodyColor} />
-            <line x1="68" y1="69" x2="135" y2="69" stroke={bodyColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="95" y1="69" x2="95" y2="30" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <rect x="60" y="26" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="63" cy="28" r="8" fill={primaryColor} />
-            <circle cx="127" cy="28" r="8" fill={primaryColor} />
-            <path d="M 145 30 L 145 55 M 140 48 L 145 55 L 150 48" stroke={warningColor} strokeWidth="2" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 2 && (
-          <g>
-            <circle cx="60" cy="65" r="9" fill={bodyColor} />
-            <line x1="68" y1="69" x2="135" y2="69" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="95" y1="69" x2="80" y2="60" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="80" y1="60" x2="95" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <rect x="60" y="49" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="63" cy="51" r="8" fill={primaryColor} />
-            <circle cx="127" cy="51" r="8" fill={primaryColor} />
-          </g>
-        )}
-
-        {stage === 3 && (
-          <g>
-            <circle cx="60" cy="65" r="9" fill={bodyColor} />
-            <line x1="68" y1="69" x2="135" y2="69" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="95" y1="69" x2="95" y2="28" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <rect x="60" y="24" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="63" cy="26" r="8" fill={primaryColor} />
-            <circle cx="127" cy="26" r="8" fill={primaryColor} />
-            <path d="M 145 60 L 145 25 M 140 33 L 145 25 L 150 33" stroke={primaryColor} strokeWidth="2.5" strokeLinecap="round" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 3. DEADLIFT / RDL / POSTERIOR CHAIN
-  if (type === 'deadlift') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-
-        {stage === 1 && (
-          // Hip hinge setup
-          <g>
-            <circle cx="125" cy="40" r="9" fill={bodyColor} />
-            <line x1="125" y1="48" x2="90" y2="70" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="90" y1="70" x2="95" y2="90" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="95" y1="90" x2="98" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Arms hanging to barbell */}
-            <line x1="120" y1="52" x2="105" y2="92" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <circle cx="105" cy="92" r="12" fill={primaryColor} />
-            <rect x="70" y="90" width="70" height="5" rx="2.5" fill={primaryColor} />
-          </g>
-        )}
-
-        {stage === 2 && (
-          // Mid-shin drive
-          <g>
-            <circle cx="115" cy="30" r="9" fill={bodyColor} />
-            <line x1="115" y1="38" x2="95" y2="65" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="95" y1="65" x2="98" y2="90" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="98" y1="90" x2="100" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="112" y1="42" x2="105" y2="75" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <circle cx="105" cy="75" r="12" fill={primaryColor} />
-            <rect x="70" y="73" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <path d="M 140 85 L 140 55 M 135 62 L 140 55 L 145 62" stroke={warningColor} strokeWidth="2.5" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 3 && (
-          // Standing tall lockout
-          <g>
-            <circle cx="100" cy="20" r="9" fill={bodyColor} />
-            <line x1="100" y1="29" x2="100" y2="65" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="65" x2="96" y2="105" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="65" x2="104" y2="105" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Barbell locked at thighs */}
-            <line x1="100" y1="35" x2="100" y2="65" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <circle cx="100" cy="65" r="12" fill={primaryColor} />
-            <rect x="65" y="63" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="100" cy="65" r="16" stroke={primaryColor} strokeWidth="2" strokeDasharray="3 3" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 4. OVERHEAD PRESS / SHOULDERS
-  if (type === 'press') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-
-        {stage === 1 && (
-          <g>
-            <circle cx="100" cy="28" r="9" fill={bodyColor} />
-            <line x1="100" y1="37" x2="100" y2="70" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="70" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="70" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Bar at collarbone */}
-            <rect x="65" y="38" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="68" cy="40" r="7" fill={primaryColor} />
-            <circle cx="132" cy="40" r="7" fill={primaryColor} />
-            <path d="M 148 48 L 148 22 M 144 28 L 148 22 L 152 28" stroke={warningColor} strokeWidth="2" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 2 && (
-          <g>
-            <circle cx="97" cy="28" r="9" fill={bodyColor} />
-            <line x1="97" y1="37" x2="98" y2="70" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="98" y1="70" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="98" y1="70" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Bar passing forehead */}
-            <line x1="98" y1="42" x2="100" y2="22" stroke={primaryColor} strokeWidth="4" strokeLinecap="round" />
-            <rect x="65" y="20" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="68" cy="22" r="7" fill={primaryColor} />
-            <circle cx="132" cy="22" r="7" fill={primaryColor} />
-          </g>
-        )}
-
-        {stage === 3 && (
-          <g>
-            <circle cx="100" cy="30" r="9" fill={bodyColor} />
-            <line x1="100" y1="39" x2="100" y2="70" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="70" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="70" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Full lockout over spine */}
-            <line x1="100" y1="42" x2="100" y2="14" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <rect x="65" y="10" width="70" height="5" rx="2.5" fill={primaryColor} />
-            <circle cx="68" cy="12" r="8" fill={primaryColor} />
-            <circle cx="132" cy="12" r="8" fill={primaryColor} />
-            <circle cx="100" cy="12" r="14" stroke={primaryColor} strokeWidth="2" strokeDasharray="3 3" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 5. PULL-UP / LAT PULLDOWN / ROWS
-  if (type === 'pull') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        {/* Overhead pull bar */}
-        <rect x="45" y="12" width="110" height="5" rx="2.5" fill="#475569" />
-
-        {stage === 1 && (
-          // Dead hang / full stretch
-          <g>
-            <circle cx="100" cy="42" r="9" fill={bodyColor} />
-            <line x1="100" y1="51" x2="100" y2="80" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            {/* Arms fully extended to bar */}
-            <line x1="100" y1="53" x2="70" y2="14" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="53" x2="130" y2="14" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="80" x2="94" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="80" x2="106" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <path d="M 145 40 L 145 65 M 140 58 L 145 65 L 150 58" stroke={warningColor} strokeWidth="2" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 2 && (
-          // Mid pull / elbows driving down
-          <g>
-            <circle cx="100" cy="30" r="9" fill={bodyColor} />
-            <line x1="100" y1="39" x2="100" y2="68" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            {/* Bent arms driving elbows to ribs */}
-            <line x1="100" y1="41" x2="75" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="75" y1="52" x2="75" y2="14" stroke={primaryColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="41" x2="125" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="125" y1="52" x2="125" y2="14" stroke={primaryColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="94" y2="95" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="106" y2="95" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 3 && (
-          // Chest to bar / peak lat squeeze
-          <g>
-            <circle cx="100" cy="22" r="9" fill={bodyColor} />
-            <line x1="100" y1="31" x2="100" y2="60" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="100" y1="34" x2="72" y2="44" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="72" y1="44" x2="75" y2="14" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="34" x2="128" y2="44" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="128" y1="44" x2="125" y2="14" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="60" x2="94" y2="88" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="60" x2="106" y2="88" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="100" cy="40" r="14" stroke={primaryColor} strokeWidth="2" strokeDasharray="3 3" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 6. BICEP CURLS
-  if (type === 'curl') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-
-        {stage === 1 && (
-          // Arms extended down
-          <g>
-            <circle cx="100" cy="25" r="9" fill={bodyColor} />
-            <line x1="100" y1="34" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Arms extended down with dumbbells */}
-            <line x1="100" y1="38" x2="88" y2="68" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="112" y2="68" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <circle cx="88" cy="68" r="6" fill={primaryColor} />
-            <circle cx="112" cy="68" r="6" fill={primaryColor} />
-            <path d="M 72 65 Q 65 45 78 35" stroke={warningColor} strokeWidth="2" strokeDasharray="3 3" />
-          </g>
-        )}
-
-        {stage === 2 && (
-          // Curling 90 degrees
-          <g>
-            <circle cx="100" cy="25" r="9" fill={bodyColor} />
-            <line x1="100" y1="34" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Forearms at 90° */}
-            <line x1="100" y1="38" x2="92" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="92" y1="52" x2="80" y2="45" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="108" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="108" y1="52" x2="120" y2="45" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="80" cy="45" r="7" fill={primaryColor} />
-            <circle cx="120" cy="45" r="7" fill={primaryColor} />
-          </g>
-        )}
-
-        {stage === 3 && (
-          // Peak squeeze flex
-          <g>
-            <circle cx="100" cy="25" r="9" fill={bodyColor} />
-            <line x1="100" y1="34" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Arms fully flexed at top */}
-            <line x1="100" y1="38" x2="94" y2="52" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="94" y1="52" x2="90" y2="35" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="106" y2="52" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="106" y1="52" x2="110" y2="35" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <circle cx="90" cy="35" r="7" fill={primaryColor} />
-            <circle cx="110" cy="35" r="7" fill={primaryColor} />
-            <circle cx="92" cy="44" r="8" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
-            <circle cx="108" cy="44" r="8" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 7. TRICEP PUSHDOWNS / EXTENSIONS
-  if (type === 'tricep') {
-    return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-        {/* Cable attachment at top */}
-        <circle cx="100" cy="8" r="4" fill="#64748b" />
-        <line x1="100" y1="8" x2="100" y2="30" stroke="#64748b" strokeWidth="2" />
-
-        {stage === 1 && (
-          <g>
-            <circle cx="100" cy="26" r="9" fill={bodyColor} />
-            <line x1="100" y1="35" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Forearms at 90° */}
-            <line x1="100" y1="40" x2="100" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="52" x2="100" y2="40" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="100" cy="40" r="6" fill={primaryColor} />
-          </g>
-        )}
-
-        {stage === 2 && (
-          <g>
-            <circle cx="100" cy="26" r="9" fill={bodyColor} />
-            <line x1="100" y1="35" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Extending down */}
-            <line x1="100" y1="40" x2="100" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="52" x2="100" y2="62" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="100" cy="62" r="6" fill={primaryColor} />
-            <path d="M 116 48 L 116 70 M 112 64 L 116 70 L 120 64" stroke={warningColor} strokeWidth="2" strokeLinecap="round" />
-          </g>
-        )}
-
-        {stage === 3 && (
-          <g>
-            <circle cx="100" cy="26" r="9" fill={bodyColor} />
-            <line x1="100" y1="35" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="92" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="108" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Full straight arm lockout */}
-            <line x1="100" y1="40" x2="90" y2="72" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="40" x2="110" y2="72" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <circle cx="90" cy="72" r="6" fill={primaryColor} />
-            <circle cx="110" cy="72" r="6" fill={primaryColor} />
-            <circle cx="95" cy="50" r="8" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
-            <circle cx="105" cy="50" r="8" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
-          </g>
-        )}
-      </svg>
-    )
-  }
-
-  // 8. ABS / CRUNCHES / HANGING LEG RAISES / CORE
+  // 1. ABS / CRUNCHES / CORE (Matching user reference image: lying start vs curled peak contraction)
   if (type === 'abs') {
     return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        {/* Floor mat / pullup bar */}
-        <line x1="40" y1="18" x2="160" y2="18" stroke="#475569" strokeWidth="4" />
+      <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+        <defs>
+          <linearGradient id="absMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={redActiveLight} />
+            <stop offset="50%" stopColor={redActive} />
+            <stop offset="100%" stopColor={redActiveDark} />
+          </linearGradient>
+          <linearGradient id="bodyMuscleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={bodyLight} />
+            <stop offset="60%" stopColor={bodyBase} />
+            <stop offset="100%" stopColor={bodyDark} />
+          </linearGradient>
+          <pattern id="grid" width="12" height="12" patternUnits="userSpaceOnUse">
+            <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#334155" strokeWidth="0.5" opacity="0.15" />
+          </pattern>
+        </defs>
+
+        {/* Subtle Anatomical Grid Background */}
+        <rect width="320" height="140" fill="url(#grid)" />
+        <line x1="20" y1="125" x2="300" y2="125" stroke="#475569" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.4" />
 
         {stage === 1 && (
-          <g>
-            <circle cx="100" cy="38" r="9" fill={bodyColor} />
-            <line x1="100" y1="47" x2="100" y2="75" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="48" x2="85" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="48" x2="115" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            {/* Legs hanging straight */}
-            <line x1="100" y1="75" x2="100" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
+          // Stage 1: Supine Lying Setup (Left Figure in Reference)
+          <g transform="translate(45, 20)">
+            {/* Athletic Head & Ponytail */}
+            <circle cx="210" cy="85" r="11" fill="url(#bodyMuscleGrad)" />
+            <path d="M 218 80 Q 228 85 225 96 Q 220 94 218 88 Z" fill="#334155" />
+            <ellipse cx="205" cy="86" rx="3" ry="5" fill="#1e293b" opacity="0.3" />
+
+            {/* Arms Behind Head */}
+            <path d="M 195 85 Q 205 70 216 75 Q 222 80 216 88" stroke="url(#bodyMuscleGrad)" strokeWidth="6" strokeLinecap="round" fill="none" />
+            
+            {/* Thorax / Ribs */}
+            <path d="M 195 86 C 180 88 165 89 150 90 C 145 92 140 98 135 105" stroke={bodyDark} strokeWidth="2" fill="url(#bodyMuscleGrad)" />
+            
+            {/* HIGHLIGHTED ACTIVE RECTUS ABDOMINIS & OBLIQUES (Bright Red Muscle Group) */}
+            <path d="M 180 88 C 170 89 155 90 145 94 C 142 98 140 104 148 105 C 162 104 175 100 182 95 Z" fill="url(#absMuscleGrad)" stroke={redActiveLight} strokeWidth="1" />
+            {/* Muscle striations / six-pack segments */}
+            <line x1="172" y1="90" x2="174" y2="101" stroke="#fee2e2" strokeWidth="1.2" opacity="0.9" />
+            <line x1="162" y1="91" x2="164" y2="103" stroke="#fee2e2" strokeWidth="1.2" opacity="0.9" />
+            <line x1="152" y1="93" x2="154" y2="104" stroke="#fee2e2" strokeWidth="1.2" opacity="0.9" />
+            <path d="M 148 97 Q 165 95 180 92" stroke="#b91c1c" strokeWidth="1" opacity="0.8" />
+
+            {/* Pelvis & Bent Thighs */}
+            <path d="M 135 105 Q 115 80 95 75 Q 85 75 80 82" stroke="url(#bodyMuscleGrad)" strokeWidth="13" strokeLinecap="round" fill="none" />
+            {/* Shins / Calves down to feet */}
+            <path d="M 80 82 Q 65 95 50 115" stroke="url(#bodyMuscleGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+            {/* Feet planted flat */}
+            <path d="M 50 115 L 35 117" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
+
+            {/* Joint Markers */}
+            <circle cx="85" cy="78" r="4" fill={jointColor} />
+            <circle cx="50" cy="115" r="3.5" fill={jointColor} />
+
+            {/* Active Muscle Glow Badge */}
+            <g transform="translate(130, 60)">
+              <rect width="90" height="18" rx="9" fill="#991b1b" fillOpacity="0.8" stroke="#ef4444" strokeWidth="1" />
+              <text x="45" y="13" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="bold" fontFamily="sans-serif">
+                Rectus Abdominis
+              </text>
+            </g>
           </g>
         )}
 
         {stage === 2 && (
-          <g>
-            <circle cx="100" cy="38" r="9" fill={bodyColor} />
-            <line x1="100" y1="47" x2="98" y2="75" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="48" x2="85" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="48" x2="115" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            {/* Knees lifting up to 90° */}
-            <line x1="98" y1="75" x2="120" y2="75" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="120" y1="75" x2="122" y2="95" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <path d="M 105 100 Q 130 95 125 75" stroke={warningColor} strokeWidth="2" strokeDasharray="3 3" />
+          // Stage 2: Mid-Flexion Compression
+          <g transform="translate(45, 15)">
+            {/* Head curling up */}
+            <circle cx="195" cy="65" r="11" fill="url(#bodyMuscleGrad)" />
+            <path d="M 203 60 Q 212 65 208 76 Q 203 74 201 68 Z" fill="#334155" />
+
+            {/* Arms behind head */}
+            <path d="M 180 68 Q 192 50 202 55 Q 208 60 200 68" stroke="url(#bodyMuscleGrad)" strokeWidth="6" strokeLinecap="round" fill="none" />
+
+            {/* Curled Thorax & Spine */}
+            <path d="M 180 68 Q 165 72 150 82 Q 140 92 135 105" stroke={bodyDark} strokeWidth="2" fill="url(#bodyMuscleGrad)" />
+
+            {/* HIGHLIGHTED ACTIVE CRUNCH MUSCLE CORE (Deep Red Contracted Striations) */}
+            <path d="M 172 70 C 160 75 148 84 140 94 C 137 100 142 105 150 102 C 160 96 172 85 178 76 Z" fill="url(#absMuscleGrad)" stroke={redActiveLight} strokeWidth="1.5" />
+            <line x1="165" y1="73" x2="160" y2="88" stroke="#fee2e2" strokeWidth="1.4" opacity="0.95" />
+            <line x1="155" y1="78" x2="150" y2="94" stroke="#fee2e2" strokeWidth="1.4" opacity="0.95" />
+            <line x1="147" y1="84" x2="142" y2="99" stroke="#fee2e2" strokeWidth="1.4" opacity="0.95" />
+
+            {/* Pelvis & Legs */}
+            <path d="M 135 105 Q 115 80 95 75 Q 85 75 80 82" stroke="url(#bodyMuscleGrad)" strokeWidth="13" strokeLinecap="round" fill="none" />
+            <path d="M 80 82 Q 65 95 50 115" stroke="url(#bodyMuscleGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+            <path d="M 50 115 L 35 117" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
+
+            {/* Movement Vector Pulse Arc */}
+            <path d="M 195 85 Q 190 75 185 68" stroke="#f59e0b" strokeWidth="2.5" strokeDasharray="3 3" strokeLinecap="round" />
           </g>
         )}
 
         {stage === 3 && (
-          <g>
-            <circle cx="100" cy="38" r="9" fill={bodyColor} />
-            {/* Rounded spine in full ab crunch */}
-            <path d="M 100 47 Q 90 60 98 75" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" fill="none" />
-            <line x1="100" y1="48" x2="85" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="48" x2="115" y2="18" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            {/* Knees tucked tight to chest */}
-            <line x1="98" y1="75" x2="118" y2="55" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="118" y1="55" x2="110" y2="75" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="95" cy="62" r="10" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
+          // Stage 3: Peak Contraction Curled Sit-Up (Right Figure in Reference Image)
+          <g transform="translate(45, 10)">
+            {/* Torso curled full forward */}
+            <circle cx="175" cy="40" r="11" fill="url(#bodyMuscleGrad)" />
+            <path d="M 183 35 Q 194 40 190 52 Q 184 50 182 43 Z" fill="#334155" />
+
+            {/* Arms cradling head */}
+            <path d="M 160 45 Q 172 25 182 32 Q 188 38 180 46" stroke="url(#bodyMuscleGrad)" strokeWidth="6" strokeLinecap="round" fill="none" />
+
+            {/* Curled Upper Spine */}
+            <path d="M 162 48 Q 148 58 140 75 Q 135 90 135 105" stroke={bodyDark} strokeWidth="2" fill="url(#bodyMuscleGrad)" />
+
+            {/* MAXIMAL PEAK RED MUSCLE CONTRACTION (Deep Burning Red & Obliques) */}
+            <path d="M 158 52 C 145 62 136 78 134 94 C 133 103 140 106 148 100 C 156 90 165 72 168 58 Z" fill="url(#absMuscleGrad)" stroke="#fca5a5" strokeWidth="2" />
+            <line x1="156" y1="56" x2="148" y2="76" stroke="#ffffff" strokeWidth="1.6" />
+            <line x1="148" y1="64" x2="141" y2="86" stroke="#ffffff" strokeWidth="1.6" />
+            <line x1="142" y1="74" x2="137" y2="94" stroke="#ffffff" strokeWidth="1.6" />
+
+            {/* Pelvis & Legs */}
+            <path d="M 135 105 Q 115 80 95 75 Q 85 75 80 82" stroke="url(#bodyMuscleGrad)" strokeWidth="13" strokeLinecap="round" fill="none" />
+            <path d="M 80 82 Q 65 95 50 115" stroke="url(#bodyMuscleGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+            <path d="M 50 115 L 35 117" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
+
+            {/* Peak Contraction Starburst */}
+            <circle cx="145" cy="78" r="16" stroke={redActive} strokeWidth="1.5" strokeDasharray="3 3" />
+            <g transform="translate(100, 15)">
+              <rect width="115" height="18" rx="9" fill="#991b1b" fillOpacity="0.85" stroke="#ef4444" strokeWidth="1" />
+              <text x="57" y="13" textAnchor="middle" fill="#fee2e2" fontSize="9" fontWeight="bold" fontFamily="sans-serif">
+                Peak Core Compression
+              </text>
+            </g>
           </g>
         )}
       </svg>
     )
   }
 
-  // 9. GLUTE / HIP THRUST / BRIDGE
-  if (type === 'glute') {
+  // 2. BENCH PRESS / CHEST / PUSHUPS (Anatomical Pectoralis Major & Anterior Deltoid in Red)
+  if (type === 'bench') {
     return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        {/* Bench support */}
-        <rect x="35" y="60" width="30" height="35" rx="3" fill="#334155" />
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
+      <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+        <defs>
+          <linearGradient id="chestMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={redActiveLight} />
+            <stop offset="50%" stopColor={redActive} />
+            <stop offset="100%" stopColor={redActiveDark} />
+          </linearGradient>
+          <linearGradient id="bodyMuscleGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor={bodyLight} />
+            <stop offset="60%" stopColor={bodyBase} />
+            <stop offset="100%" stopColor={bodyDark} />
+          </linearGradient>
+        </defs>
+
+        {/* Bench Flat Structure */}
+        <rect x="50" y="90" width="160" height="10" rx="3" fill="#1e293b" stroke="#334155" strokeWidth="1.5" />
+        <rect x="75" y="100" width="10" height="25" fill="#0f172a" />
+        <rect x="175" y="100" width="10" height="25" fill="#0f172a" />
 
         {stage === 1 && (
-          // Hips lowered down
-          <g>
-            <circle cx="58" cy="50" r="8" fill={bodyColor} />
-            <line x1="62" y1="56" x2="90" y2="85" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="90" y1="85" x2="120" y2="85" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="120" y1="85" x2="120" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <rect x="75" y="80" width="30" height="6" rx="3" fill={primaryColor} />
-            <path d="M 90 92 L 90 62 M 85 70 L 90 62 L 95 70" stroke={warningColor} strokeWidth="2.5" strokeLinecap="round" />
+          // Bench Press: Starting Lockout Position
+          <g transform="translate(40, 10)">
+            {/* Head rested on bench */}
+            <circle cx="80" cy="78" r="11" fill="url(#bodyMuscleGrad2)" />
+            {/* Torso & Arch */}
+            <path d="M 88 82 Q 130 80 160 88" stroke="url(#bodyMuscleGrad2)" strokeWidth="16" strokeLinecap="round" />
+            
+            {/* HIGHLIGHTED ACTIVE PECTORALIS MAJOR (Chest in Red) */}
+            <ellipse cx="125" cy="80" rx="18" ry="8" fill="url(#chestMuscleGrad)" stroke={redActiveLight} strokeWidth="1.2" />
+            <line x1="115" y1="78" x2="135" y2="78" stroke="#fee2e2" strokeWidth="1.2" />
+            <line x1="118" y1="82" x2="132" y2="82" stroke="#fee2e2" strokeWidth="1.2" />
+
+            {/* Straight Arms Overhead */}
+            <path d="M 120 78 L 120 32" stroke="url(#bodyMuscleGrad2)" strokeWidth="8" strokeLinecap="round" />
+            <path d="M 130 78 L 130 32" stroke="url(#bodyMuscleGrad2)" strokeWidth="8" strokeLinecap="round" />
+
+            {/* Barbell & Plates */}
+            <line x1="60" y1="30" x2="190" y2="30" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <rect x="65" y="18" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+            <rect x="177" y="18" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+
+            {/* Legs bent to floor */}
+            <path d="M 160 88 Q 185 92 195 115" stroke="url(#bodyMuscleGrad2)" strokeWidth="10" strokeLinecap="round" />
+            <path d="M 195 115 L 210 115" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
           </g>
         )}
 
         {stage === 2 && (
-          // Hips driving upward
-          <g>
-            <circle cx="58" cy="50" r="8" fill={bodyColor} />
-            <line x1="62" y1="56" x2="95" y2="68" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="95" y1="68" x2="122" y2="75" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="122" y1="75" x2="120" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <rect x="80" y="65" width="30" height="6" rx="3" fill={primaryColor} />
+          // Bench Press: Deep Chest Stretch at Bottom
+          <g transform="translate(40, 10)">
+            <circle cx="80" cy="78" r="11" fill="url(#bodyMuscleGrad2)" />
+            <path d="M 88 82 Q 130 80 160 88" stroke="url(#bodyMuscleGrad2)" strokeWidth="16" strokeLinecap="round" />
+
+            {/* MAXIMAL PECTORAL STRETCH (Wide glowing red pectorals) */}
+            <ellipse cx="125" cy="80" rx="22" ry="9" fill="url(#chestMuscleGrad)" stroke={redActiveLight} strokeWidth="1.8" />
+            <line x1="110" y1="78" x2="140" y2="78" stroke="#ffffff" strokeWidth="1.4" />
+            <line x1="112" y1="83" x2="138" y2="83" stroke="#ffffff" strokeWidth="1.4" />
+
+            {/* 45-degree tucked elbows */}
+            <path d="M 120 78 L 105 88 L 122 62" stroke="url(#bodyMuscleGrad2)" strokeWidth="7" strokeLinecap="round" />
+            <path d="M 130 78 L 145 88 L 128 62" stroke="url(#bodyMuscleGrad2)" strokeWidth="7" strokeLinecap="round" />
+
+            {/* Barbell at Chest Level */}
+            <line x1="60" y1="60" x2="190" y2="60" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <rect x="65" y="48" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+            <rect x="177" y="48" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+
+            <path d="M 160 88 Q 185 92 195 115" stroke="url(#bodyMuscleGrad2)" strokeWidth="10" strokeLinecap="round" />
+            <path d="M 195 115 L 210 115" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
           </g>
         )}
 
         {stage === 3 && (
-          // Full horizontal lockout & glute squeeze
-          <g>
-            <circle cx="58" cy="50" r="8" fill={bodyColor} />
-            {/* Flat horizontal table */}
-            <line x1="62" y1="56" x2="115" y2="56" stroke={primaryColor} strokeWidth="7" strokeLinecap="round" />
-            <line x1="115" y1="56" x2="118" y2="105" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <rect x="85" y="52" width="32" height="7" rx="3.5" fill={primaryColor} />
-            <circle cx="95" cy="56" r="12" stroke={primaryColor} strokeWidth="2.5" strokeDasharray="3 3" />
+          // Bench Press: Peak Concentric Chest Squeeze
+          <g transform="translate(40, 10)">
+            <circle cx="80" cy="78" r="11" fill="url(#bodyMuscleGrad2)" />
+            <path d="M 88 82 Q 130 80 160 88" stroke="url(#bodyMuscleGrad2)" strokeWidth="16" strokeLinecap="round" />
+
+            {/* PEAK CHEST SQUEEZE LOCKOUT */}
+            <ellipse cx="125" cy="80" rx="19" ry="8.5" fill="url(#chestMuscleGrad)" stroke="#fca5a5" strokeWidth="2" />
+            <line x1="114" y1="78" x2="136" y2="78" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx="125" cy="80" r="14" stroke={redActive} strokeWidth="1.5" strokeDasharray="3 3" />
+
+            <path d="M 120 78 L 120 30" stroke="url(#bodyMuscleGrad2)" strokeWidth="8" strokeLinecap="round" />
+            <path d="M 130 78 L 130 30" stroke="url(#bodyMuscleGrad2)" strokeWidth="8" strokeLinecap="round" />
+
+            <line x1="60" y1="28" x2="190" y2="28" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <rect x="65" y="16" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+            <rect x="177" y="16" width="8" height="24" rx="2" fill={redActive} stroke="#fff" strokeWidth="0.8" />
+
+            <path d="M 160 88 Q 185 92 195 115" stroke="url(#bodyMuscleGrad2)" strokeWidth="10" strokeLinecap="round" />
+            <path d="M 195 115 L 210 115" stroke={bodyLight} strokeWidth="5" strokeLinecap="round" />
           </g>
         )}
       </svg>
     )
   }
 
-  // 10. LATERAL RAISES
-  if (type === 'lateral') {
+  // 3. SQUAT / LEGS / LUNGES (Anatomical Quadriceps & Gluteus Maximus in Red)
+  if (type === 'squat') {
     return (
-      <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-        <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
+      <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+        <defs>
+          <linearGradient id="legMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={redActiveLight} />
+            <stop offset="50%" stopColor={redActive} />
+            <stop offset="100%" stopColor={redActiveDark} />
+          </linearGradient>
+        </defs>
+
+        <line x1="30" y1="125" x2="290" y2="125" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
 
         {stage === 1 && (
-          <g>
-            <circle cx="100" cy="24" r="9" fill={bodyColor} />
-            <line x1="100" y1="33" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Arms at sides */}
-            <line x1="100" y1="38" x2="88" y2="68" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="112" y2="68" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-            <circle cx="88" cy="68" r="6" fill={primaryColor} />
-            <circle cx="112" cy="68" r="6" fill={primaryColor} />
+          // Squat: Upright Setup
+          <g transform="translate(100, 10)">
+            <circle cx="60" cy="20" r="10" fill={bodyBase} />
+            <path d="M 60 28 L 60 65" stroke={bodyDark} strokeWidth="14" strokeLinecap="round" />
+            
+            {/* Barbell across upper traps */}
+            <line x1="10" y1="28" x2="110" y2="28" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <circle cx="15" cy="28" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+            <circle cx="105" cy="28" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+
+            {/* QUADRICEPS & GLUTES IN RED */}
+            <path d="M 54 65 L 48 95" stroke="url(#legMuscleGrad)" strokeWidth="12" strokeLinecap="round" />
+            <path d="M 66 65 L 72 95" stroke="url(#legMuscleGrad)" strokeWidth="12" strokeLinecap="round" />
+            {/* Calves */}
+            <path d="M 48 95 L 45 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
+            <path d="M 72 95 L 75 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
           </g>
         )}
 
         {stage === 2 && (
-          <g>
-            <circle cx="100" cy="24" r="9" fill={bodyColor} />
-            <line x1="100" y1="33" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Raising 45° */}
-            <line x1="100" y1="38" x2="72" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="128" y2="52" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-            <circle cx="72" cy="52" r="6" fill={primaryColor} />
-            <circle cx="128" cy="52" r="6" fill={primaryColor} />
+          // Squat: Deep Parallel Hole (Peak Quad & Glute Contraction)
+          <g transform="translate(100, 15)">
+            <circle cx="80" cy="40" r="10" fill={bodyBase} />
+            {/* Forward angled back */}
+            <path d="M 80 48 L 55 72" stroke={bodyDark} strokeWidth="14" strokeLinecap="round" />
+
+            <line x1="25" y1="46" x2="125" y2="46" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <circle cx="30" cy="46" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+            <circle cx="120" cy="46" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+
+            {/* MAXIMAL QUADRICEPS & GLUTEUS TENSION (Deep Red) */}
+            <path d="M 55 72 L 95 72" stroke="url(#legMuscleGrad)" strokeWidth="14" strokeLinecap="round" />
+            <line x1="60" y1="72" x2="90" y2="72" stroke="#ffffff" strokeWidth="1.8" />
+            {/* Shin vertical at ~80° */}
+            <path d="M 95 72 L 88 120" stroke={bodyBase} strokeWidth="10" strokeLinecap="round" />
+            <circle cx="95" cy="72" r="5" fill={jointColor} />
+            <circle cx="75" cy="72" r="14" stroke={redActive} strokeWidth="2" strokeDasharray="3 3" />
           </g>
         )}
 
         {stage === 3 && (
-          <g>
-            <circle cx="100" cy="24" r="9" fill={bodyColor} />
-            <line x1="100" y1="33" x2="100" y2="68" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="90" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            <line x1="100" y1="68" x2="110" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-            {/* Arms wide at shoulder height */}
-            <line x1="100" y1="38" x2="58" y2="38" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <line x1="100" y1="38" x2="142" y2="38" stroke={primaryColor} strokeWidth="6" strokeLinecap="round" />
-            <circle cx="58" cy="38" r="7" fill={primaryColor} />
-            <circle cx="142" cy="38" r="7" fill={primaryColor} />
-            <circle cx="80" cy="38" r="7" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
-            <circle cx="120" cy="38" r="7" stroke={primaryColor} strokeWidth="2" strokeDasharray="2 2" />
+          // Squat: Upright Power Lockout
+          <g transform="translate(100, 10)">
+            <circle cx="60" cy="18" r="10" fill={bodyBase} />
+            <path d="M 60 26 L 60 63" stroke={bodyDark} strokeWidth="14" strokeLinecap="round" />
+
+            <line x1="10" y1="26" x2="110" y2="26" stroke={barbellColor} strokeWidth="5" strokeLinecap="round" />
+            <circle cx="15" cy="26" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+            <circle cx="105" cy="26" r="10" fill={redActive} stroke="#fff" strokeWidth="1" />
+
+            {/* LOCKED OUT GLUTES & QUADS */}
+            <path d="M 54 63 L 48 93" stroke="url(#legMuscleGrad)" strokeWidth="12" strokeLinecap="round" />
+            <path d="M 66 63 L 72 93" stroke="url(#legMuscleGrad)" strokeWidth="12" strokeLinecap="round" />
+            <path d="M 48 93 L 45 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
+            <path d="M 72 93 L 75 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
+            <circle cx="60" cy="63" r="15" stroke={redActive} strokeWidth="1.8" strokeDasharray="3 3" />
           </g>
         )}
       </svg>
     )
   }
 
-  // DEFAULT / LEG MACHINE / HIIT
+  // 4. BICEPS / CURLS (Anatomical Biceps Brachii in Red)
+  if (type === 'curl') {
+    return (
+      <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+        <defs>
+          <linearGradient id="bicepMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={redActiveLight} />
+            <stop offset="50%" stopColor={redActive} />
+            <stop offset="100%" stopColor={redActiveDark} />
+          </linearGradient>
+        </defs>
+
+        <line x1="30" y1="125" x2="290" y2="125" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+
+        <g transform="translate(110, 10)">
+          <circle cx="50" cy="20" r="10" fill={bodyBase} />
+          <path d="M 50 28 L 50 70" stroke={bodyDark} strokeWidth="14" strokeLinecap="round" />
+
+          {stage === 1 && (
+            // Arm hanging straight, bicep stretched
+            <g>
+              <path d="M 54 36 L 54 62" stroke="url(#bicepMuscleGrad)" strokeWidth="9" strokeLinecap="round" />
+              <path d="M 54 62 L 54 90" stroke={bodyBase} strokeWidth="8" strokeLinecap="round" />
+              <circle cx="54" cy="90" r="8" fill="#3b82f6" stroke="#fff" strokeWidth="1" />
+            </g>
+          )}
+
+          {stage === 2 && (
+            // Arm curling at 90 degrees
+            <g>
+              <path d="M 54 36 L 54 60" stroke="url(#bicepMuscleGrad)" strokeWidth="11" strokeLinecap="round" />
+              <line x1="52" y1="42" x2="52" y2="54" stroke="#ffffff" strokeWidth="1.4" />
+              <path d="M 54 60 L 80 50" stroke={bodyBase} strokeWidth="8" strokeLinecap="round" />
+              <circle cx="80" cy="50" r="9" fill="#3b82f6" stroke="#fff" strokeWidth="1" />
+            </g>
+          )}
+
+          {stage === 3 && (
+            // Peak Bicep Contraction & Flex Peak
+            <g>
+              {/* Bulging Bicep Peak */}
+              <ellipse cx="54" cy="46" rx="8" ry="12" fill="url(#bicepMuscleGrad)" stroke="#fee2e2" strokeWidth="1.5" />
+              <line x1="52" y1="40" x2="52" y2="52" stroke="#ffffff" strokeWidth="1.6" />
+              <path d="M 54 60 L 62 38" stroke={bodyBase} strokeWidth="8" strokeLinecap="round" />
+              <circle cx="62" cy="38" r="9" fill="#3b82f6" stroke="#fff" strokeWidth="1" />
+              <circle cx="54" cy="46" r="14" stroke={redActive} strokeWidth="2" strokeDasharray="3 3" />
+            </g>
+          )}
+
+          {/* Legs */}
+          <path d="M 45 70 L 42 122" stroke={bodyDark} strokeWidth="10" strokeLinecap="round" />
+          <path d="M 55 70 L 58 122" stroke={bodyDark} strokeWidth="10" strokeLinecap="round" />
+        </g>
+      </svg>
+    )
+  }
+
+  // 5. BACK / PULL-UPS / ROWS / LAT PULLDOWN (Anatomical Latissimus Dorsi in Red)
+  if (type === 'pull' || type === 'deadlift') {
+    return (
+      <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+        <defs>
+          <linearGradient id="latMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={redActiveLight} />
+            <stop offset="50%" stopColor={redActive} />
+            <stop offset="100%" stopColor={redActiveDark} />
+          </linearGradient>
+        </defs>
+
+        <rect x="70" y="8" width="180" height="6" rx="3" fill="#334155" />
+
+        <g transform="translate(100, 15)">
+          <circle cx="60" cy="35" r="10" fill={bodyBase} />
+
+          {/* HIGHLIGHTED ACTIVE LATISSIMUS DORSI & TRAPEZIUS V-TAPER (Vibrant Red) */}
+          <path d="M 42 45 Q 60 42 78 45 L 68 78 L 52 78 Z" fill="url(#latMuscleGrad)" stroke={redActiveLight} strokeWidth="1.2" />
+          <line x1="50" y1="50" x2="56" y2="72" stroke="#fee2e2" strokeWidth="1.2" />
+          <line x1="70" y1="50" x2="64" y2="72" stroke="#fee2e2" strokeWidth="1.2" />
+
+          {stage === 1 && (
+            // Hanging full stretch
+            <g>
+              <path d="M 45 45 L 25 10" stroke={bodyBase} strokeWidth="7" strokeLinecap="round" />
+              <path d="M 75 45 L 95 10" stroke={bodyBase} strokeWidth="7" strokeLinecap="round" />
+              <path d="M 55 78 L 52 118" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+              <path d="M 65 78 L 68 118" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+            </g>
+          )}
+
+          {stage === 2 && (
+            // Pulling up, elbows flared back
+            <g>
+              <path d="M 45 42 L 30 52 L 30 10" stroke={bodyBase} strokeWidth="7" strokeLinecap="round" />
+              <path d="M 75 42 L 90 52 L 90 10" stroke={bodyBase} strokeWidth="7" strokeLinecap="round" />
+              <path d="M 55 78 L 52 110" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+              <path d="M 65 78 L 68 110" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+            </g>
+          )}
+
+          {stage === 3 && (
+            // Chest to bar peak lat contraction
+            <g>
+              <path d="M 45 38 L 26 44 L 32 10" stroke={bodyBase} strokeWidth="8" strokeLinecap="round" />
+              <path d="M 75 38 L 94 44 L 88 10" stroke={bodyBase} strokeWidth="8" strokeLinecap="round" />
+              <circle cx="60" cy="56" r="16" stroke={redActive} strokeWidth="2" strokeDasharray="3 3" />
+              <path d="M 55 78 L 52 105" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+              <path d="M 65 78 L 68 105" stroke={bodyDark} strokeWidth="9" strokeLinecap="round" />
+            </g>
+          )}
+        </g>
+      </svg>
+    )
+  }
+
+  // 6. DEFAULT / PRESS / TRICEP / GLUTE / LATERAL (Anatomical Deltoids, Triceps, & Glutes in Red)
   return (
-    <svg viewBox="0 0 200 120" className="h-full w-auto select-none" fill="none">
-      <line x1="20" y1="105" x2="180" y2="105" stroke="#334155" strokeWidth="3" strokeDasharray="4 4" />
-      <circle cx="100" cy="25" r="10" fill={bodyColor} />
-      <line x1="100" y1="35" x2="100" y2="70" stroke={bodyColor} strokeWidth="6" strokeLinecap="round" />
+    <svg viewBox="0 0 320 140" className="h-full w-auto select-none" fill="none">
+      <defs>
+        <linearGradient id="genericMuscleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={redActiveLight} />
+          <stop offset="50%" stopColor={redActive} />
+          <stop offset="100%" stopColor={redActiveDark} />
+        </linearGradient>
+      </defs>
 
-      {stage === 1 && (
-        <g>
-          <line x1="100" y1="40" x2="80" y2="65" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-          <line x1="100" y1="40" x2="120" y2="65" stroke={bodyColor} strokeWidth="4" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="88" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="112" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-          <circle cx="80" cy="65" r="5" fill={primaryColor} />
-          <circle cx="120" cy="65" r="5" fill={primaryColor} />
-        </g>
-      )}
+      <line x1="30" y1="125" x2="290" y2="125" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
 
-      {stage === 2 && (
-        <g>
-          <line x1="100" y1="40" x2="75" y2="45" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="40" x2="125" y2="45" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="85" y2="105" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="115" y2="105" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <circle cx="75" cy="45" r="6" fill={primaryColor} />
-          <circle cx="125" cy="45" r="6" fill={primaryColor} />
-        </g>
-      )}
+      <g transform="translate(100, 12)">
+        <circle cx="60" cy="20" r="10" fill={bodyBase} />
 
-      {stage === 3 && (
-        <g>
-          <line x1="100" y1="40" x2="70" y2="35" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="40" x2="130" y2="35" stroke={primaryColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="88" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-          <line x1="100" y1="70" x2="112" y2="105" stroke={bodyColor} strokeWidth="5" strokeLinecap="round" />
-          <circle cx="70" cy="35" r="7" fill={primaryColor} />
-          <circle cx="130" cy="35" r="7" fill={primaryColor} />
-          <circle cx="100" cy="50" r="14" stroke={primaryColor} strokeWidth="2" strokeDasharray="3 3" />
-        </g>
-      )}
+        {/* DELTOIDS & UPPER TORSO IN RED */}
+        <circle cx="44" cy="34" r="7" fill="url(#genericMuscleGrad)" stroke={redActiveLight} strokeWidth="1" />
+        <circle cx="76" cy="34" r="7" fill="url(#genericMuscleGrad)" stroke={redActiveLight} strokeWidth="1" />
+        <path d="M 50 32 Q 60 30 70 32 L 66 65 L 54 65 Z" fill={bodyDark} stroke={bodyBase} strokeWidth="1" />
+
+        {stage === 1 && (
+          <g>
+            <path d="M 44 38 L 36 68" stroke="url(#genericMuscleGrad)" strokeWidth="7" strokeLinecap="round" />
+            <path d="M 76 38 L 84 68" stroke="url(#genericMuscleGrad)" strokeWidth="7" strokeLinecap="round" />
+            <circle cx="36" cy="68" r="6" fill="#3b82f6" />
+            <circle cx="84" cy="68" r="6" fill="#3b82f6" />
+          </g>
+        )}
+
+        {stage === 2 && (
+          <g>
+            <path d="M 44 38 L 28 50" stroke="url(#genericMuscleGrad)" strokeWidth="8" strokeLinecap="round" />
+            <path d="M 76 38 L 92 50" stroke="url(#genericMuscleGrad)" strokeWidth="8" strokeLinecap="round" />
+            <circle cx="28" cy="50" r="6" fill="#3b82f6" />
+            <circle cx="92" cy="50" r="6" fill="#3b82f6" />
+          </g>
+        )}
+
+        {stage === 3 && (
+          <g>
+            <path d="M 44 38 L 18 36" stroke="url(#genericMuscleGrad)" strokeWidth="8" strokeLinecap="round" />
+            <path d="M 76 38 L 102 36" stroke="url(#genericMuscleGrad)" strokeWidth="8" strokeLinecap="round" />
+            <circle cx="18" cy="36" r="7" fill="#3b82f6" />
+            <circle cx="102" cy="36" r="7" fill="#3b82f6" />
+            <circle cx="60" cy="34" r="16" stroke={redActive} strokeWidth="2" strokeDasharray="3 3" />
+          </g>
+        )}
+
+        {/* Lower Body */}
+        <path d="M 54 65 L 48 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
+        <path d="M 66 65 L 72 122" stroke={bodyBase} strokeWidth="9" strokeLinecap="round" />
+      </g>
     </svg>
   )
 }
+
