@@ -105,6 +105,10 @@ interface SessionStoreState {
     setId: string,
     flags: NonNullable<SetLog['isPr']>,
   ) => void
+  /** Toggle all sets of an exercise between completed and uncompleted */
+  toggleCompleteExercise: (exerciseSessionId: string, now?: number) => void
+  /** Complete all sets across all exercises in the current session */
+  completeAllExercises: (now?: number) => void
   finish: (now?: number) => void
   abandon: (now?: number) => void
   clear: () => void
@@ -112,6 +116,8 @@ interface SessionStoreState {
   // selectors
   totalPlannedSets: () => number
   completedSetCount: () => number
+  totalExerciseCount: () => number
+  completedExerciseCount: () => number
   totalVolumeKg: () => number
 }
 
@@ -304,6 +310,106 @@ export const useSessionStore = create<SessionStoreState>()(
           }
         }),
 
+      toggleCompleteExercise: (exerciseSessionId, now) =>
+        set((s) => {
+          if (!s.session) return {}
+          const timestamp = now ?? Date.now()
+          return {
+            session: {
+              ...s.session,
+              exercises: s.session.exercises.map((ex) => {
+                if (ex.exerciseSessionId !== exerciseSessionId) return ex
+                const allCompleted =
+                  ex.sets.length > 0 && ex.sets.every((st) => st.isCompleted)
+                if (allCompleted) {
+                  // Uncheck / uncomplete all sets
+                  return {
+                    ...ex,
+                    sets: ex.sets.map((st) => ({
+                      ...st,
+                      isCompleted: false,
+                      completedAtMs: undefined,
+                    })),
+                  }
+                }
+
+                // Mark all completed
+                const defaultWeight = getDefaultStartingWeight(ex.exerciseId)
+                const targetSetsCount = Math.max(1, ex.prescription.targetSets || 3)
+                let sets = [...ex.sets]
+                if (sets.length === 0) {
+                  for (let i = 0; i < targetSetsCount; i++) {
+                    sets.push({
+                      id: genId('set'),
+                      exerciseSessionId,
+                      setIndex: i,
+                      targetReps: ex.prescription.targetRepMax,
+                      weightKg: defaultWeight,
+                      actualReps: ex.prescription.targetRepMax || 10,
+                      isWarmup: false,
+                      isCompleted: true,
+                      completedAtMs: timestamp,
+                    })
+                  }
+                } else {
+                  sets = sets.map((st) => ({
+                    ...st,
+                    isCompleted: true,
+                    completedAtMs: st.completedAtMs ?? timestamp,
+                    actualReps:
+                      st.actualReps ??
+                      st.targetReps ??
+                      (ex.prescription.targetRepMax || 10),
+                  }))
+                }
+                return { ...ex, sets }
+              }),
+            },
+          }
+        }),
+
+      completeAllExercises: (now) =>
+        set((s) => {
+          if (!s.session) return {}
+          const timestamp = now ?? Date.now()
+          return {
+            session: {
+              ...s.session,
+              exercises: s.session.exercises.map((ex) => {
+                const defaultWeight = getDefaultStartingWeight(ex.exerciseId)
+                const targetSetsCount = Math.max(1, ex.prescription.targetSets || 3)
+                let sets = [...ex.sets]
+                if (sets.length === 0) {
+                  for (let i = 0; i < targetSetsCount; i++) {
+                    sets.push({
+                      id: genId('set'),
+                      exerciseSessionId: ex.exerciseSessionId,
+                      setIndex: i,
+                      targetReps: ex.prescription.targetRepMax,
+                      weightKg: defaultWeight,
+                      actualReps: ex.prescription.targetRepMax || 10,
+                      isWarmup: false,
+                      isCompleted: true,
+                      completedAtMs: timestamp,
+                    })
+                  }
+                } else {
+                  sets = sets.map((st) => ({
+                    ...st,
+                    isCompleted: true,
+                    completedAtMs: st.completedAtMs ?? timestamp,
+                    actualReps:
+                      st.actualReps ??
+                      st.targetReps ??
+                      (ex.prescription.targetRepMax || 10),
+                  }))
+                }
+                return { ...ex, sets }
+              }),
+            },
+          }
+        }),
+
       finish: (now) =>
         set((s) =>
           s.session
@@ -348,6 +454,20 @@ export const useSessionStore = create<SessionStoreState>()(
           (acc, ex) => acc + ex.sets.filter((st) => st.isCompleted).length,
           0,
         )
+      },
+
+      totalExerciseCount: () => {
+        const s = get().session
+        if (!s) return 0
+        return s.exercises.length
+      },
+
+      completedExerciseCount: () => {
+        const s = get().session
+        if (!s) return 0
+        return s.exercises.filter(
+          (ex) => ex.sets.length > 0 && ex.sets.every((st) => st.isCompleted),
+        ).length
       },
 
       totalVolumeKg: () => {

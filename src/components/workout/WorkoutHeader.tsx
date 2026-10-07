@@ -7,10 +7,10 @@ import { Activity } from 'lucide-react'
 /** Active-workout header: workout name + live status + elapsed clock. */
 export function WorkoutHeader() {
   const session = useSessionStore((s) => s.session)
-  if (!session) return null
+  const completedExercises = useSessionStore((s) => s.completedExerciseCount())
+  const totalExercises = useSessionStore((s) => s.totalExerciseCount())
 
-  const currentIdx = session.currentExerciseIndex + 1
-  const totalExercises = session.exercises.length
+  if (!session) return null
 
   return (
     <header className="flex items-center justify-between rounded-2xl border border-border/80 bg-card p-4 shadow-sm">
@@ -23,13 +23,18 @@ export function WorkoutHeader() {
           <Activity className="size-3.5" aria-hidden="true" />
           <span>Active Workout</span>
           <span className="text-muted-foreground">·</span>
-          <span className="text-muted-foreground">{currentIdx}/{totalExercises}</span>
+          <span className="text-muted-foreground">
+            {completedExercises}/{totalExercises} Completed
+          </span>
         </div>
         <h1 className="mt-0.5 text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
           {session.workoutName}
         </h1>
       </div>
-      <WorkoutTimer />
+
+      <div>
+        <WorkoutTimer />
+      </div>
     </header>
   )
 }

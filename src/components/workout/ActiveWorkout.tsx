@@ -1,10 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Dumbbell, Clock, ListChecks, Play, Sparkles, Flame } from 'lucide-react'
-import { ExerciseCard } from './ExerciseCard'
+import { WorkoutExerciseListItem } from './WorkoutExerciseListItem'
 import { RestTimer } from './RestTimer'
 import { StickyControls } from './StickyControls'
 import { WorkoutHeader } from './WorkoutHeader'
@@ -38,15 +37,13 @@ import type {
 } from '@/types'
 
 /**
- * Active Workout Mode orchestrator (design C.16 step 7). One exercise in focus
- * at a time; everything (timers, set logging, PR detection) runs through the
- * local stores so the screen never blocks on network. Firestore persistence is
- * best-effort through the services, which short-circuit cleanly when creds are
- * absent — so the whole surface works offline and without Firebase configured.
+ * Active Workout Mode orchestrator (design C.16 step 7). Renders the full
+ * workout routine list with one-tap exercise completion in any order. All
+ * timers, completion state, and PR detection run offline-first.
  */
 export function ActiveWorkout() {
   const router = useRouter()
-  const { uid, profile } = useAuth()
+  const { uid } = useAuth()
   const deviceId = useSettingsStore((s) => s.deviceId)
   const { playSound, speak } = useWorkoutSounds()
 
@@ -68,11 +65,6 @@ export function ActiveWorkout() {
   const clearProgress = useProgressStore((s) => s.clear)
   const exerciseById = useExerciseStore((s) => s.byId)
 
-  const unit = profile?.preferredUnit ?? 'kg'
-  const rpeMode = 'RPE' as const
-  const smartRestEnabled = useSettingsStore((s) => s.smartRestEnabled)
-  const autoStartRest = useSettingsStore((s) => s.autoStartRest)
-
   // Make sure a plan exists so a user can always start (seed offline).
   useEffect(() => {
     if (uid) ensureSeedPlan(uid)
@@ -87,9 +79,6 @@ export function ActiveWorkout() {
     })
   }, [uid, session, mergeHistories])
 
-  const current = session?.exercises[session.currentExerciseIndex]
-  const next = session?.exercises[(session?.currentExerciseIndex ?? 0) + 1]
-
   const handleStart = useCallback(() => {
     if (!uid || !plan || !selectedPlanDay || selectedPlanDay.isRest) return
     triggerHaptic('success')
@@ -102,7 +91,7 @@ export function ActiveWorkout() {
     const firstReps = firstEx?.prescription.targetRepMax ?? 10
 
     speak(
-      `Starting ${selectedPlanDay.workoutName}! First exercise: ${firstName}, ${firstSets} sets of ${firstReps} reps. Let's crush it!`,
+      `Starting ${selectedPlanDay.workoutName}! ${selectedPlanDay.entries.length} exercises ready. First: ${firstName}, ${firstSets} sets of ${firstReps} reps. Let's crush it!`,
     )
 
     startSession({
@@ -113,7 +102,7 @@ export function ActiveWorkout() {
     })
     startWorkoutClock()
 
-    // Pre-populate target sets (e.g. 3 or 4 sets) for all exercises using smart category weights & reps
+    // Pre-populate target sets for all exercises
     const live = useSessionStore.getState().session
     if (live) {
       for (const ex of live.exercises) {
@@ -280,11 +269,6 @@ export function ActiveWorkout() {
     return () => window.removeEventListener('beforeunload', handler)
   }, [session])
 
-  const nextName = useMemo(
-    () => (next ? exerciseById(next.exerciseId)?.name : undefined),
-    [next, exerciseById],
-  )
-
   if (!session || session.status !== 'IN_PROGRESS') {
     return (
       <StartPrompt
@@ -310,28 +294,19 @@ export function ActiveWorkout() {
         <WorkoutHeader />
         <WorkoutProgressBar />
         <RestTimer />
-        <AnimatePresence mode="wait">
-          {current && (
-            <motion.div
-              key={current.exerciseSessionId}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25, ease: 'easeInOut' }}
-            >
-              <ExerciseCard
-                exercise={current}
-                unit={unit}
-                rpeMode={rpeMode}
-                smartRestEnabled={smartRestEnabled}
-                autoStartRest={autoStartRest}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+        <div className="flex flex-col gap-3.5">
+          {session.exercises.map((exercise, index) => (
+            <WorkoutExerciseListItem
+              key={exercise.exerciseSessionId}
+              exercise={exercise}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
       <div className="mt-auto">
-        <StickyControls onFinish={handleFinish} nextExerciseName={nextName} />
+        <StickyControls onFinish={handleFinish} />
       </div>
       <PRCelebration />
     </div>
