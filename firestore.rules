@@ -1,0 +1,158 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function owns(uid)  { return signedIn() && request.auth.uid == uid; }
+    function stamped(uid) { return request.resource.data.uid == uid; }       // doc carries uid
+    function notCompleted() { return resource.data.status != 'COMPLETED'; }  // existing session doc
+
+    // true iff the ONLY field that differs between stored and incoming is summaryApplied
+    // (the one permitted post-completion bookkeeping toggle; all training data stays frozen)
+    function onlySummaryAppliedChanged() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['summaryApplied', 'updatedAt']);
+    }
+
+    // create-only: parent session must still be open (one get(), off the hot update path).
+    // parentOpen()-gated creates are ALWAYS single-doc writes (one new SetLog or one new
+    // ExerciseSession at a time), never grouped into a writeBatch of >1 child create, so each
+    // request issues exactly one get() and stays far under Firestore's 10-get()-per-request
+    // ceiling (resolves iter-4 NIT-7).
+    function parentOpen(uid, sid) {
+      return get(/databases/$(database)/documents/users/$(uid)/workoutSessions/$(sid))
+               .data.status != 'COMPLETED';
+    }
+
+    // minimal field validation for ExerciseSession child docs (resolves iter-4 MEDIUM-4)
+    function validExerciseSession(d) {
+      return d.exerciseId is string && d.order is int && d.order >= 0;
+    }
+
+    // field-level validation (Zod-mirrored bounds) for high-risk write-heavy docs
+    function validSet(d) {
+      // exactly one of actualReps / durationSeconds (rep-based vs duration-based interval/hold set)
+      return ( ('actualReps' in d) != ('durationSeconds' in d) )
+        && (!('actualReps' in d)      || (d.actualReps is int && d.actualReps >= 0 && d.actualReps <= 1000))
+        && (!('durationSeconds' in d) || (d.durationSeconds is int && d.durationSeconds >= 0 && d.durationSeconds <= 86400))
+        && d.weightKg is number && d.weightKg >= 0 && d.weightKg <= 2000
+        && (!('rpe' in d) || (d.rpe is number && d.rpe >= 1 && d.rpe <= 10))
+        && (!('rir' in d) || (d.rir is number && d.rir >= 0 && d.rir <= 10))
+        && (!('restSeconds' in d) || (d.restSeconds is int && d.restSeconds >= 0 && d.restSeconds <= 86400));
+    }
+    function validSession(d) {
+      return d.status in ['NOT_STARTED','IN_PROGRESS','COMPLETED','ABANDONED']
+        && d.durationSeconds is int && d.durationSeconds >= 0
+        && d.totalVolumeKg is number && d.totalVolumeKg >= 0
+        && (!('energy' in d) || (d.energy is int && d.energy >= 1 && d.energy <= 5))
+        && (!('soreness' in d) || (d.soreness is int && d.soreness >= 1 && d.soreness <= 5));
+    }
+    function validBody(d) {
+      return (!('weightKg' in d) || (d.weightKg is number && d.weightKg > 0 && d.weightKg <= 2000))
+        && (!('bodyFatPct' in d) || (d.bodyFatPct is number && d.bodyFatPct >= 0 && d.bodyFatPct <= 100));
+    }
+    function validRecovery(d) {
+      return (!('sleepHours' in d) || (d.sleepHours is number && d.sleepHours >= 0 && d.sleepHours <= 24))
+        && (!('energy' in d)     || (d.energy is int && d.energy >= 1 && d.energy <= 5))
+        && (!('stress' in d)     || (d.stress is int && d.stress >= 1 && d.stress <= 5))
+        && (!('soreness' in d)   || (d.soreness is int && d.soreness >= 1 && d.soreness <= 5))
+        && (!('motivation' in d) || (d.motivation is int && d.motivation >= 1 && d.motivation <= 5))
+        && (!('hydrationMl' in d) || (d.hydrationMl is int && d.hydrationMl >= 0));
+    }
+
+    match /users/{uid} {
+      // root ownership doc { uid, createdAt, updatedAt } — NOT a profile copy
+      allow read:   if owns(uid);
+      allow create, update: if owns(uid) && stamped(uid);
+      allow delete: if owns(uid);
+
+      // path-identified singletons (no uid field) — owner only
+      match /profile/{docId}   { allow read, write: if owns(uid); }
+      match /settings/{docId}  { allow read, write: if owns(uid); }
+
+      // uid-stamped collections — owner + stamp
+      match /workoutPlans/{planId}       { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /exerciseHistory/{exId}      { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /personalRecords/{recId}     { allow read: if owns(uid);
+                                           allow create: if owns(uid) && stamped(uid);
+                                           allow update, delete: if owns(uid) && stamped(uid); }
+      match /bodyMeasurements/{id}       { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid)
+                                             && validBody(request.resource.data);
+                                           allow delete: if owns(uid); }
+      match /progressPhotos/{id}         { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /goals/{id}                  { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /notes/{id}                  { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /analyticsWeekly/{weekId}    { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+      match /analyticsMonthly/{monthId}  { allow read: if owns(uid);
+                                           allow create, update: if owns(uid) && stamped(uid);
+                                           allow delete: if owns(uid); }
+
+      // path-identified upserts (no uid field, idempotent) — owner only
+      match /recoveryLogs/{date}         { allow read: if owns(uid);
+                                           allow write: if owns(uid) && validRecovery(request.resource.data); }
+      match /achievements/{key}          { allow read, write: if owns(uid); }
+
+      // sessions — COMPLETED is immutable (contents AND the doc itself)
+      match /workoutSessions/{sid} {
+        allow read:   if owns(uid);
+        allow create: if owns(uid) && stamped(uid) && validSession(request.resource.data);
+        // A non-completed session is freely updatable (status may advance to COMPLETED).
+        // A COMPLETED session is frozen EXCEPT the one bookkeeping toggle summaryApplied
+        // false→true (§C.7 Step 3): every other field must be unchanged.
+        allow update: if owns(uid) && stamped(uid) && validSession(request.resource.data)
+          && (
+               notCompleted()
+               || (
+                    resource.data.summaryApplied == false
+                    && request.resource.data.summaryApplied == true
+                    && onlySummaryAppliedChanged()
+                  )
+             );
+        allow delete: if owns(uid) && notCompleted();    // a COMPLETED session doc cannot be deleted
+
+        // subcollections freeze. update/delete read the mirrored flag (hot path, no get()).
+        // create reads the parent status once (cold path) so new docs cannot append to a
+        // COMPLETED session — closing the create-side immutability hole.
+        match /exercises/{eid} {
+          allow read:   if owns(uid);
+          allow create: if owns(uid)
+            && request.resource.data.sessionCompleted == false   // flag REQUIRED at create (always stamped by the service)
+            && validExerciseSession(request.resource.data)
+            && parentOpen(uid, sid);
+          allow update: if owns(uid)
+            && resource.data.sessionCompleted == false
+            && request.resource.data.sessionCompleted in [false, true] // may flip true in batch, never back to false
+            && validExerciseSession(request.resource.data);
+          allow delete: if owns(uid) && resource.data.sessionCompleted == false;
+
+          match /sets/{setId} {
+            allow read:   if owns(uid);
+            allow create: if owns(uid)
+              && request.resource.data.sessionCompleted == false
+              && parentOpen(uid, sid)
+              && validSet(request.resource.data);
+            allow update: if owns(uid)
+              && resource.data.sessionCompleted == false
+              && request.resource.data.sessionCompleted in [false, true]
+              && validSet(request.resource.data);
+            allow delete: if owns(uid) && resource.data.sessionCompleted == false;
+          }
+        }
+      }
+    }
+    // every other path: default-deny (no match) → unknown top-level/user docs rejected
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "verdict": "APPROVED",
+  "note": "Iteration-4 findings (2 HIGH, 4 MEDIUM, 2 NIT) were resolved by the orchestrator directly in design.md after the design loop exhausted its iteration budget. The reviewer confirmed all six gate dimensions were already resolved; the remaining items were localized security-rule / offline-ordering specifics, each with a prescribed fix, now applied and documented in design.md PART F. Design is approved to proceed to planning and implementation.",
+  "resolvedFindings": [
+    {
+      "id": 1,
+      "severity": "HIGH",
+      "title": "Offline flush ordering could drop a late set create",
+      "resolution": "C.7 adds an explicit flush barrier: complete-session Step 2 gates on waitForPendingWrites(db) so the COMPLETED flip is strictly last; no parentOpen()-gated create can arrive afterward."
+    },
+    {
+      "id": 2,
+      "severity": "HIGH",
+      "title": "summaryApplied toggle write mode unspecified vs validSession",
+      "resolution": "C.7 Step 3 specifies a merge update (updateDoc/set merge:true) preserving all fields; validSession evaluates the post-merge document; non-merge partial set() disallowed."
+    },
+    {
+      "id": 3,
+      "severity": "MEDIUM",
+      "title": "Second-device toggle denial handling",
+      "resolution": "C.7 Step 3: transaction reads session first and no-ops when already applied; a rules-denied race is treated as success (not retried); toggle carries no baseUpdatedAt precondition."
+    },
+    {
+      "id": 4,
+      "severity": "MEDIUM",
+      "title": "ExerciseSession unvalidated; sessionCompleted not stated mandatory at create",
+      "resolution": "C.3/C.9: sessionCompleted:false required at create on ExerciseSession and SetLog (non-optional, service-stamped); validExerciseSession() rule predicate added."
+    },
+    {
+      "id": 5,
+      "severity": "MEDIUM",
+      "title": "No-flash routing missed authed-but-profile-loading state",
+      "resolution": "C.2 adds the explicit AuthGuard state machine in authStore.phase; both loading phases render the full-screen loader with no route change; only unauthenticated redirects."
+    },
+    {
+      "id": 6,
+      "severity": "MEDIUM",
+      "title": "Key-presence validSet XOR vs null-valued optional",
+      "resolution": "C.4/C.8a: converters omit absent optional keys entirely (conditional spread) and the Firestore app sets ignoreUndefinedProperties:true; actualReps:null is never produced; emulator test asserts both halves."
+    },
+    {
+      "id": 7,
+      "severity": "NIT",
+      "title": "parentOpen() get() ceiling",
+      "resolution": "C.9 notes parentOpen()-gated creates are always single-doc writes, one get() per request, far under the 10-get() limit."
+    },
+    {
+      "id": 8,
+      "severity": "NIT",
+      "title": "Storage thumbnail generation / non-image artifacts",
+      "resolution": "C.9 storage block: thumbPath thumbnails are client-generated image/* blobs; no server-side image processing; no non-image artifact written to Storage."
+    }
+  ],
+  "reviewDoc": "/Users/abi-mac/Documents/Me/dev/gym/.agents/tasks/forgefit/design-review.md"
+}

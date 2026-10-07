@@ -1,0 +1,11 @@
+/** Barrel for the ForgeFit data model (C.3). */
+export * from './enums'
+export * from './user'
+export * from './exercise'
+export * from './session'
+export * from './progress'
+export * from './body'
+export * from './goal'
+export * from './timer'
+export * from './sync'
+export * from './service'

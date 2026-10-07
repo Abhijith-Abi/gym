@@ -1,0 +1,39 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+out
+
+# builds
+build
+dist
+
+# env
+.env.local
+
+# logs
+*.log
+
+# os
+.DS_Store
+
+# testing
+coverage
+
+# next-pwa generated service worker artifacts (do not hand-edit)
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+public/workbox-*.js
+public/worker-*.js
+public/fallback-*.js
+
+# next typegen
+next-env.d.ts
+
+# typescript incremental build cache
+*.tsbuildinfo
+
+# turbo
+.turbo

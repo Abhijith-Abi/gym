@@ -1,0 +1,14 @@
+{
+  "task_id": "task-forgefit",
+  "task_description": "Build ForgeFit: a production-ready, mobile-first, offline-first Next.js 15 PWA for personal strength-training/workout tracking (PLAN -> TRAIN -> LOG -> ANALYZE -> PROGRESS -> RECOVER -> IMPROVE), backed by Firebase, per the approved design at .agents/tasks/forgefit/design.md. The entire Firebase integration must be real yet build/lint/typecheck green with absent/blank NEXT_PUBLIC_FIREBASE_* env vars (guarded lazy singleton), becoming fully functional the instant real creds land in .env.local. Built directly in the repo root on branch main (greenfield, no worktree).",
+  "status": "completed",
+  "feature_order": [
+    "FEAT-001",
+    "FEAT-002",
+    "FEAT-003",
+    "FEAT-004",
+    "FEAT-005",
+    "FEAT-006"
+  ],
+  "blocked_reason": null
+}
