@@ -9,11 +9,9 @@ import {
   ChevronRight,
   Target,
   Sparkles,
-  Layers,
   Image as ImageIcon,
   Activity,
   Maximize2,
-  CheckCircle2,
 } from 'lucide-react'
 import Image from 'next/image'
 import { triggerHaptic } from '@/hooks/useHaptics'
