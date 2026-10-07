@@ -21,6 +21,7 @@ vi.mock('@/lib/firebase/config', () => ({
 // Capture the onAuthStateChanged callback so the test drives phase transitions.
 let authCallback: ((user: User | null) => void) | null = null
 vi.mock('@/services/authService', () => ({
+  checkAuthRedirect: vi.fn(async () => ({ ok: true, data: null })),
   subscribeToAuth: (cb: (user: User | null) => void) => {
     authCallback = cb
     return () => {}

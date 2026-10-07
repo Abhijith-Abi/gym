@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { User } from 'firebase/auth'
 import { firebaseConfigPresent } from '@/lib/firebase/config'
-import { subscribeToAuth } from '@/services/authService'
+import { checkAuthRedirect, subscribeToAuth } from '@/services/authService'
 import { getProfile } from '@/services/profileService'
 import type { UserProfile } from '@/types'
 
@@ -53,6 +53,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
 
     set({ phase: 'initializing' })
+
+    if (typeof window !== 'undefined') {
+      void checkAuthRedirect()
+    }
 
     unsubscribe = subscribeToAuth(async (user) => {
       if (!user) {

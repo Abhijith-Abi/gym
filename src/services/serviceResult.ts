@@ -36,6 +36,9 @@ const FRIENDLY: Record<string, string> = {
   'auth/email-already-in-use': 'An account already exists for that email.',
   'auth/weak-password': 'Please choose a stronger password (at least 6 characters).',
   'auth/popup-closed-by-user': 'The sign-in window was closed before finishing.',
+  'auth/popup-blocked': 'Sign-in popup was blocked by the browser. Please allow popups or retry.',
+  'auth/unauthorized-domain':
+    'This domain (gym.abisolutions.online) is not authorized in Firebase. Please add gym.abisolutions.online under Firebase Console > Authentication > Settings > Authorized domains.',
   'auth/too-many-requests': 'Too many attempts. Please wait a moment and try again.',
   'auth/network-request-failed': 'Network error. Check your connection and try again.',
   'permission-denied': 'You do not have permission to perform that action.',

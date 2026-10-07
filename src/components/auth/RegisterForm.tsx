@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -10,10 +10,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { registerSchema, type RegisterInput } from '@/lib/schemas/auth'
 import { loginWithGoogle, register as registerUser } from '@/services/authService'
+import { useAuth } from '@/hooks/useAuth'
 
 /** Email/password registration + Google (FR-1). RHF + zodResolver (C.13). */
 export function RegisterForm() {
   const router = useRouter()
+  const { phase } = useAuth()
   const [formError, setFormError] = useState<string | null>(null)
   const [googlePending, setGooglePending] = useState(false)
   const {
@@ -21,6 +23,15 @@ export function RegisterForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema) })
+
+  // Auto-redirect if session is already active or resolves via redirect
+  useEffect(() => {
+    if (phase === 'ready') {
+      router.replace('/dashboard')
+    } else if (phase === 'onboarding') {
+      router.replace('/onboarding')
+    }
+  }, [phase, router])
 
   async function onSubmit(values: RegisterInput) {
     setFormError(null)

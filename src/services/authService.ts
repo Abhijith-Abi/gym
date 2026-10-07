@@ -4,6 +4,7 @@ import {
   type User,
 } from 'firebase/auth'
 import {
+  checkRedirectResult,
   confirmReset,
   emailRegister,
   emailSignIn,
@@ -20,6 +21,18 @@ import { mapError, notConfigured, ok } from './serviceResult'
  * a non-null Firebase client and otherwise returns firebase/not-configured
  * (C.2). Raw Firebase errors are mapped to friendly messages (FR-38, C.12).
  */
+
+/** Check for redirect result on app load (for mobile redirect auth). */
+export async function checkAuthRedirect(): Promise<ServiceResult<string | null>> {
+  const auth = getFirebaseAuth()
+  if (!auth) return notConfigured()
+  try {
+    const cred = await checkRedirectResult(auth)
+    return ok(cred?.user.uid ?? null)
+  } catch (error) {
+    return mapError(error)
+  }
+}
 
 /** Current signed-in uid (null if signed out). */
 export async function getCurrentUserId(): Promise<ServiceResult<string | null>> {

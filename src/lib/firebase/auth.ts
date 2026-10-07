@@ -2,9 +2,11 @@ import {
   GoogleAuthProvider,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
+  getRedirectResult,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   type Auth,
   type UserCredential,
@@ -30,8 +32,33 @@ export function emailRegister(
   return createUserWithEmailAndPassword(auth, email, password)
 }
 
-export function googleSignIn(auth: Auth): Promise<UserCredential> {
-  return signInWithPopup(auth, new GoogleAuthProvider())
+export async function googleSignIn(auth: Auth): Promise<UserCredential> {
+  const provider = new GoogleAuthProvider()
+  provider.setCustomParameters({ prompt: 'select_account' })
+  try {
+    return await signInWithPopup(auth, provider)
+  } catch (error: unknown) {
+    const err = error as { code?: string }
+    // If popup blocked or mobile device where popups fail/hang, fallback to redirect
+    if (
+      err?.code === 'auth/popup-blocked' ||
+      err?.code === 'auth/cancelled-popup-request' ||
+      (typeof navigator !== 'undefined' &&
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent))
+    ) {
+      await signInWithRedirect(auth, provider)
+      return new Promise<UserCredential>(() => {})
+    }
+    throw error
+  }
+}
+
+export async function checkRedirectResult(auth: Auth): Promise<UserCredential | null> {
+  try {
+    return await getRedirectResult(auth)
+  } catch {
+    return null
+  }
 }
 
 export function sendReset(auth: Auth, email: string): Promise<void> {
