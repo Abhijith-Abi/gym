@@ -49,7 +49,53 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): {
   const id = exerciseId.toLowerCase()
   const n = name.toLowerCase()
 
-  if (id.includes('bench') || id.includes('chest') || id.includes('pushup') || id.includes('dip') || n.includes('bench')) {
+  // 1. Calf Raises
+  if (id.includes('calf') || n.includes('calf')) {
+    return {
+      src: '/exercises/calf_raise.jpg',
+      alt: 'Calf Raise Anatomical Muscle Guide',
+      muscles: ['Gastrocnemius (Medial & Lateral Heads)', 'Soleus', 'Achilles Tendon'],
+    }
+  }
+
+  // 2. Hip Thrusts / Glute Bridges / Bulgarian Split Squat
+  if (id.includes('thrust') || id.includes('glute') || id.includes('bridge') || id.includes('bulgarian') || n.includes('thrust') || n.includes('bridge')) {
+    return {
+      src: '/exercises/hip_thrust.jpg',
+      alt: 'Hip Thrust & Glute Bridge Anatomical Muscle Guide',
+      muscles: ['Gluteus Maximus', 'Gluteus Medius', 'Biceps Femoris (Hamstrings)'],
+    }
+  }
+
+  // 3. Leg Extensions / Leg Curls / Leg Press
+  if (id.includes('leg-ext') || id.includes('extension') || id.includes('hamstring-curl') || id.includes('leg-curl') || n.includes('leg extension') || n.includes('leg curl')) {
+    return {
+      src: '/exercises/leg_extension.jpg',
+      alt: 'Leg Extension & Quadriceps Isolation Guide',
+      muscles: ['Rectus Femoris', 'Vastus Lateralis', 'Vastus Medialis', 'Vastus Intermedius'],
+    }
+  }
+
+  // 4. Planks & Core Stability / Obliques
+  if (id.includes('plank') || id.includes('woodchopper') || id.includes('russian-twist') || id.includes('rollout') || n.includes('plank') || n.includes('twist')) {
+    return {
+      src: '/exercises/plank_core.jpg',
+      alt: 'Plank & Isometric Core Activation Guide',
+      muscles: ['Rectus Abdominis', 'Transverse Abdominis (Deep Core)', 'Internal & External Obliques'],
+    }
+  }
+
+  // 5. Crunches & Dynamic Abs
+  if (id.includes('crunch') || id.includes('hanging-leg') || id.includes('leg-raise') || id.includes('climber') || id.includes('abs') || n.includes('crunch') || n.includes('leg raise')) {
+    return {
+      src: '/exercises/abs_crunch.jpg',
+      alt: 'Abdominal Crunch Core Anatomical Guide',
+      muscles: ['Rectus Abdominis', 'External Obliques', 'Iliopsoas'],
+    }
+  }
+
+  // 6. Chest Press / Push-ups / Flyes
+  if (id.includes('bench') || id.includes('chest') || id.includes('push-up') || id.includes('pushup') || id.includes('fly') || n.includes('bench') || n.includes('push up') || n.includes('push-up') || n.includes('fly')) {
     return {
       src: '/exercises/bench_press.jpg',
       alt: 'Barbell Bench Press Anatomical Muscle Guide',
@@ -57,15 +103,17 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): {
     }
   }
 
-  if (id.includes('squat') || id.includes('leg-press') || id.includes('hack') || id.includes('lunge') || n.includes('squat')) {
+  // 7. Squats & Lunges
+  if (id.includes('squat') || id.includes('leg-press') || id.includes('hack') || id.includes('lunge') || n.includes('squat') || n.includes('lunge')) {
     return {
       src: '/exercises/squat.jpg',
       alt: 'Barbell Squat Anatomical Muscle Activation Guide',
-      muscles: ['Quadriceps Femoris', 'Gluteus Maximus', 'Erector Spinae'],
+      muscles: ['Quadriceps Femoris', 'Gluteus Maximus', 'Adductor Magnus'],
     }
   }
 
-  if (id.includes('deadlift') || id.includes('rdl') || n.includes('deadlift')) {
+  // 8. Deadlifts & Posterior Chain
+  if (id.includes('deadlift') || id.includes('rdl') || id.includes('farmers-walk') || id.includes('kb-swing') || n.includes('deadlift') || n.includes('rdl')) {
     return {
       src: '/exercises/deadlift.jpg',
       alt: 'Deadlift Anatomical Muscle Guide',
@@ -73,23 +121,17 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): {
     }
   }
 
-  if (id.includes('curl') || id.includes('bicep') || n.includes('curl')) {
+  // 9. Biceps & Forearms
+  if (id.includes('curl') || id.includes('bicep') || id.includes('chin-up') || id.includes('wrist') || n.includes('curl') || n.includes('chin-up')) {
     return {
       src: '/exercises/bicep_curl.jpg',
-      alt: 'Dumbbell Bicep Curl Anatomical Muscle Guide',
+      alt: 'Bicep Curl Anatomical Muscle Guide',
       muscles: ['Biceps Brachii (Short & Long Head)', 'Brachialis', 'Brachioradialis'],
     }
   }
 
-  if (id.includes('pull') || id.includes('row') || id.includes('lat') || id.includes('chin') || n.includes('pull') || n.includes('row')) {
-    return {
-      src: '/exercises/pullup_back.jpg',
-      alt: 'Pull-Up & Lat Pulldown Anatomical Guide',
-      muscles: ['Latissimus Dorsi', 'Trapezius', 'Rhomboids', 'Rear Deltoid'],
-    }
-  }
-
-  if (id.includes('tricep') || id.includes('pushdown') || id.includes('skull') || n.includes('tricep')) {
+  // 10. Triceps & Dips
+  if (id.includes('tricep') || id.includes('pushdown') || id.includes('skull') || id.includes('dip') || n.includes('tricep') || n.includes('dip')) {
     return {
       src: '/exercises/tricep_pushdown.jpg',
       alt: 'Cable Triceps Pushdown Anatomical Guide',
@@ -97,26 +139,37 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): {
     }
   }
 
-  if (id.includes('lateral') || id.includes('face-pull') || n.includes('lateral')) {
+  // 11. Lateral Deltoids & Rear Delts
+  if (id.includes('lateral') || id.includes('face-pull') || n.includes('lateral') || n.includes('face pull')) {
     return {
       src: '/exercises/lateral_raise.jpg',
-      alt: 'Dumbbell Lateral Raise Anatomical Guide',
+      alt: 'Lateral Deltoid Raise Anatomical Guide',
       muscles: ['Lateral Deltoid', 'Trapezius & Supraspinatus'],
     }
   }
 
-  if (id.includes('overhead') || id.includes('shoulder') || id.includes('military') || id.includes('arnold') || n.includes('overhead') || n.includes('shoulder')) {
+  // 12. Overhead Shoulder Press & Thrusters
+  if (id.includes('overhead') || id.includes('shoulder') || id.includes('military') || id.includes('arnold') || id.includes('thruster') || n.includes('overhead') || n.includes('shoulder') || n.includes('press')) {
     return {
       src: '/exercises/overhead_press.jpg',
       alt: 'Overhead Shoulder Press Anatomical Guide',
-      muscles: ['Anterior Deltoid', 'Lateral Deltoid', 'Upper Trapezius'],
+      muscles: ['Anterior Deltoid', 'Lateral Deltoid', 'Upper Trapezius', 'Triceps Brachii'],
     }
   }
 
-  // Default to Abdominal Crunches / Core Anatomical Guide
+  // 13. Back Rows & Pulldowns
+  if (id.includes('pull') || id.includes('row') || id.includes('lat') || n.includes('pull') || n.includes('row')) {
+    return {
+      src: '/exercises/pullup_back.jpg',
+      alt: 'Back & Lat Pulldown Anatomical Guide',
+      muscles: ['Latissimus Dorsi', 'Trapezius', 'Rhomboids', 'Rear Deltoid'],
+    }
+  }
+
+  // Default fallback
   return {
     src: '/exercises/abs_crunch.jpg',
-    alt: 'Abdominal Crunch Core Anatomical Guide',
+    alt: 'Core & Body Anatomy Guide',
     muscles: ['Rectus Abdominis', 'External Obliques'],
   }
 }
