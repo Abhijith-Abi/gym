@@ -113,12 +113,15 @@ export function ActiveWorkout() {
     })
     startWorkoutClock()
 
-    // Pre-populate initial sets for all exercises using smart category weights & reps
+    // Pre-populate target sets (e.g. 3 or 4 sets) for all exercises using smart category weights & reps
     const live = useSessionStore.getState().session
     if (live) {
       for (const ex of live.exercises) {
         if (ex.intervalWorkSeconds === undefined) {
-          useSessionStore.getState().addSet(ex.exerciseSessionId)
+          const targetCount = Math.max(1, ex.prescription.targetSets || 3)
+          for (let i = 0; i < targetCount; i++) {
+            useSessionStore.getState().addSet(ex.exerciseSessionId)
+          }
         }
       }
     }

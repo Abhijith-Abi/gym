@@ -40,42 +40,50 @@ export function computeRestSeconds(args: SmartRestArgs): number {
 export function useRestTimer(): {
   remainingSeconds: number
   isRunning: boolean
+  isPaused: boolean
   durationS: number
   preset: number
   start: (durationS: number) => void
   startWithPreset: (preset: number) => void
+  pause: () => void
+  resume: () => void
   stop: () => void
   setPreset: (preset: number) => void
 } {
   const restRemainingSeconds = useTimerStore((s) => s.restRemainingSeconds)
   const rest = useTimerStore((s) => s.rest)
   const startRest = useTimerStore((s) => s.startRest)
+  const pauseRest = useTimerStore((s) => s.pauseRest)
+  const resumeRest = useTimerStore((s) => s.resumeRest)
   const stopRest = useTimerStore((s) => s.stopRest)
   const setRestPreset = useTimerStore((s) => s.setRestPreset)
   const [, forceTick] = useState(0)
 
   useEffect(() => {
-    if (!rest.isRunning) return
+    if (!rest.isRunning || rest.isPaused) return
     const id = window.setInterval(() => forceTick((n) => n + 1), 250)
     return () => window.clearInterval(id)
-  }, [rest.isRunning])
+  }, [rest.isRunning, rest.isPaused])
 
   const remaining = restRemainingSeconds()
 
   // Auto-stop once the countdown reaches zero so stale "running" state clears.
   useEffect(() => {
-    if (rest.isRunning && remaining <= 0 && rest.endsAtMs !== undefined) {
+    if (rest.isRunning && !rest.isPaused && remaining <= 0 && rest.endsAtMs !== undefined) {
       stopRest()
     }
-  }, [rest.isRunning, rest.endsAtMs, remaining, stopRest])
+  }, [rest.isRunning, rest.isPaused, rest.endsAtMs, remaining, stopRest])
 
   return {
     remainingSeconds: remaining,
     isRunning: rest.isRunning,
+    isPaused: rest.isPaused ?? false,
     durationS: rest.durationS,
     preset: rest.preset,
     start: (durationS) => startRest(durationS),
     startWithPreset: (preset) => startRest(preset),
+    pause: () => pauseRest(),
+    resume: () => resumeRest(),
     stop: stopRest,
     setPreset: setRestPreset,
   }

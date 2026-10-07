@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useAnalyticsStore } from '@/store/analyticsStore'
+import { useExerciseStore } from '@/store/exerciseStore'
 import * as analyticsService from '@/services/analyticsService'
 import * as bodyService from '@/services/bodyService'
 import { useBodyStore } from '@/store/bodyStore'
@@ -48,6 +49,9 @@ export function ProgressDashboard() {
 
   const measurements = useBodyStore((s) => s.measurements)
   const setMeasurements = useBodyStore((s) => s.setMeasurements)
+  const allExercises = useExerciseStore((s) => s.all())
+
+  const [selectedExerciseId, setSelectedExerciseId] = useState<string>('')
 
   useEffect(() => {
     if (!uid) return
@@ -79,9 +83,17 @@ export function ProgressDashboard() {
     () => muscleVolumePoints(aggregateMuscleVolume(weekly, range, now)),
     [weekly, range, now],
   )
+
+  const activeHistory = useMemo(() => {
+    if (selectedExerciseId) {
+      return histories.find((h) => h.exerciseId === selectedExerciseId)
+    }
+    return histories[0]
+  }, [histories, selectedExerciseId])
+
   const strengthPoints = useMemo(
-    () => e1rmSeries(histories[0], range, now),
-    [histories, range, now],
+    () => e1rmSeries(activeHistory, range, now),
+    [activeHistory, range, now],
   )
   const bodyPoints = useMemo(
     () => bodyWeightSeries(measurements, range, now),
@@ -154,7 +166,34 @@ export function ProgressDashboard() {
         <MuscleVolumeChart points={musclePoints} />
       </ChartSection>
 
-      <ChartSection title="Estimated 1RM Strength Trend" icon={Trophy}>
+      <ChartSection
+        title="Estimated 1RM Strength Trend"
+        icon={Trophy}
+        headerRight={
+          <select
+            value={selectedExerciseId || histories[0]?.exerciseId || ''}
+            onChange={(e) => setSelectedExerciseId(e.target.value)}
+            className="max-w-[180px] truncate rounded-xl border border-input bg-card px-2.5 py-1.5 text-xs font-semibold text-foreground focus:outline-none"
+          >
+            {histories.length > 0 ? (
+              histories.map((h) => {
+                const ex = allExercises.find((e) => e.id === h.exerciseId)
+                return (
+                  <option key={h.exerciseId} value={h.exerciseId}>
+                    {ex?.name ?? h.exerciseId}
+                  </option>
+                )
+              })
+            ) : (
+              allExercises.slice(0, 10).map((e) => (
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
+              ))
+            )}
+          </select>
+        }
+      >
         <StrengthChart points={strengthPoints} />
       </ChartSection>
 
@@ -212,19 +251,24 @@ function ReportCard({
 function ChartSection({
   title,
   icon: Icon,
+  headerRight,
   children,
 }: {
   title: string
   icon: typeof Dumbbell
+  headerRight?: React.ReactNode
   children: React.ReactNode
 }) {
   return (
     <section className="flex flex-col gap-3">
-      <div className="flex items-center gap-2">
-        <Icon className="size-4 text-primary" />
-        <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
-          {title}
-        </h2>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Icon className="size-4 text-primary" />
+          <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+            {title}
+          </h2>
+        </div>
+        {headerRight}
       </div>
       {children}
     </section>

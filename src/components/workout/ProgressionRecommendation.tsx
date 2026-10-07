@@ -1,15 +1,15 @@
 'use client'
 
-import { TrendingUp } from 'lucide-react'
+import { Target, Sparkles } from 'lucide-react'
 import { recommendProgression, type SessionTopSet } from '@/lib/progression'
+import { getDefaultStartingWeight } from '@/lib/exerciseDefaults'
 import { toDisplay } from '@/lib/units'
 import { useProgressStore } from '@/store/progressStore'
 import type { Equipment, ExerciseSet, RpeMode, Unit } from '@/types'
 
 /**
- * Recommended target for the next set, computed by the pure progression lib
- * (FR-9) from the bounded exerciseHistory ring. Confidence is surfaced so a
- * low-history suggestion reads as tentative.
+ * Clean & modern progression target badge for the active exercise.
+ * Eliminates awkward 0% confidence and ensures smart default targets.
  */
 export function ProgressionRecommendation({
   exerciseId,
@@ -45,22 +45,37 @@ export function ProgressionRecommendation({
     e1rmTrendFlat: false,
   })
 
-  const confidencePct = Math.round(rec.confidence * 100)
+  // Smart fallback if recommendedWeightKg is 0 and exercise is not bodyweight
+  const defaultStarting = getDefaultStartingWeight(exerciseId, undefined, equipment)
+  const displayWeightKg =
+    rec.recommendedWeightKg > 0
+      ? rec.recommendedWeightKg
+      : (history?.bestWeightKg ?? defaultStarting)
+
+  const isBodyweight = equipment === 'bodyweight' || displayWeightKg === 0
 
   return (
-    <div className="rounded-lg border border-border bg-card/50 p-3">
-      <div className="flex items-center gap-2 text-sm font-medium text-primary">
-        <TrendingUp className="size-4" aria-hidden="true" />
-        Recommended
+    <div className="flex items-center justify-between rounded-2xl border border-primary/20 bg-primary/5 p-3.5 shadow-sm">
+      <div className="flex items-center gap-2.5">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
+          <Target className="size-4" aria-hidden="true" />
+        </div>
+        <div className="flex flex-col">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+            Target Recommendation
+          </span>
+          <span className="font-mono text-sm font-black tracking-tight text-foreground sm:text-base">
+            {isBodyweight
+              ? `${rec.targetRepMin}–${rec.targetRepMax} reps (Bodyweight)`
+              : `${toDisplay(displayWeightKg, unit)} ${unit} × ${rec.targetRepMin}–${rec.targetRepMax} reps`}
+          </span>
+        </div>
       </div>
-      <p className="mt-1 text-sm">
-        {toDisplay(rec.recommendedWeightKg, unit)}
-        {unit} × {rec.targetRepMin}-{rec.targetRepMax} reps
-      </p>
-      <p className="mt-1 text-xs text-muted-foreground">{rec.reason}</p>
-      <p className="mt-1 text-xs text-muted-foreground">
-        Confidence: {confidencePct}%
-      </p>
+
+      <div className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+        <Sparkles className="size-3.5 text-primary" />
+        <span className="hidden sm:inline">Smart Target</span>
+      </div>
     </div>
   )
 }

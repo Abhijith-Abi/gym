@@ -30,6 +30,8 @@ interface RestState {
   durationS: number
   preset: number
   isRunning: boolean
+  isPaused?: boolean
+  remainingPausedS?: number
 }
 
 interface TimerStoreState {
@@ -57,6 +59,8 @@ interface TimerStoreState {
   // rest actions
   startRest: (durationS: number, now?: number) => void
   setRestPreset: (preset: number) => void
+  pauseRest: (now?: number) => void
+  resumeRest: (now?: number) => void
   stopRest: () => void
   restRemainingSeconds: (now?: number) => number
 
@@ -81,7 +85,7 @@ export const useTimerStore = create<TimerStoreState>()(
       pausedAccumMs: 0,
       pausedAtMs: undefined,
       isPaused: false,
-      rest: { durationS: 0, preset: 90, isRunning: false },
+      rest: { durationS: 0, preset: 90, isRunning: false, isPaused: false },
       interval: null,
 
       startWorkoutClock: (now) =>
@@ -115,7 +119,7 @@ export const useTimerStore = create<TimerStoreState>()(
           pausedAccumMs: 0,
           pausedAtMs: undefined,
           isPaused: false,
-          rest: { durationS: 0, preset: get().rest.preset, isRunning: false },
+          rest: { durationS: 0, preset: get().rest.preset, isRunning: false, isPaused: false },
           interval: null,
         }),
 
@@ -136,20 +140,59 @@ export const useTimerStore = create<TimerStoreState>()(
             durationS,
             endsAtMs: nowMs(now) + durationS * 1000,
             isRunning: true,
+            isPaused: false,
+            remainingPausedS: undefined,
           },
         })),
 
       setRestPreset: (preset) =>
         set((s) => ({ rest: { ...s.rest, preset } })),
 
+      pauseRest: (now) => {
+        const s = get()
+        if (!s.rest.isRunning || s.rest.isPaused || s.rest.endsAtMs === undefined) return
+        const current = nowMs(now)
+        const remaining = Math.max(0, Math.ceil((s.rest.endsAtMs - current) / 1000))
+        set({
+          rest: {
+            ...s.rest,
+            isPaused: true,
+            remainingPausedS: remaining,
+            endsAtMs: undefined,
+          },
+        })
+      },
+
+      resumeRest: (now) => {
+        const s = get()
+        if (!s.rest.isRunning || !s.rest.isPaused || s.rest.remainingPausedS === undefined) return
+        const current = nowMs(now)
+        set({
+          rest: {
+            ...s.rest,
+            isPaused: false,
+            endsAtMs: current + s.rest.remainingPausedS * 1000,
+            remainingPausedS: undefined,
+          },
+        })
+      },
+
       stopRest: () =>
         set((s) => ({
-          rest: { ...s.rest, endsAtMs: undefined, isRunning: false },
+          rest: {
+            ...s.rest,
+            endsAtMs: undefined,
+            isRunning: false,
+            isPaused: false,
+            remainingPausedS: undefined,
+          },
         })),
 
       restRemainingSeconds: (now) => {
         const { rest } = get()
-        if (!rest.isRunning || rest.endsAtMs === undefined) return 0
+        if (!rest.isRunning) return 0
+        if (rest.isPaused) return rest.remainingPausedS ?? 0
+        if (rest.endsAtMs === undefined) return 0
         return Math.max(0, Math.ceil((rest.endsAtMs - nowMs(now)) / 1000))
       },
 

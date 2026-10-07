@@ -10,14 +10,15 @@ import type { ActiveSet } from '@/store/sessionStore'
 import type { RpeMode, Unit } from '@/types'
 
 /**
- * Mobile-First Set Row with large touch steppers for Weight & Reps.
- * Includes quick +/- buttons, RPE selector, and a prominent Complete button.
+ * Mobile-First Set Row with touch steppers for Weight & Reps.
+ * Clean, single-input design with clear Active / Completed states.
  */
 export function SetRow({
   set,
   unit,
   rpeMode,
   isDuration,
+  isActive,
   onChange,
   onComplete,
   onRemove,
@@ -26,6 +27,7 @@ export function SetRow({
   unit: Unit
   rpeMode: RpeMode
   isDuration: boolean
+  isActive?: boolean
   onChange: (patch: Partial<ActiveSet>) => void
   onComplete: () => void
   onRemove: () => void
@@ -61,28 +63,42 @@ export function SetRow({
   return (
     <div
       className={cn(
-        'flex flex-col gap-2 rounded-2xl border p-3.5 transition-all',
+        'flex flex-col gap-2.5 rounded-2xl border p-3.5 transition-all',
         set.isCompleted
-          ? 'border-primary/50 bg-primary/10 shadow-[0_0_15px_-3px_rgba(34,197,94,0.15)]'
-          : 'border-border bg-card hover:border-border/80',
+          ? 'border-primary/40 bg-primary/10 shadow-[0_0_15px_-3px_rgba(34,197,94,0.15)] opacity-95'
+          : isActive
+            ? 'border-primary bg-card shadow-[0_0_20px_-3px_rgba(34,197,94,0.25)] ring-1 ring-primary'
+            : 'border-border/80 bg-card hover:border-border',
       )}
     >
-      {/* Top bar: Set number, Warmup badge, PR Badges, Remove */}
+      {/* Top bar: Set number, Warmup badge, Status, Remove */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span
             className={cn(
-              'flex size-6 items-center justify-center rounded-full text-xs font-bold',
+              'flex size-6 items-center justify-center rounded-full text-xs font-black',
               set.isCompleted
                 ? 'bg-primary text-primary-foreground'
-                : 'bg-secondary text-muted-foreground',
+                : isActive
+                  ? 'bg-primary text-primary-foreground animate-pulse'
+                  : 'bg-secondary text-muted-foreground',
             )}
           >
             {set.setIndex + 1}
           </span>
-          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <span className="text-xs font-extrabold uppercase tracking-wider text-foreground">
             {set.isWarmup ? 'Warmup Set' : `Set ${set.setIndex + 1}`}
           </span>
+          {isActive && !set.isCompleted && (
+            <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-primary">
+              Active
+            </span>
+          )}
+          {set.isCompleted && (
+            <span className="rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-primary">
+              Logged
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-1">
@@ -122,9 +138,9 @@ export function SetRow({
         </div>
       </div>
 
-      {/* Main input controls */}
-      <div className="grid grid-cols-2 gap-3 pt-1">
-        {/* Weight Control with Steppers */}
+      {/* Main Stepper Controls */}
+      <div className="grid grid-cols-2 gap-2.5 pt-1">
+        {/* Weight Stepper */}
         <div className="flex flex-col gap-1">
           <label
             htmlFor={`weight-input-${set.id}`}
@@ -147,7 +163,7 @@ export function SetRow({
               inputMode="decimal"
               aria-label={`Set ${set.setIndex + 1} weight in ${unit}`}
               className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none"
-              value={set.weightKg === 0 ? '' : currentDisplayWeight}
+              value={set.weightKg === 0 ? '0' : currentDisplayWeight}
               placeholder="0"
               onChange={(e) =>
                 onChange({
@@ -169,7 +185,7 @@ export function SetRow({
           </div>
         </div>
 
-        {/* Reps or Duration Control with Steppers */}
+        {/* Reps Stepper */}
         <div className="flex flex-col gap-1">
           <label
             htmlFor={`reps-input-${set.id}`}
@@ -246,16 +262,16 @@ export function SetRow({
         </div>
       </div>
 
-      {/* Optional RPE / RIR and Complete Button Bar */}
-      <div className="mt-1 flex items-center gap-2 pt-1">
+      {/* RPE Selector & Complete Button */}
+      <div className="mt-0.5 flex items-center gap-2 pt-1">
         {showRpe && (
-          <div className="flex flex-1 items-center gap-1.5 rounded-xl border border-input bg-card-elevated px-2.5 py-1.5">
+          <div className="flex flex-1 items-center gap-1 rounded-xl border border-input bg-card-elevated px-2.5 py-1.5">
             <span className="text-[10px] font-bold uppercase text-muted-foreground">RPE</span>
             <input
               type="number"
               inputMode="decimal"
               aria-label={`Set ${set.setIndex + 1} RPE`}
-              className="w-full bg-transparent text-center font-mono text-sm font-semibold text-foreground focus:outline-none"
+              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none"
               placeholder="8"
               value={set.rpe ?? ''}
               onChange={(e) =>
@@ -266,13 +282,13 @@ export function SetRow({
         )}
 
         {showRir && (
-          <div className="flex flex-1 items-center gap-1.5 rounded-xl border border-input bg-card-elevated px-2.5 py-1.5">
+          <div className="flex flex-1 items-center gap-1 rounded-xl border border-input bg-card-elevated px-2.5 py-1.5">
             <span className="text-[10px] font-bold uppercase text-muted-foreground">RIR</span>
             <input
               type="number"
               inputMode="numeric"
               aria-label={`Set ${set.setIndex + 1} RIR`}
-              className="w-full bg-transparent text-center font-mono text-sm font-semibold text-foreground focus:outline-none"
+              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none"
               placeholder="2"
               value={set.rir ?? ''}
               onChange={(e) =>
@@ -289,14 +305,25 @@ export function SetRow({
           aria-label={set.isCompleted ? 'Set logged' : 'Log set'}
           aria-pressed={set.isCompleted}
           className={cn(
-            'flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all active:scale-95',
+            'flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-xs font-extrabold transition-all active:scale-95',
             set.isCompleted
               ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(34,197,94,0.4)]'
-              : 'border border-primary/50 bg-primary/10 text-primary hover:bg-primary/20',
+              : isActive
+                ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:bg-primary/90'
+                : 'border border-primary/50 bg-primary/10 text-primary hover:bg-primary/20',
           )}
         >
-          <Check className={cn('size-4', set.isCompleted ? 'stroke-[3]' : 'stroke-[2]')} />
-          <span>{set.isCompleted ? 'Completed' : 'Complete Set'}</span>
+          {set.isCompleted ? (
+            <>
+              <Check className="size-4 stroke-[3]" />
+              <span>Completed</span>
+            </>
+          ) : (
+            <>
+              <Check className="size-4 stroke-[2.5]" />
+              <span>Complete Set {set.setIndex + 1}</span>
+            </>
+          )}
         </button>
       </div>
     </div>

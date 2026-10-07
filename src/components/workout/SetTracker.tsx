@@ -66,10 +66,25 @@ export function SetTracker({
     exercise.intervalWorkSeconds !== undefined ||
     exercise.prescription.targetRepMax === 0
 
+  const targetSetsCount = Math.max(1, exercise.prescription.targetSets || 3)
+  const activeSetIndex = liveExercise.sets.findIndex((s) => !s.isCompleted)
+  const allCompleted =
+    liveExercise.sets.length >= targetSetsCount &&
+    liveExercise.sets.every((s) => s.isCompleted)
+
   const onComplete = useCallback(
     (set: ActiveSet) => {
       const done = completeSet(exercise.exerciseSessionId, set.id)
       if (!done || !session) return
+
+      // Auto-add next set if there are more target sets prescribed
+      const currentSets = session.exercises.find(
+        (e) => e.exerciseSessionId === exercise.exerciseSessionId,
+      )?.sets ?? liveExercise.sets
+
+      if (currentSets.length < targetSetsCount) {
+        addSet(exercise.exerciseSessionId)
+      }
 
       // PR detection against the cached history (reads-before-writes, C.7).
       if (!done.isWarmup && done.actualReps !== undefined) {
@@ -115,21 +130,24 @@ export function SetTracker({
         }
       }
 
-      // Smart-rest countdown.
-      if (autoStartRest) {
+      // Smart-rest countdown: start rest interval if autoStartRest is enabled
+      if (autoStartRest !== false) {
         const rest = computeRestSeconds({
-          prescriptionRestSeconds: exercise.prescription.restSeconds,
-          smartRestEnabled,
+          prescriptionRestSeconds: exercise.prescription.restSeconds ?? 90,
+          smartRestEnabled: smartRestEnabled ?? true,
           rpeMode,
           lastSet: { rpe: done.rpe, rir: done.rir, isWarmup: done.isWarmup },
         })
-        startRest(rest)
+        startRest(rest > 0 ? rest : (exercise.prescription.restSeconds || 90))
       }
     },
     [
       completeSet,
       exercise,
       session,
+      liveExercise.sets,
+      targetSetsCount,
+      addSet,
       historyFor,
       flagPr,
       queueCelebration,
@@ -142,26 +160,41 @@ export function SetTracker({
   )
 
   return (
-    <div className="flex flex-col gap-2">
-      {liveExercise.sets.map((st) => (
+    <div className="flex flex-col gap-3">
+      {allCompleted && (
+        <div className="flex items-center justify-between rounded-xl border border-primary/40 bg-primary/10 p-3 text-xs font-bold text-primary shadow-xs">
+          <span>🎉 All {liveExercise.sets.length} sets completed for this exercise!</span>
+        </div>
+      )}
+
+      {liveExercise.sets.map((st, idx) => (
         <SetRow
           key={st.id}
           set={st}
           unit={unit}
           rpeMode={rpeMode}
           isDuration={isDuration}
-          onChange={(patch) => updateSet(exercise.exerciseSessionId, st.id, patch)}
+          isActive={
+            idx ===
+            (activeSetIndex === -1
+              ? liveExercise.sets.length - 1
+              : activeSetIndex)
+          }
+          onChange={(patch) =>
+            updateSet(exercise.exerciseSessionId, st.id, patch)
+          }
           onComplete={() => onComplete(st)}
           onRemove={() => removeSet(exercise.exerciseSessionId, st.id)}
         />
       ))}
+
       <Button
         variant="outline"
         onClick={() => addSet(exercise.exerciseSessionId)}
-        className="w-full"
+        className="w-full min-h-[44px] rounded-xl border-dashed border-border hover:border-primary/50 text-xs font-bold"
       >
         <Plus className="size-4" />
-        Add set
+        Add Set {liveExercise.sets.length + 1}
         {exerciseMeta ? ` · ${exerciseMeta.name}` : ''}
       </Button>
     </div>
