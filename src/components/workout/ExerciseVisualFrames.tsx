@@ -38,29 +38,30 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
   const id = exerciseId.toLowerCase()
   const n = name.toLowerCase()
 
-  // 1. Triceps & Dips
+  // 1. Deadlift & RDL & Swings & Farmer's Walk
   if (
-    id.includes('tricep') ||
-    id.includes('pushdown') ||
-    id.includes('skull') ||
-    n.includes('tricep') ||
-    n.includes('pushdown') ||
-    n.includes('skull crusher')
+    id.includes('deadlift') ||
+    id.includes('rdl') ||
+    id.includes('swing') ||
+    id.includes('farmer') ||
+    n.includes('deadlift') ||
+    n.includes('rdl') ||
+    n.includes('kettlebell swing') ||
+    n.includes('farmer')
   ) {
     return {
-      src: '/exercises/tricep_pushdown.jpg',
-      alt: 'Cable Triceps Pushdown & Arms Guide',
-      muscles: ['Triceps Brachii (Lateral, Long & Medial Heads)'],
-      equipment: 'Cable / Rope / EZ-Bar',
+      src: '/exercises/deadlift.jpg',
+      alt: 'Deadlift & Posterior Chain Muscle Guide',
+      muscles: ['Erector Spinae (Lower Back)', 'Gluteus Maximus', 'Hamstrings', 'Trapezius'],
+      equipment: 'Barbell / Dumbbells',
     }
   }
 
-  // 2. Biceps Curls & Forearms
+  // 2. Biceps Curls & Forearms (Includes Incline DB Curl, Hammer Curl, Preacher Curl, Wrist Curls)
   if (
-    id.includes('curl') ||
+    ((id.includes('curl') || n.includes('curl')) && !id.includes('hamstring') && !id.includes('leg') && !n.includes('leg')) ||
     id.includes('bicep') ||
     id.includes('wrist') ||
-    n.includes('curl') ||
     n.includes('bicep') ||
     n.includes('wrist')
   ) {
@@ -72,19 +73,38 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 3. Chest Press, Push-ups, Dips & Chest Flyes
+  // 3. Triceps & Dips (Pushdowns, Skull Crushers, Overhead Tricep Ext, Dips)
+  if (
+    id.includes('tricep') ||
+    id.includes('pushdown') ||
+    id.includes('skull') ||
+    id.includes('dip') ||
+    n.includes('tricep') ||
+    n.includes('pushdown') ||
+    n.includes('skull') ||
+    n.includes('dip')
+  ) {
+    return {
+      src: '/exercises/tricep_pushdown.jpg',
+      alt: 'Cable Triceps Pushdown & Arms Guide',
+      muscles: ['Triceps Brachii (Lateral, Long & Medial Heads)'],
+      equipment: 'Cable / Rope / EZ-Bar / Parallel Bars',
+    }
+  }
+
+  // 4. Chest Press & Flyes (Incline DB Press, Incline Barbell, Flat Bench, Push-ups, Cable Flyes)
   if (
     id.includes('bench') ||
     id.includes('chest') ||
     id.includes('push-up') ||
     id.includes('pushup') ||
     id.includes('fly') ||
-    id === 'dips' ||
+    (id.includes('incline') && id.includes('press')) ||
     n.includes('bench') ||
     n.includes('push up') ||
     n.includes('push-up') ||
     n.includes('fly') ||
-    n === 'dips'
+    (n.includes('incline') && n.includes('press'))
   ) {
     return {
       src: '/exercises/bench_press.jpg',
@@ -94,7 +114,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 4. Calf Raises
+  // 5. Calf Raises
   if (id.includes('calf') || n.includes('calf')) {
     return {
       src: '/exercises/calf_raise.jpg',
@@ -104,7 +124,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 5. Leg Press / Leg Extension / Hamstring Curl / Leg Machines
+  // 6. Leg Extension / Hamstring Curl / Leg Press / Hack Squat
   if (
     id.includes('leg-press') ||
     id.includes('leg-ext') ||
@@ -113,7 +133,8 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     id.includes('hack') ||
     n.includes('leg press') ||
     n.includes('leg extension') ||
-    n.includes('hamstring curl')
+    n.includes('hamstring curl') ||
+    n.includes('leg curl')
   ) {
     return {
       src: '/exercises/leg_extension.jpg',
@@ -123,7 +144,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 6. Hip Thrusts / Glute Bridges / Walking Lunges / Split Squats
+  // 7. Hip Thrusts / Glute Bridges / Walking Lunges / Bulgarian Split Squats
   if (
     id.includes('thrust') ||
     id.includes('glute') ||
@@ -133,7 +154,8 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     id.includes('bulgarian') ||
     n.includes('thrust') ||
     n.includes('lunge') ||
-    n.includes('split squat')
+    n.includes('split squat') ||
+    n.includes('bridge')
   ) {
     return {
       src: '/exercises/hip_thrust.jpg',
@@ -143,7 +165,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 7. Lateral Deltoids & Face Pulls
+  // 8. Lateral Deltoids & Face Pulls
   if (id.includes('lateral') || id.includes('face-pull') || n.includes('lateral') || n.includes('face pull')) {
     return {
       src: '/exercises/lateral_raise.jpg',
@@ -153,7 +175,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 8. Overhead Shoulder Press, Arnold Press & Thrusters
+  // 9. Overhead Shoulder Press, Arnold Press & Thrusters
   if (
     id.includes('overhead') ||
     id.includes('shoulder') ||
@@ -173,7 +195,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 9. Back Rows, Pulldowns, Pull-ups & Battle Ropes
+  // 10. Back Rows, Pulldowns, Pull-ups & Battle Ropes
   if (
     id.includes('pull') ||
     id.includes('row') ||
@@ -183,6 +205,7 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     n.includes('pull') ||
     n.includes('row') ||
     n.includes('lat') ||
+    n.includes('chin') ||
     n.includes('battle ropes')
   ) {
     return {
@@ -193,32 +216,13 @@ export function getExerciseAnatomicalImage(exerciseId: string, name: string): An
     }
   }
 
-  // 10. Squats (Back Squat, Goblet Squat, Box Jumps, Jump Squats)
+  // 11. Squats (Back Squat, Goblet Squat, Box Jumps, Jump Squats)
   if (id.includes('squat') || id.includes('jump') || n.includes('squat') || n.includes('jump')) {
     return {
       src: '/exercises/squat.jpg',
       alt: 'Barbell Squat Lower Body Anatomical Guide',
       muscles: ['Quadriceps Femoris', 'Gluteus Maximus', 'Adductor Magnus', 'Erector Spinae'],
       equipment: 'Barbell / Kettlebell',
-    }
-  }
-
-  // 11. Deadlifts, RDL, Kettlebell Swings & Farmer's Walk
-  if (
-    id.includes('deadlift') ||
-    id.includes('rdl') ||
-    id.includes('farmers-walk') ||
-    id.includes('swing') ||
-    n.includes('deadlift') ||
-    n.includes('rdl') ||
-    n.includes('swing') ||
-    n.includes('farmer')
-  ) {
-    return {
-      src: '/exercises/deadlift.jpg',
-      alt: 'Deadlift & Posterior Chain Muscle Guide',
-      muscles: ['Erector Spinae (Lower Back)', 'Gluteus Maximus', 'Hamstrings', 'Trapezius'],
-      equipment: 'Barbell / Dumbbells',
     }
   }
 
