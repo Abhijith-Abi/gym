@@ -77,7 +77,7 @@ export const useSettingsStore = create<SettingsState>()(
       theme: 'dark',
       setTheme: (theme) => set({ theme }),
 
-      defaultRestSeconds: 90,
+      defaultRestSeconds: 30,
       setDefaultRestSeconds: (defaultRestSeconds) =>
         set({ defaultRestSeconds }),
       smartRestEnabled: true,

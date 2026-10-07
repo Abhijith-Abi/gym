@@ -9,7 +9,7 @@ import type { RpeMode } from '@/types'
 export const REST_PRESETS = [30, 60, 90, 120, 180] as const
 
 /** Fallback base rest when a prescription omits restSeconds (C.8a). */
-export const DEFAULT_REST_SECONDS = 90
+export const DEFAULT_REST_SECONDS = 30
 
 export interface SmartRestArgs {
   /** base rest from the PlanEntry/ExerciseSet; preset fallback 90s. */

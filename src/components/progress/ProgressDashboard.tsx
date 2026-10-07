@@ -49,7 +49,12 @@ export function ProgressDashboard() {
 
   const measurements = useBodyStore((s) => s.measurements)
   const setMeasurements = useBodyStore((s) => s.setMeasurements)
-  const allExercises = useExerciseStore((s) => s.all())
+  const all = useExerciseStore((s) => s.all)
+  const custom = useExerciseStore((s) => s.custom)
+  const allExercises = useMemo(() => {
+    void custom
+    return all()
+  }, [all, custom])
 
   const [selectedExerciseId, setSelectedExerciseId] = useState<string>('')
 

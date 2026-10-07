@@ -133,12 +133,22 @@ export function SetTracker({
       // Smart-rest countdown: start rest interval if autoStartRest is enabled
       if (autoStartRest !== false) {
         const rest = computeRestSeconds({
-          prescriptionRestSeconds: exercise.prescription.restSeconds ?? 90,
+          prescriptionRestSeconds: exercise.prescription.restSeconds ?? 30,
           smartRestEnabled: smartRestEnabled ?? true,
           rpeMode,
           lastSet: { rpe: done.rpe, rir: done.rir, isWarmup: done.isWarmup },
         })
-        startRest(rest > 0 ? rest : (exercise.prescription.restSeconds || 90))
+        startRest(rest > 0 ? rest : 30)
+      }
+
+      // Smooth auto-scroll to the next active set on mobile
+      if (typeof window !== 'undefined') {
+        window.setTimeout(() => {
+          const nextRow = document.getElementById(`set-row-${set.setIndex + 1}`)
+          if (nextRow) {
+            nextRow.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }
+        }, 120)
       }
     },
     [

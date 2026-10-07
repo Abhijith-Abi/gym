@@ -5,6 +5,7 @@ import { Flame, Trophy, Dumbbell, CalendarCheck } from 'lucide-react'
 import { toDisplay } from '@/lib/units'
 import { useAuth } from '@/hooks/useAuth'
 import * as sessionService from '@/services/sessionService'
+import * as progressService from '@/services/progressService'
 import type { Unit, WorkoutSession } from '@/types'
 
 interface Stats {
@@ -17,7 +18,7 @@ interface Stats {
 /**
  * Dynamic dashboard stat tiles (FR-27, FR-28). Reads the user's completed
  * sessions through sessionService and derives streak / weekly volume / workout
- * count. Features athletic color badges and bold display metrics.
+ * count and PR count. Features athletic color badges and bold display metrics.
  */
 export function StatTiles() {
   const { uid, profile } = useAuth()
@@ -32,9 +33,15 @@ export function StatTiles() {
   useEffect(() => {
     if (!uid) return
     let active = true
-    void sessionService.listRecentSessions(uid).then((res) => {
-      if (!active || !res.ok) return
-      setStats(deriveStats(res.data))
+    Promise.all([
+      sessionService.listRecentSessions(uid),
+      progressService.listPersonalRecords(uid),
+    ]).then(([sessionsRes, prsRes]) => {
+      if (!active) return
+      const sessions = sessionsRes.ok ? sessionsRes.data : []
+      const prCount = prsRes.ok ? prsRes.data.length : 0
+      const derived = deriveStats(sessions)
+      setStats({ ...derived, newPrs: prCount })
     })
     return () => {
       active = false

@@ -85,7 +85,7 @@ export const useTimerStore = create<TimerStoreState>()(
       pausedAccumMs: 0,
       pausedAtMs: undefined,
       isPaused: false,
-      rest: { durationS: 0, preset: 90, isRunning: false, isPaused: false },
+      rest: { durationS: 0, preset: 30, isRunning: false, isPaused: false },
       interval: null,
 
       startWorkoutClock: (now) =>

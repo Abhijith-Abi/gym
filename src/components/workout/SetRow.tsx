@@ -62,8 +62,9 @@ export function SetRow({
 
   return (
     <div
+      id={`set-row-${set.setIndex}`}
       className={cn(
-        'flex flex-col gap-2.5 rounded-2xl border p-3.5 transition-all',
+        'flex flex-col gap-2.5 rounded-2xl border p-3.5 transition-all scroll-mt-20',
         set.isCompleted
           ? 'border-primary/40 bg-primary/10 shadow-[0_0_15px_-3px_rgba(34,197,94,0.15)] opacity-95'
           : isActive
@@ -162,7 +163,7 @@ export function SetRow({
               type="number"
               inputMode="decimal"
               aria-label={`Set ${set.setIndex + 1} weight in ${unit}`}
-              className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none"
+              className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               value={set.weightKg === 0 ? '0' : currentDisplayWeight}
               placeholder="0"
               onChange={(e) =>
@@ -217,7 +218,7 @@ export function SetRow({
                 type="number"
                 inputMode="numeric"
                 aria-label={`Set ${set.setIndex + 1} duration in seconds`}
-                className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none"
+                className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 value={set.durationSeconds ?? ''}
                 placeholder="0"
                 onChange={(e) =>
@@ -233,7 +234,7 @@ export function SetRow({
                 type="number"
                 inputMode="numeric"
                 aria-label={`Set ${set.setIndex + 1} reps`}
-                className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none"
+                className="w-full bg-transparent text-center font-mono text-base font-bold text-foreground focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 value={set.actualReps ?? ''}
                 placeholder="0"
                 onChange={(e) =>
@@ -271,7 +272,7 @@ export function SetRow({
               type="number"
               inputMode="decimal"
               aria-label={`Set ${set.setIndex + 1} RPE`}
-              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none"
+              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="8"
               value={set.rpe ?? ''}
               onChange={(e) =>
@@ -288,7 +289,7 @@ export function SetRow({
               type="number"
               inputMode="numeric"
               aria-label={`Set ${set.setIndex + 1} RIR`}
-              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none"
+              className="w-full bg-transparent text-center font-mono text-xs font-semibold text-foreground focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               placeholder="2"
               value={set.rir ?? ''}
               onChange={(e) =>
