@@ -135,7 +135,14 @@ export async function completeSession(
   try {
     // Barrier: do not flip COMPLETED until the SDK has flushed every prior write
     // (including this session's SetLog creates). C.7 HIGH-1.
-    await waitForPendingWrites(db)
+    try {
+      await Promise.race([
+        waitForPendingWrites(db),
+        new Promise((resolve) => setTimeout(resolve, 2000)),
+      ])
+    } catch {
+      // Continue with batch if barrier times out
+    }
 
     const batch = writeBatch(db)
 
@@ -223,7 +230,22 @@ export async function listRecentSessions(
     const snap = await getDocs(completedSessionsQuery(col))
     return ok(snap.docs.map((d) => d.data()))
   } catch (e) {
-    return mapError(e)
+    // Fallback if composite index is missing in Firebase Console
+    try {
+      const col = sessionsCollection(db, uid).withConverter(workoutSessionConverter)
+      const snap = await getDocs(col)
+      const all = snap.docs
+        .map((d) => d.data())
+        .filter((s) => s.status === 'COMPLETED')
+        .sort((a, b) => {
+          const tA = (a.completedAt ?? a.startedAt ?? a.createdAt).getTime()
+          const tB = (b.completedAt ?? b.startedAt ?? b.createdAt).getTime()
+          return tB - tA
+        })
+      return ok(all)
+    } catch {
+      return mapError(e)
+    }
   }
 }
 

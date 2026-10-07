@@ -28,7 +28,7 @@ export function ProfileHeader() {
         <div className="mt-2 flex flex-wrap gap-1.5">
           <span className="flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
             <Shield className="size-3" />
-            {profile?.goal?.replace('_', ' ') ?? 'Strength'}
+            {profile?.goal?.replace(/_/g, ' ') ?? 'Strength'}
           </span>
           <span className="flex items-center gap-1 rounded-full border border-border bg-secondary/80 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             {profile?.experience ?? 'Intermediate'}

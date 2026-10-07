@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Dumbbell, Clock, ListChecks, Play, Sparkles, Flame } from 'lucide-react'
 import { WorkoutExerciseListItem } from './WorkoutExerciseListItem'
@@ -23,6 +23,7 @@ import { triggerHaptic } from '@/hooks/useHaptics'
 import { activeSetToSetLog } from './SetTracker'
 import { monthIdOf, weekIdOf } from '@/lib/sync/summaryKeys'
 import { emptyMuscleVolume, setVolumeKg } from '@/lib/volume'
+import * as goalService from '@/services/goalService'
 import * as progressService from '@/services/progressService'
 import * as sessionService from '@/services/sessionService'
 import * as syncService from '@/services/syncService'
@@ -36,6 +37,11 @@ import type {
   WorkoutSession,
 } from '@/types'
 
+import { WorkoutCompletedCard } from '@/components/dashboard/WorkoutCompletedCard'
+import * as workoutService from '@/services/workoutService'
+import { todayDayId } from '@/store/workoutStore'
+import type { DayOfWeek } from '@/types'
+
 /**
  * Active Workout Mode orchestrator (design C.16 step 7). Renders the full
  * workout routine list with one-tap exercise completion in any order. All
@@ -43,7 +49,7 @@ import type {
  */
 export function ActiveWorkout() {
   const router = useRouter()
-  const { uid } = useAuth()
+  const { uid, profile } = useAuth()
   const deviceId = useSettingsStore((s) => s.deviceId)
   const { playSound, speak } = useWorkoutSounds()
 
@@ -64,11 +70,33 @@ export function ActiveWorkout() {
   const mergeHistories = useProgressStore((s) => s.mergeHistories)
   const clearProgress = useProgressStore((s) => s.clear)
   const exerciseById = useExerciseStore((s) => s.byId)
+  const [completedTodaySession, setCompletedTodaySession] = useState<WorkoutSession | null>(null)
+  const [forceShowStart, setForceShowStart] = useState(false)
 
   // Make sure a plan exists so a user can always start (seed offline).
   useEffect(() => {
-    if (uid) ensureSeedPlan(uid)
-  }, [uid, ensureSeedPlan])
+    if (uid) ensureSeedPlan(uid, profile?.goal, profile?.experience)
+  }, [uid, profile?.goal, profile?.experience, ensureSeedPlan])
+
+  // Check if today's workout has already been completed
+  useEffect(() => {
+    if (!uid) return
+    let active = true
+    void workoutService.listCompletedSessionsPage(uid, 5).then((res) => {
+      if (!active || !res.ok) return
+      const today = new Date().toDateString()
+      const match = res.data.sessions.find((s) => {
+        if (!s.completedAt) return false
+        return new Date(s.completedAt).toDateString() === today
+      })
+      if (match) {
+        setCompletedTodaySession(match)
+      }
+    })
+    return () => {
+      active = false
+    }
+  }, [uid, selectedDay])
 
   // Hydrate exerciseHistory for the day's exercises (bounded reads).
   useEffect(() => {
@@ -230,22 +258,50 @@ export function ActiveWorkout() {
     }
     const op = syncService.buildCompleteSessionOp(finished.id, payload)
     useSyncStore.getState().enqueueOp(op)
-    const result = await syncService.runCompleteSession(op, payload)
-    const sync = useSyncStore.getState()
-    if (!result.ok) {
-      // Not-configured / offline-safe: keep the op queued for a later flush.
-      sync.markFailure(op.id, result.code)
-    } else if (result.data.status === 'done' || result.data.status === 'dropped') {
-      sync.removeOp(op.id)
-      sync.markSynced()
-    } else if (result.data.status === 'retry') {
-      sync.markFailure(op.id, result.data.error)
-    }
+    try {
+      const result = await syncService.runCompleteSession(op, payload)
+      const sync = useSyncStore.getState()
+      if (!result.ok) {
+        // Not-configured / offline-safe: keep the op queued for a later flush.
+        sync.markFailure(op.id, result.code)
+      } else if (result.data.status === 'done' || result.data.status === 'dropped') {
+        sync.removeOp(op.id)
+        sync.markSynced()
+      } else if (result.data.status === 'retry') {
+        sync.markFailure(op.id, result.data.error)
+      }
 
-    clearSession()
-    clearProgress()
-    resetWorkoutClock()
-    router.push('/dashboard')
+      // Proactively evaluate & unlock achievements in the background
+      void (async () => {
+        try {
+          const [existingRes, prsRes] = await Promise.all([
+            goalService.listAchievements(uid),
+            progressService.listPersonalRecords(uid),
+          ])
+          const unlockedKeys = existingRes.ok ? existingRes.data.map((a) => a.key) : []
+          const prCount = prsRes.ok ? prsRes.data.length : personalRecords.length
+          await goalService.evaluateAndUnlock(
+            uid,
+            {
+              workouts: 1,
+              streakDays: 1,
+              prCount,
+              totalVolumeKg: sessionDoc.totalVolumeKg,
+            },
+            unlockedKeys,
+          )
+        } catch {
+          // non-blocking
+        }
+      })()
+    } catch (err) {
+      console.error('Session completion error:', err)
+    } finally {
+      clearSession()
+      clearProgress()
+      resetWorkoutClock()
+      router.push('/dashboard')
+    }
   }, [
     uid,
     finish,
@@ -270,6 +326,24 @@ export function ActiveWorkout() {
   }, [session])
 
   if (!session || session.status !== 'IN_PROGRESS') {
+    const DAYS_ORDER: DayOfWeek[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+    const currIdx = DAYS_ORDER.indexOf(selectedDay)
+    const tomorrowDayId = DAYS_ORDER[(currIdx + 1) % 7]
+    const tomorrowPlanDay = plan?.days[tomorrowDayId]
+
+    if (completedTodaySession && selectedDay === todayDayId() && !forceShowStart) {
+      return (
+        <main className="mx-auto flex min-h-[80vh] w-full max-w-xl min-w-0 flex-col items-center justify-center p-4 sm:p-6">
+          <WorkoutCompletedCard
+            completedWorkoutName={completedTodaySession.workoutName}
+            tomorrowPlanDay={tomorrowPlanDay}
+            completedSets={completedTodaySession.completedSets}
+            onStartAnother={() => setForceShowStart(true)}
+          />
+        </main>
+      )
+    }
+
     return (
       <StartPrompt
         canStart={Boolean(selectedPlanDay && !selectedPlanDay.isRest && uid)}

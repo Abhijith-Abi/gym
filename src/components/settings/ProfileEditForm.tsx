@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils'
 import { experienceSchema, goalSchema, unitSchema } from '@/lib/schemas/enums'
 import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/authStore'
+import { useWorkoutStore } from '@/store/workoutStore'
+import { getPresetForGoal } from '@/data/workoutPresets'
 import { updateProfile } from '@/services/profileService'
 import { Target, Dumbbell, Scale } from 'lucide-react'
 import type { Experience, Goal, Unit } from '@/types'
@@ -24,11 +26,16 @@ const profileEditSchema = z.object({
 type ProfileEditInput = z.infer<typeof profileEditSchema>
 
 const GOALS: { value: Goal; label: string }[] = [
-  { value: 'muscle_gain', label: 'Build Muscle' },
-  { value: 'strength', label: 'Strength' },
-  { value: 'fat_loss', label: 'Lose Fat' },
-  { value: 'fitness', label: 'Fitness' },
-  { value: 'custom', label: 'Custom' },
+  { value: 'fat_loss', label: '🔥 Lose Belly Fat & Shred' },
+  { value: 'six_pack', label: '⚡ Six Pack Abs & Core' },
+  { value: 'muscle_gain', label: '💪 Build Muscle (Hypertrophy)' },
+  { value: 'strength', label: '🏋️ Maximum Strength' },
+  { value: 'hardcore', label: '💥 Hardcore Extreme' },
+  { value: 'arms_focus', label: '🦾 Biceps & Arm Blast' },
+  { value: 'legs_glutes', label: '🍑 Glutes & Lower Body' },
+  { value: 'fitness', label: '✨ Beginner & General Fitness' },
+  { value: 'mobility', label: '🧘 Mobility & Joint Health' },
+  { value: 'custom', label: '⚙️ Custom Split' },
 ]
 const EXPERIENCE: { value: Experience; label: string }[] = [
   { value: 'beginner', label: 'Beginner' },
@@ -113,6 +120,12 @@ export function ProfileEditForm() {
       return
     }
     await refreshProfile()
+
+    // Automatically adapt and load the workout routine for the selected goal & experience
+    const matchedPreset = getPresetForGoal(values.goal, values.experience)
+    useWorkoutStore.getState().loadPresetPlan(uid, matchedPreset)
+    useWorkoutStore.getState().selectToday()
+
     setStatus('saved')
   }
 

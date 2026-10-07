@@ -1,25 +1,73 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Dumbbell, Clock, ListChecks, Play, Sparkles } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 import { useExerciseStore } from '@/store/exerciseStore'
-import { useWorkoutStore } from '@/store/workoutStore'
+import { useWorkoutStore, todayDayId } from '@/store/workoutStore'
+import * as workoutService from '@/services/workoutService'
+import { WorkoutCompletedCard } from './WorkoutCompletedCard'
 import { triggerHaptic } from '@/hooks/useHaptics'
+import type { DayOfWeek, WorkoutSession } from '@/types'
 
 /**
  * Hero Workout Card on the Home screen.
  * Displays today's workout, muscle tags, estimated duration, exercise previews,
- * and high-energy Start Workout button.
+ * and high-energy Start Workout button, OR the WorkoutCompletedCard when finished!
  */
 export function TodayCard() {
+  const { uid } = useAuth()
+  const plan = useWorkoutStore((s) => s.plan)
+  const selectedDay = useWorkoutStore((s) => s.selectedDay)
   const planDay = useWorkoutStore((s) => s.selectedPlanDay())
   const byId = useExerciseStore((s) => s.byId)
+  const [completedTodaySession, setCompletedTodaySession] = useState<WorkoutSession | null>(null)
+  const [forceShowStart, setForceShowStart] = useState(false)
+
+  // Check if today's workout has already been completed
+  useEffect(() => {
+    if (!uid) return
+    let active = true
+    void workoutService.listCompletedSessionsPage(uid, 5).then((res) => {
+      if (!active || !res.ok) return
+      const today = new Date().toDateString()
+      const match = res.data.sessions.find((s) => {
+        if (!s.completedAt) return false
+        return new Date(s.completedAt).toDateString() === today
+      })
+      if (match) {
+        setCompletedTodaySession(match)
+      }
+    })
+    return () => {
+      active = false
+    }
+  }, [uid, selectedDay])
 
   if (!planDay) {
     return (
       <div className="rounded-3xl border border-border bg-card p-6 text-center text-sm text-muted-foreground">
         No workout plan loaded yet.
       </div>
+    )
+  }
+
+  // Calculate tomorrow's plan day for the recovery sneak peek
+  const DAYS_ORDER: DayOfWeek[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+  const currIdx = DAYS_ORDER.indexOf(selectedDay)
+  const tomorrowDayId = DAYS_ORDER[(currIdx + 1) % 7]
+  const tomorrowPlanDay = plan?.days[tomorrowDayId]
+
+  // If today's workout is completed and user didn't request another session:
+  if (completedTodaySession && selectedDay === todayDayId() && !forceShowStart) {
+    return (
+      <WorkoutCompletedCard
+        completedWorkoutName={completedTodaySession.workoutName}
+        tomorrowPlanDay={tomorrowPlanDay}
+        completedSets={completedTodaySession.completedSets}
+        onStartAnother={() => setForceShowStart(true)}
+      />
     )
   }
 
@@ -113,14 +161,16 @@ export function TodayCard() {
       </div>
 
       {/* CTA Button */}
-      <Link
-        href="/workout"
-        onClick={() => triggerHaptic('medium')}
-        className="mt-5 flex min-h-[50px] w-full items-center justify-center gap-2 rounded-2xl bg-primary text-sm font-bold text-primary-foreground shadow-[0_0_25px_rgba(34,197,94,0.35)] transition-all hover:bg-primary/90 active:scale-95 sm:mt-6 sm:min-h-[52px] sm:text-base"
-      >
-        <Play className="size-4 fill-primary-foreground" />
-        Start Workout
-      </Link>
+      <div className="mt-5 flex flex-col gap-2.5 sm:mt-6">
+        <Link
+          href="/workout"
+          onClick={() => triggerHaptic('medium')}
+          className="flex min-h-[50px] w-full items-center justify-center gap-2 rounded-2xl bg-primary text-sm font-bold text-primary-foreground shadow-[0_0_25px_rgba(34,197,94,0.35)] transition-all hover:bg-primary/90 active:scale-95 sm:min-h-[52px] sm:text-base"
+        >
+          <Play className="size-4 fill-primary-foreground" />
+          Start Workout
+        </Link>
+      </div>
     </div>
   )
 }

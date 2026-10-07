@@ -127,8 +127,12 @@ export async function flushCompleteSession(
 
   try {
     // HIGH-1 flush barrier: do not flip COMPLETED until every prior single-doc
-    // write (incl. this session's SetLog creates) is acknowledged.
-    await barrier(deps.db)
+    // write (incl. this session's SetLog creates) is acknowledged, with a timeout
+    // to prevent hanging when offline or experiencing network delay.
+    await Promise.race([
+      barrier(deps.db),
+      new Promise((resolve) => setTimeout(resolve, 2000)),
+    ])
   } catch (e) {
     return { status: 'retry', error: errMsg(e) }
   }

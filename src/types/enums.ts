@@ -2,7 +2,17 @@
 
 export type DayOfWeek = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'
 
-export type Goal = 'muscle_gain' | 'strength' | 'fat_loss' | 'fitness' | 'custom'
+export type Goal =
+  | 'muscle_gain'
+  | 'strength'
+  | 'fat_loss'
+  | 'six_pack'
+  | 'hardcore'
+  | 'arms_focus'
+  | 'legs_glutes'
+  | 'fitness'
+  | 'mobility'
+  | 'custom'
 
 export type Experience = 'beginner' | 'intermediate' | 'advanced'
 

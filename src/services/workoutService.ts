@@ -71,7 +71,28 @@ export async function listCompletedSessionsPage(
       hasMore: docs.length === pageSize,
     })
   } catch (e) {
-    return mapError(e)
+    // Fallback if composite index is not deployed in Firestore
+    try {
+      const col = sessionsCollection(db, uid).withConverter(
+        workoutSessionConverter,
+      )
+      const snap = await getDocs(col)
+      const all = snap.docs
+        .map((d) => d.data())
+        .filter((s) => s.status === 'COMPLETED')
+        .sort((a, b) => {
+          const tA = (a.completedAt ?? a.startedAt ?? a.createdAt).getTime()
+          const tB = (b.completedAt ?? b.startedAt ?? b.createdAt).getTime()
+          return tB - tA
+        })
+      return ok({
+        sessions: all.slice(0, pageSize),
+        cursor: undefined,
+        hasMore: all.length > pageSize,
+      })
+    } catch {
+      return mapError(e)
+    }
   }
 }
 

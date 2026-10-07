@@ -14,14 +14,21 @@ import { useAuth } from '@/hooks/useAuth'
 import { useAuthStore } from '@/store/authStore'
 import { useSettingsStore } from '@/store/settingsStore'
 import { completeOnboarding } from '@/services/profileService'
+import { useWorkoutStore } from '@/store/workoutStore'
+import { getPresetForGoal } from '@/data/workoutPresets'
 import type { Experience, Goal, Unit } from '@/types'
 
 const GOALS: { value: Goal; label: string }[] = [
-  { value: 'muscle_gain', label: 'Build Muscle' },
-  { value: 'strength', label: 'Increase Strength' },
-  { value: 'fat_loss', label: 'Lose Fat' },
-  { value: 'fitness', label: 'General Fitness' },
-  { value: 'custom', label: 'Custom' },
+  { value: 'fat_loss', label: '🔥 Lose Belly Fat & Shred' },
+  { value: 'six_pack', label: '⚡ Six Pack Abs & Core' },
+  { value: 'muscle_gain', label: '💪 Build Muscle (Hypertrophy)' },
+  { value: 'strength', label: '🏋️ Maximum Strength' },
+  { value: 'hardcore', label: '💥 Hardcore Extreme' },
+  { value: 'arms_focus', label: '🦾 Biceps & Arm Blast' },
+  { value: 'legs_glutes', label: '🍑 Glutes & Lower Body' },
+  { value: 'fitness', label: '✨ Beginner Fitness' },
+  { value: 'mobility', label: '🧘 Mobility & Recovery' },
+  { value: 'custom', label: '⚙️ Custom Split' },
 ]
 
 const EXPERIENCE: { value: Experience; label: string }[] = [
@@ -137,6 +144,13 @@ export function ProfileSetup() {
       return
     }
     await refreshProfile()
+    // Pre-load workout plan tailored to the selected goal & experience level
+    try {
+      const preset = getPresetForGoal(values.goal, values.experience)
+      await useWorkoutStore.getState().loadPresetPlan(uid, preset)
+    } catch {
+      // Non-blocking fallback
+    }
     router.replace('/dashboard')
   }
 

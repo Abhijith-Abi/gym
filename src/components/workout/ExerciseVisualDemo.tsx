@@ -10,18 +10,19 @@ import {
   CheckCircle2,
   Shield,
   Activity,
-  Dumbbell,
+  Image as ImageIcon,
 } from 'lucide-react'
 import { getExerciseFormGuide } from '@/lib/exerciseDefaults'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { triggerHaptic } from '@/hooks/useHaptics'
+import { ExerciseVisualFrames } from './ExerciseVisualFrames'
 import type { Equipment, MuscleGroup } from '@/types'
 
 /**
  * Interactive Exercise Visual Demo & Form Guide (FR-4, FR-20).
- * Displays anatomical muscle target map, movement path diagram,
- * step-by-step coaching cues, and voice audio explanation.
+ * Displays 3-step visual frame illustrations, anatomical muscle target map,
+ * movement path diagram, step-by-step coaching cues, and voice audio explanation.
  */
 export function ExerciseVisualDemo({
   exerciseId,
@@ -32,7 +33,7 @@ export function ExerciseVisualDemo({
 }) {
   const meta = useExerciseStore((s) => s.byId(exerciseId))
   const { speak } = useWorkoutSounds()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   const name = meta?.name ?? exerciseId
   const guide = getExerciseFormGuide(exerciseId, name, equipment)
@@ -49,21 +50,16 @@ export function ExerciseVisualDemo({
     <div className="flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card-elevated/70 shadow-sm transition-all">
       {/* Visual Header / Muscle highlights & Expand button */}
       <div className="flex items-center justify-between p-3 sm:p-3.5">
-        <div className="flex min-w-0 flex-1 items-center gap-2">
-          {/* Animated Barbell/Dumbbell Visual Icon */}
+        <div className="flex min-w-0 flex-1 items-center gap-2.5">
+          {/* Visual Step Icon */}
           <div className="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-            <motion.div
-              animate={{ y: [-2, 2, -2] }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            >
-              <Dumbbell className="size-5" />
-            </motion.div>
+            <ImageIcon className="size-5" />
           </div>
 
           <div className="flex min-w-0 flex-col">
             <div className="flex items-center gap-1.5">
               <span className="truncate text-xs font-extrabold uppercase tracking-wide text-foreground">
-                Movement &amp; Form Guide
+                3-Step Visual Exercise Guide
               </span>
               <span className="rounded-md bg-secondary/80 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
                 {equipment}
@@ -111,13 +107,13 @@ export function ExerciseVisualDemo({
             aria-label={isOpen ? 'Collapse form guide' : 'Expand form guide'}
             className="flex items-center gap-1 rounded-lg border border-border bg-card px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground active:scale-95"
           >
-            <span>{isOpen ? 'Hide' : 'Demo'}</span>
+            <span>{isOpen ? 'Hide' : 'Show Demo'}</span>
             {isOpen ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
           </button>
         </div>
       </div>
 
-      {/* Expandable Form Guide & Animated Motion Path */}
+      {/* Expandable Form Guide & 3-Step Visual Frame Cards */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -125,10 +121,13 @@ export function ExerciseVisualDemo({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="border-t border-border/60 bg-card/60 p-3.5 sm:p-4"
+            className="flex flex-col gap-3.5 border-t border-border/60 bg-card/60 p-3.5 sm:p-4"
           >
+            {/* 3-Frame Visual Step Demonstration (Start, Mid/Peak, Finish) */}
+            <ExerciseVisualFrames exerciseId={exerciseId} name={name} />
+
             {/* Motion Path Visualization */}
-            <div className="mb-3.5 flex items-center justify-between rounded-xl border border-primary/20 bg-primary/5 p-3">
+            <div className="flex items-center justify-between rounded-xl border border-primary/20 bg-primary/5 p-3">
               <div className="flex items-center gap-2">
                 <Activity className="size-4 text-primary animate-pulse" />
                 <span className="text-xs font-bold text-foreground">
@@ -155,7 +154,7 @@ export function ExerciseVisualDemo({
             </div>
 
             {/* Execution instructions */}
-            <div className="mt-3 flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5">
               <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent">
                 <CheckCircle2 className="size-3.5" />
                 <span>2. Movement Execution</span>
@@ -169,7 +168,7 @@ export function ExerciseVisualDemo({
 
             {/* Common Mistakes to Avoid */}
             {guide.mistakes.length > 0 && (
-              <div className="mt-3 flex flex-col gap-1.5 rounded-xl border border-destructive/20 bg-destructive/5 p-2.5">
+              <div className="flex flex-col gap-1.5 rounded-xl border border-destructive/20 bg-destructive/5 p-2.5">
                 <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-destructive">
                   <AlertTriangle className="size-3.5" />
                   <span>Mistakes to Avoid</span>

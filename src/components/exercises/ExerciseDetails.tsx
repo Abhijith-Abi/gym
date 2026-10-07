@@ -3,6 +3,7 @@
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useExerciseStore } from '@/store/exerciseStore'
+import { ExerciseVisualFrames } from '@/components/workout/ExerciseVisualFrames'
 import type { Exercise } from '@/types'
 
 /**
@@ -41,6 +42,9 @@ export function ExerciseDetails({
           {exercise.category} · {exercise.difficulty} · {exercise.equipment}
         </p>
       </header>
+
+      {/* 3-Step Visual Frame Demonstration */}
+      <ExerciseVisualFrames exerciseId={exercise.id} name={exercise.name} />
 
       <section className="flex flex-col gap-2">
         <h2 className="text-sm font-semibold uppercase text-muted-foreground">

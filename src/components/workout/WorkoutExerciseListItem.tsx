@@ -155,22 +155,30 @@ export function WorkoutExerciseListItem({
         </div>
 
         {/* Demo view toggle button */}
-        <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-2.5">
+        <div className="mt-3.5 flex items-center justify-between border-t border-border/60 pt-3">
           <button
             type="button"
-            onClick={() => setShowDemo(!showDemo)}
-            className="flex items-center gap-1 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            aria-label={showDemo ? 'Hide form & demo' : 'View form & demo'}
+            onClick={() => {
+              triggerHaptic('light')
+              setShowDemo(!showDemo)
+            }}
+            className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
+              showDemo
+                ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.3)]'
+                : 'border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20'
+            }`}
           >
-            <span>{showDemo ? 'Hide Movement Demo' : 'View Form & Demo'}</span>
+            <span>{showDemo ? '✕ Hide Movement Demo & Images' : '📸 View Form & Demo (3-Step Images)'}</span>
             {showDemo ? (
-              <ChevronUp className="size-3.5 text-primary" />
+              <ChevronUp className="size-3.5 text-current" />
             ) : (
-              <ChevronDown className="size-3.5 text-primary" />
+              <ChevronDown className="size-3.5 text-current" />
             )}
           </button>
 
-          <span className="text-[11px] font-medium text-muted-foreground">
-            {isCompleted ? 'Done' : 'Tap below to complete'}
+          <span className="text-[11px] font-semibold text-muted-foreground">
+            {isCompleted ? '✓ Done' : 'Tap below to complete'}
           </span>
         </div>
 

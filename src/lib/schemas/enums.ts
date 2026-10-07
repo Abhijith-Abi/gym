@@ -1,7 +1,18 @@
 import { z } from 'zod'
 
 export const dayOfWeekSchema = z.enum(['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'])
-export const goalSchema = z.enum(['muscle_gain', 'strength', 'fat_loss', 'fitness', 'custom'])
+export const goalSchema = z.enum([
+  'muscle_gain',
+  'strength',
+  'fat_loss',
+  'six_pack',
+  'hardcore',
+  'arms_focus',
+  'legs_glutes',
+  'fitness',
+  'mobility',
+  'custom',
+])
 export const experienceSchema = z.enum(['beginner', 'intermediate', 'advanced'])
 export const unitSchema = z.enum(['kg', 'lb'])
 export const sessionStatusSchema = z.enum([
