@@ -9,7 +9,12 @@ import {
   ChevronRight,
   Target,
   Sparkles,
+  Layers,
+  Image as ImageIcon,
+  Activity,
+  Maximize2,
 } from 'lucide-react'
+import Image from 'next/image'
 import { triggerHaptic } from '@/hooks/useHaptics'
 
 export type GraphicType =
@@ -34,6 +39,86 @@ export interface FrameStep {
   focusCue: string
   graphicType: GraphicType
   stage: 1 | 2 | 3
+}
+
+export function getExerciseAnatomicalImage(exerciseId: string, name: string): {
+  src: string
+  alt: string
+  muscles: string[]
+} {
+  const id = exerciseId.toLowerCase()
+  const n = name.toLowerCase()
+
+  if (id.includes('bench') || id.includes('chest') || id.includes('pushup') || id.includes('dip') || n.includes('bench')) {
+    return {
+      src: '/exercises/bench_press.jpg',
+      alt: 'Barbell Bench Press Anatomical Muscle Guide',
+      muscles: ['Pectoralis Major', 'Anterior Deltoids', 'Triceps Brachii'],
+    }
+  }
+
+  if (id.includes('squat') || id.includes('leg-press') || id.includes('hack') || id.includes('lunge') || n.includes('squat')) {
+    return {
+      src: '/exercises/squat.jpg',
+      alt: 'Barbell Squat Anatomical Muscle Activation Guide',
+      muscles: ['Quadriceps Femoris', 'Gluteus Maximus', 'Erector Spinae'],
+    }
+  }
+
+  if (id.includes('deadlift') || id.includes('rdl') || n.includes('deadlift')) {
+    return {
+      src: '/exercises/deadlift.jpg',
+      alt: 'Deadlift Anatomical Muscle Guide',
+      muscles: ['Erector Spinae (Lower Back)', 'Gluteus Maximus', 'Hamstrings', 'Trapezius'],
+    }
+  }
+
+  if (id.includes('curl') || id.includes('bicep') || n.includes('curl')) {
+    return {
+      src: '/exercises/bicep_curl.jpg',
+      alt: 'Dumbbell Bicep Curl Anatomical Muscle Guide',
+      muscles: ['Biceps Brachii (Short & Long Head)', 'Brachialis', 'Brachioradialis'],
+    }
+  }
+
+  if (id.includes('pull') || id.includes('row') || id.includes('lat') || id.includes('chin') || n.includes('pull') || n.includes('row')) {
+    return {
+      src: '/exercises/pullup_back.jpg',
+      alt: 'Pull-Up & Lat Pulldown Anatomical Guide',
+      muscles: ['Latissimus Dorsi', 'Trapezius', 'Rhomboids', 'Rear Deltoid'],
+    }
+  }
+
+  if (id.includes('tricep') || id.includes('pushdown') || id.includes('skull') || n.includes('tricep')) {
+    return {
+      src: '/exercises/tricep_pushdown.jpg',
+      alt: 'Cable Triceps Pushdown Anatomical Guide',
+      muscles: ['Triceps Brachii (Lateral, Long & Medial Heads)'],
+    }
+  }
+
+  if (id.includes('lateral') || id.includes('face-pull') || n.includes('lateral')) {
+    return {
+      src: '/exercises/lateral_raise.jpg',
+      alt: 'Dumbbell Lateral Raise Anatomical Guide',
+      muscles: ['Lateral Deltoid', 'Trapezius & Supraspinatus'],
+    }
+  }
+
+  if (id.includes('overhead') || id.includes('shoulder') || id.includes('military') || id.includes('arnold') || n.includes('overhead') || n.includes('shoulder')) {
+    return {
+      src: '/exercises/overhead_press.jpg',
+      alt: 'Overhead Shoulder Press Anatomical Guide',
+      muscles: ['Anterior Deltoid', 'Lateral Deltoid', 'Upper Trapezius'],
+    }
+  }
+
+  // Default to Abdominal Crunches / Core Anatomical Guide
+  return {
+    src: '/exercises/abs_crunch.jpg',
+    alt: 'Abdominal Crunch Core Anatomical Guide',
+    muscles: ['Rectus Abdominis', 'External Obliques'],
+  }
 }
 
 export function getExerciseVisualSteps(exerciseId: string, name: string): FrameStep[] {
@@ -523,17 +608,20 @@ export function ExerciseVisualFrames({
   name: string
 }) {
   const steps = getExerciseVisualSteps(exerciseId, name)
+  const photo = getExerciseAnatomicalImage(exerciseId, name)
+  const [viewMode, setViewMode] = useState<'photo' | 'steps'>('photo')
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [isPlaying, setIsPlaying] = useState<boolean>(true)
+  const [isZoomed, setIsZoomed] = useState<boolean>(false)
 
   // Auto-play animation cycle between Frame 1 -> Frame 2 -> Frame 3
   useEffect(() => {
-    if (!isPlaying) return
+    if (!isPlaying || viewMode !== 'steps') return
     const timer = setInterval(() => {
       setCurrentStep((prev) => (prev + 1) % steps.length)
     }, 1800)
     return () => clearInterval(timer)
-  }, [isPlaying, steps.length])
+  }, [isPlaying, viewMode, steps.length])
 
   const step = steps[currentStep] || steps[0]
 
@@ -561,143 +649,234 @@ export function ExerciseVisualFrames({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border/90 bg-card p-3.5 shadow-sm sm:p-4">
-      {/* Top Header: Step Selector Pills and Auto-play Toggle */}
-      <div className="flex items-center justify-between gap-2">
-        {/* Step frame tabs (1, 2, 3) */}
-        <div className="flex items-center gap-1.5">
-          {steps.map((s, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => handleSelectStep(idx)}
-              className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-all active:scale-95 ${
-                currentStep === idx
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.4)]'
-                  : 'border border-border bg-secondary/70 text-muted-foreground hover:bg-secondary hover:text-foreground'
-              }`}
-            >
-              <span className="flex size-4 items-center justify-center rounded-full bg-background/25 text-[10px]">
-                {idx + 1}
-              </span>
-              <span className="hidden xs:inline">{s.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Auto Play / Pause Toggle */}
-        <button
-          type="button"
-          onClick={togglePlay}
-          className={`flex items-center gap-1 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition-all active:scale-95 ${
-            isPlaying
-              ? 'border-primary/40 bg-primary/10 text-primary'
-              : 'border-border bg-secondary text-muted-foreground hover:text-foreground'
-          }`}
-          title={isPlaying ? 'Pause auto-play animation' : 'Start auto-play animation'}
-        >
-          {isPlaying ? (
-            <>
-              <Pause className="size-3.5 fill-primary" />
-              <span className="text-[11px] font-bold">Auto</span>
-            </>
-          ) : (
-            <>
-              <Play className="size-3.5 fill-current" />
-              <span className="text-[11px] font-bold">Play</span>
-            </>
-          )}
-        </button>
-      </div>
-
-      {/* Main Visual Display Stage */}
-      <div className="relative w-full overflow-hidden rounded-2xl border border-border/80 bg-background/80 p-3 sm:p-4">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.04 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="flex w-full flex-col items-center justify-center gap-3"
-          >
-            {/* Visual Biomechanical Graphic / Pose Frame */}
-            <div className="relative flex h-32 xs:h-36 sm:h-40 w-full items-center justify-center rounded-xl bg-gradient-to-b from-primary/[0.08] to-transparent border border-primary/20 shadow-inner overflow-hidden p-1">
-              <BiomechanicGraphic type={step.graphicType} stage={step.stage} />
-
-              {/* Stage Badge in Graphic */}
-              <div className="absolute top-2 left-2 flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-black uppercase tracking-wider text-primary border border-border shadow-xs backdrop-blur-xs">
-                <Sparkles className="size-2.5 xs:size-3" />
-                <span>Frame {currentStep + 1}/3</span>
-              </div>
-
-              {/* Movement Vector Indicator */}
-              <div className="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-bold text-primary border border-primary/30">
-                <span className="truncate max-w-[120px]">{step.label}</span>
-              </div>
-            </div>
-
-            {/* Frame Title & Cue */}
-            <div className="flex w-full flex-col gap-1 text-center sm:text-left">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                <h4 className="text-sm font-extrabold text-foreground">
-                  {step.title}
-                </h4>
-                <span className="inline-flex items-center gap-1 self-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-bold text-primary border border-primary/20">
-                  <Target className="size-3" />
-                  {step.focusCue}
-                </span>
-              </div>
-
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                {step.description}
-              </p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Left & Right Step Arrow Overlays */}
-        <button
-          type="button"
-          onClick={handlePrev}
-          aria-label="Previous step frame"
-          className="absolute left-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-card/80 border border-border text-foreground shadow-md backdrop-blur-xs transition-all hover:bg-card hover:scale-105 active:scale-95"
-        >
-          <ChevronLeft className="size-4" />
-        </button>
-
-        <button
-          type="button"
-          onClick={handleNext}
-          aria-label="Next step frame"
-          className="absolute right-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-card/80 border border-border text-foreground shadow-md backdrop-blur-xs transition-all hover:bg-card hover:scale-105 active:scale-95"
-        >
-          <ChevronRight className="size-4" />
-        </button>
-      </div>
-
-      {/* Bottom 3-Frame Step Thumbnails */}
-      <div className="grid grid-cols-3 gap-2">
-        {steps.map((s, idx) => (
+    <div className="flex flex-col gap-3 rounded-2xl border border-border/90 bg-card p-3 shadow-sm sm:p-4">
+      {/* Top View Mode Switcher: HD 3D Anatomical Guide vs 3-Step Motion Frames */}
+      <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-2.5">
+        <div className="flex items-center gap-1.5 rounded-xl bg-secondary/80 p-1">
           <button
-            key={idx}
             type="button"
-            onClick={() => handleSelectStep(idx)}
-            className={`flex flex-col items-center gap-1 rounded-xl p-2 text-center transition-all ${
-              currentStep === idx
-                ? 'border-2 border-primary bg-primary/10 shadow-[0_0_12px_rgba(34,197,94,0.2)]'
-                : 'border border-border/70 bg-card hover:border-border hover:bg-secondary/50'
+            onClick={() => {
+              triggerHaptic('light')
+              setViewMode('photo')
+            }}
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
+              viewMode === 'photo'
+                ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.35)]'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
-            <div className="flex size-7 items-center justify-center rounded-lg bg-background font-mono text-xs font-black text-primary shadow-xs">
-              {idx + 1}
-            </div>
-            <span className="text-[11px] font-bold leading-tight text-foreground truncate w-full">
-              {s.label}
-            </span>
+            <ImageIcon className="size-3.5" />
+            <span>3D Muscle Guide</span>
           </button>
-        ))}
+
+          <button
+            type="button"
+            onClick={() => {
+              triggerHaptic('light')
+              setViewMode('steps')
+            }}
+            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
+              viewMode === 'steps'
+                ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.35)]'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Activity className="size-3.5" />
+            <span>Motion Steps</span>
+          </button>
+        </div>
+
+        {viewMode === 'steps' && (
+          /* Auto Play / Pause Toggle */
+          <button
+            type="button"
+            onClick={togglePlay}
+            className={`flex items-center gap-1 rounded-xl border px-2.5 py-1 text-xs font-semibold transition-all active:scale-95 ${
+              isPlaying
+                ? 'border-primary/40 bg-primary/10 text-primary'
+                : 'border-border bg-secondary text-muted-foreground hover:text-foreground'
+            }`}
+            title={isPlaying ? 'Pause auto-play animation' : 'Start auto-play animation'}
+          >
+            {isPlaying ? (
+              <>
+                <Pause className="size-3.5 fill-primary" />
+                <span className="text-[11px] font-bold">Auto</span>
+              </>
+            ) : (
+              <>
+                <Play className="size-3.5 fill-current" />
+                <span className="text-[11px] font-bold">Play</span>
+              </>
+            )}
+          </button>
+        )}
+
+        {viewMode === 'photo' && (
+          <button
+            type="button"
+            onClick={() => setIsZoomed(!isZoomed)}
+            className="flex items-center gap-1 rounded-xl border border-border bg-secondary/80 px-2.5 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground active:scale-95"
+          >
+            <Maximize2 className="size-3" />
+            <span>{isZoomed ? 'Fit' : 'Expand'}</span>
+          </button>
+        )}
       </div>
+
+      {/* MODE 1: HD 3D ANATOMICAL MUSCLE ILLUSTRATION (Start + Contraction Guide) */}
+      {viewMode === 'photo' && (
+        <div className="flex flex-col gap-2.5">
+          <div className="relative w-full overflow-hidden rounded-2xl border border-border/80 bg-background/90 shadow-inner">
+            <div className={`relative w-full transition-all duration-300 ${isZoomed ? 'h-64 sm:h-80' : 'h-48 sm:h-56'}`}>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, 600px"
+                className="object-contain p-1 rounded-xl select-none"
+                priority
+              />
+            </div>
+
+            {/* Overlay Badge */}
+            <div className="absolute top-2.5 left-2.5 flex items-center gap-1 rounded-md bg-background/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary border border-border shadow-xs backdrop-blur-xs">
+              <Sparkles className="size-3 text-primary" />
+              <span>Anatomical Visual Guide</span>
+            </div>
+          </div>
+
+          {/* Active Muscle Labels */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Target Activation:
+            </span>
+            {photo.muscles.map((m) => (
+              <span
+                key={m}
+                className="rounded-lg border border-primary/30 bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary"
+              >
+                {m}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* MODE 2: 3-STEP ANIMATED MOTION FRAMES */}
+      {viewMode === 'steps' && (
+        <>
+          {/* Step Selector Pills */}
+          <div className="flex items-center gap-1.5">
+            {steps.map((s, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => handleSelectStep(idx)}
+                className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-all active:scale-95 ${
+                  currentStep === idx
+                    ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.4)]'
+                    : 'border border-border bg-secondary/70 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                }`}
+              >
+                <span className="flex size-4 items-center justify-center rounded-full bg-background/25 text-[10px]">
+                  {idx + 1}
+                </span>
+                <span className="hidden xs:inline">{s.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Main Visual Display Stage */}
+          <div className="relative w-full overflow-hidden rounded-2xl border border-border/80 bg-background/80 p-3 sm:p-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.04 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className="flex w-full flex-col items-center justify-center gap-3"
+              >
+                {/* Visual Biomechanical Graphic / Pose Frame */}
+                <div className="relative flex h-32 xs:h-36 sm:h-40 w-full items-center justify-center rounded-xl bg-gradient-to-b from-primary/[0.08] to-transparent border border-primary/20 shadow-inner overflow-hidden p-1">
+                  <BiomechanicGraphic type={step.graphicType} stage={step.stage} />
+
+                  {/* Stage Badge in Graphic */}
+                  <div className="absolute top-2 left-2 flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-black uppercase tracking-wider text-primary border border-border shadow-xs backdrop-blur-xs">
+                    <Sparkles className="size-2.5 xs:size-3" />
+                    <span>Frame {currentStep + 1}/3</span>
+                  </div>
+
+                  {/* Movement Vector Indicator */}
+                  <div className="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-bold text-primary border border-primary/30">
+                    <span className="truncate max-w-[120px]">{step.label}</span>
+                  </div>
+                </div>
+
+                {/* Frame Title & Cue */}
+                <div className="flex w-full flex-col gap-1 text-center sm:text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                    <h4 className="text-sm font-extrabold text-foreground">
+                      {step.title}
+                    </h4>
+                    <span className="inline-flex items-center gap-1 self-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-bold text-primary border border-primary/20">
+                      <Target className="size-3" />
+                      {step.focusCue}
+                    </span>
+                  </div>
+
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    {step.description}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Left & Right Step Arrow Overlays */}
+            <button
+              type="button"
+              onClick={handlePrev}
+              aria-label="Previous step frame"
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-card/80 border border-border text-foreground shadow-md backdrop-blur-xs transition-all hover:bg-card hover:scale-105 active:scale-95"
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next step frame"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full bg-card/80 border border-border text-foreground shadow-md backdrop-blur-xs transition-all hover:bg-card hover:scale-105 active:scale-95"
+            >
+              <ChevronRight className="size-4" />
+            </button>
+          </div>
+
+          {/* Bottom 3-Frame Step Thumbnails */}
+          <div className="grid grid-cols-3 gap-2">
+            {steps.map((s, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => handleSelectStep(idx)}
+                className={`flex flex-col items-center gap-1 rounded-xl p-2 text-center transition-all ${
+                  currentStep === idx
+                    ? 'border-2 border-primary bg-primary/10 shadow-[0_0_12px_rgba(34,197,94,0.2)]'
+                    : 'border border-border/70 bg-card hover:border-border hover:bg-secondary/50'
+                }`}
+              >
+                <div className="flex size-7 items-center justify-center rounded-lg bg-background font-mono text-xs font-black text-primary shadow-xs">
+                  {idx + 1}
+                </div>
+                <span className="text-[11px] font-bold leading-tight text-foreground truncate w-full">
+                  {s.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
