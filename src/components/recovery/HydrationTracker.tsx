@@ -10,6 +10,7 @@ import {
   HYDRATION_QUICK_ADDS_ML,
   hydrationProgress,
 } from '@/lib/recovery'
+import { triggerHaptic } from '@/hooks/useHaptics'
 import { Button } from '@/components/ui/button'
 
 /**
@@ -77,14 +78,19 @@ export function HydrationTracker() {
   const progress = hydrationProgress(currentMl, targetMl)
 
   return (
-    <section className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4">
+    <section className="flex flex-col gap-4 rounded-3xl border border-border/80 bg-card p-5 shadow-sm">
       <div className="flex items-center justify-between">
-        <h2 className="flex items-center gap-2 text-lg font-semibold">
-          <Droplet className="size-5 text-sky-400" aria-hidden="true" />
-          Hydration
-        </h2>
-        <span className="text-sm tabular-nums text-muted-foreground">
-          {currentMl} / {targetMl} ml
+        <div className="flex items-center gap-2.5">
+          <div className="flex size-9 items-center justify-center rounded-2xl bg-sky-500/15 text-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.25)]">
+            <Droplet className="size-5 fill-current" aria-hidden="true" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-sky-400">Recovery Factor</span>
+            <h2 className="text-base font-extrabold text-foreground sm:text-lg">Daily Hydration</h2>
+          </div>
+        </div>
+        <span className="font-mono text-sm font-black tabular-nums text-sky-400">
+          {currentMl} <span className="text-xs font-semibold text-muted-foreground">/ {targetMl} ml</span>
         </span>
       </div>
 
@@ -93,42 +99,53 @@ export function HydrationTracker() {
         aria-valuenow={Math.round(progress * 100)}
         aria-valuemin={0}
         aria-valuemax={100}
-        className="h-3 w-full overflow-hidden rounded-full bg-muted"
+        className="h-3 w-full overflow-hidden rounded-full bg-secondary p-0.5"
       >
         <div
-          className="h-full rounded-full bg-sky-400 transition-all"
-          style={{ width: `${progress * 100}%` }}
+          className="h-full rounded-full bg-gradient-to-r from-sky-500 to-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.5)] transition-all duration-500"
+          style={{ width: `${Math.min(100, progress * 100)}%` }}
         />
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {HYDRATION_QUICK_ADDS_ML.map((ml) => (
           <Button
             key={ml}
             variant="outline"
             size="sm"
-            onClick={() => onQuickAdd(ml)}
+            onClick={() => {
+              triggerHaptic('light')
+              onQuickAdd(ml)
+            }}
+            className="min-h-[44px] flex-1 rounded-2xl border-sky-500/20 bg-sky-500/10 font-bold text-sky-400 hover:bg-sky-500/20 active:scale-95"
           >
             +{ml} ml
           </Button>
         ))}
       </div>
 
-      <label className="flex items-center gap-2 text-xs text-muted-foreground">
-        Daily target (ml)
-        <input
-          type="number"
-          min={0}
-          step={250}
-          value={targetMl}
-          onChange={(e) => {
-            const next = Math.max(0, Number(e.target.value))
-            setTargetMl(next)
-            void persist(currentMl, next)
-          }}
-          className="w-24 rounded-md border border-input bg-transparent px-2 py-1"
-        />
-      </label>
+      <div className="flex items-center justify-between border-t border-border/60 pt-3">
+        <label htmlFor="hydrationTarget" className="text-xs font-semibold text-muted-foreground">
+          Daily Target Goal:
+        </label>
+        <div className="flex items-center gap-1.5">
+          <input
+            id="hydrationTarget"
+            type="number"
+            min={500}
+            max={10000}
+            step={250}
+            value={targetMl}
+            onChange={(e) => {
+              const next = Math.max(0, Number(e.target.value))
+              setTargetMl(next)
+              void persist(currentMl, next)
+            }}
+            className="h-9 w-24 rounded-xl border border-input bg-card px-2.5 text-center font-mono text-xs font-bold text-foreground focus:border-primary focus:outline-none"
+          />
+          <span className="text-xs font-bold text-muted-foreground">ml</span>
+        </div>
+      </div>
     </section>
   )
 }

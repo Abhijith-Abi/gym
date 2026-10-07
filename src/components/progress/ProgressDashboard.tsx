@@ -265,11 +265,11 @@ function ChartSection({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <Icon className="size-4 text-primary" />
-          <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+    <section className="flex w-full min-w-0 flex-col gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2 min-w-0">
+          <Icon className="size-4 shrink-0 text-primary" />
+          <h2 className="truncate text-xs sm:text-sm font-bold uppercase tracking-wider text-muted-foreground">
             {title}
           </h2>
         </div>

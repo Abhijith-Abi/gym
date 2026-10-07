@@ -611,7 +611,7 @@ export function ExerciseVisualFrames({
       </div>
 
       {/* Main Visual Display Stage */}
-      <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-background/80 p-4">
+      <div className="relative w-full overflow-hidden rounded-2xl border border-border/80 bg-background/80 p-3 sm:p-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -619,21 +619,21 @@ export function ExerciseVisualFrames({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="flex flex-col items-center justify-center gap-3"
+            className="flex w-full flex-col items-center justify-center gap-3"
           >
             {/* Visual Biomechanical Graphic / Pose Frame */}
-            <div className="relative flex h-36 w-full max-w-sm items-center justify-center rounded-xl bg-gradient-to-b from-primary/[0.08] to-transparent border border-primary/20 shadow-inner">
+            <div className="relative flex h-32 xs:h-36 sm:h-40 w-full items-center justify-center rounded-xl bg-gradient-to-b from-primary/[0.08] to-transparent border border-primary/20 shadow-inner overflow-hidden p-1">
               <BiomechanicGraphic type={step.graphicType} stage={step.stage} />
 
               {/* Stage Badge in Graphic */}
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1 rounded-md bg-background/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary border border-border shadow-xs backdrop-blur-xs">
-                <Sparkles className="size-3" />
-                <span>Frame {currentStep + 1} of 3</span>
+              <div className="absolute top-2 left-2 flex items-center gap-1 rounded-md bg-background/90 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-black uppercase tracking-wider text-primary border border-border shadow-xs backdrop-blur-xs">
+                <Sparkles className="size-2.5 xs:size-3" />
+                <span>Frame {currentStep + 1}/3</span>
               </div>
 
               {/* Movement Vector Indicator */}
-              <div className="absolute top-2.5 right-2.5 flex items-center gap-1 rounded-md bg-primary/20 px-2 py-0.5 text-[10px] font-bold text-primary border border-primary/30">
-                <span>{step.label}</span>
+              <div className="absolute top-2 right-2 flex items-center gap-1 rounded-md bg-primary/20 px-1.5 py-0.5 text-[9px] xs:text-[10px] font-bold text-primary border border-primary/30">
+                <span className="truncate max-w-[120px]">{step.label}</span>
               </div>
             </div>
 

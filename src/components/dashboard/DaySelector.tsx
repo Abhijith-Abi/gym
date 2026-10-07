@@ -37,7 +37,7 @@ export function DaySelector() {
 
   return (
     <div
-      className="flex w-full min-w-0 gap-1.5 overflow-x-auto pb-2 scrollbar-none sm:gap-2"
+      className="flex w-full min-w-0 gap-1.5 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory sm:gap-2"
       role="tablist"
       aria-label="Day of week"
     >
@@ -57,7 +57,7 @@ export function DaySelector() {
               selectDay(day)
             }}
             className={cn(
-              'relative flex min-w-[58px] flex-1 shrink-0 flex-col items-center gap-1 rounded-2xl border p-2 text-xs font-bold transition-all active:scale-95 sm:min-w-[70px] sm:p-2.5 sm:text-sm',
+              'relative flex min-w-[56px] flex-1 shrink-0 snap-center flex-col items-center gap-1 rounded-2xl border p-2 text-xs font-bold transition-all active:scale-95 sm:min-w-[70px] sm:p-2.5 sm:text-sm',
               active
                 ? 'border-primary bg-primary/15 text-primary shadow-[0_0_15px_rgba(34,197,94,0.15)]'
                 : 'border-border/80 bg-card text-muted-foreground hover:border-border hover:text-foreground',

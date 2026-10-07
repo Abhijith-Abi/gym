@@ -75,12 +75,12 @@ export function StickyControls({
     const allDone = completedCount >= totalCount && totalCount > 0
 
     return (
-      <div className="sticky bottom-0 z-20 flex items-center gap-3 border-t border-border/80 bg-background/95 p-4 pb-safe backdrop-blur-md">
+      <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-border/80 bg-background/95 p-3 sm:p-4 pb-3 backdrop-blur-md shadow-[0_-5px_20px_rgba(0,0,0,0.3)]">
         {!allDone && (
           <button
             type="button"
             onClick={handleCompleteAll}
-            className="flex min-h-[48px] items-center gap-1.5 rounded-2xl border border-primary/30 bg-primary/10 px-3.5 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-95 sm:text-sm"
+            className="flex min-h-[48px] items-center gap-1.5 rounded-2xl border border-primary/30 bg-primary/10 px-3 py-2 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-95 sm:px-3.5 sm:text-sm"
           >
             <CheckCheck className="size-4" />
             <span className="hidden sm:inline">Mark All Done</span>
@@ -91,7 +91,7 @@ export function StickyControls({
         <button
           type="button"
           onClick={handleFinish}
-          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-5 text-sm font-bold text-primary-foreground shadow-[0_0_25px_rgba(34,197,94,0.4)] transition-all hover:bg-primary/90 active:scale-95 sm:text-base"
+          className="flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-[0_0_25px_rgba(34,197,94,0.4)] transition-all hover:bg-primary/90 active:scale-95 sm:px-5 sm:text-base"
         >
           <Check className="size-5 stroke-[2.5]" />
           <span>Finish Workout</span>
@@ -104,7 +104,7 @@ export function StickyControls({
   }
 
   return (
-    <div className="sticky bottom-0 z-20 flex items-center gap-3 border-t border-border/80 bg-background/95 p-4 pb-safe backdrop-blur-md">
+    <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-border/80 bg-background/95 p-3 sm:p-4 pb-3 backdrop-blur-md shadow-[0_-5px_20px_rgba(0,0,0,0.3)]">
       <Button
         variant="outline"
         size="icon"
