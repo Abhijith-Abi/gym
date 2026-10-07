@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Info,
   Volume2,
   ChevronDown,
   ChevronUp,
@@ -17,7 +16,6 @@ import { getExerciseFormGuide } from '@/lib/exerciseDefaults'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { triggerHaptic } from '@/hooks/useHaptics'
-import { cn } from '@/lib/utils'
 import type { Equipment, MuscleGroup } from '@/types'
 
 /**

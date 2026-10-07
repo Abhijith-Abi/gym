@@ -127,34 +127,6 @@ function genId(prefix: string): string {
 }
 
 function entryToExercise(entry: PlanEntry, sessionId: string): ActiveExercise {
-  const isDuration =
-    entry.intervalWorkSeconds !== undefined ||
-    entry.prescription.targetRepMax === 0
-  const isInterval = entry.intervalWorkSeconds !== undefined
-  const defaultWeight = getDefaultStartingWeight(entry.exerciseId)
-
-  const initialSets: ActiveSet[] = isInterval
-    ? []
-    : [
-        {
-          id: genId('set'),
-          exerciseSessionId: `${sessionId}__${entry.exerciseId}__${entry.order}`,
-          setIndex: 0,
-          targetReps: isDuration ? undefined : entry.prescription.targetRepMax,
-          weightKg: isDuration ? 0 : defaultWeight,
-          ...(isDuration
-            ? {
-                durationSeconds:
-                  entry.durationSeconds ?? entry.intervalWorkSeconds ?? 30,
-              }
-            : {
-                actualReps: entry.prescription.targetRepMax || 10,
-              }),
-          isWarmup: false,
-          isCompleted: false,
-        },
-      ]
-
   return {
     exerciseSessionId: `${sessionId}__${entry.exerciseId}__${entry.order}`,
     exerciseId: entry.exerciseId,
@@ -167,7 +139,7 @@ function entryToExercise(entry: PlanEntry, sessionId: string): ActiveExercise {
       ? { intervalRestSeconds: entry.intervalRestSeconds }
       : {}),
     prescription: entry.prescription,
-    sets: initialSets,
+    sets: [],
   }
 }
 

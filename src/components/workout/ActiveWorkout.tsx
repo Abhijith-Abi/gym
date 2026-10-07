@@ -113,13 +113,23 @@ export function ActiveWorkout() {
     })
     startWorkoutClock()
 
+    // Pre-populate initial sets for all exercises using smart category weights & reps
+    const live = useSessionStore.getState().session
+    if (live) {
+      for (const ex of live.exercises) {
+        if (ex.intervalWorkSeconds === undefined) {
+          useSessionStore.getState().addSet(ex.exerciseSessionId)
+        }
+      }
+    }
+
     // Persist the session + exercise shells (best-effort; offline-safe).
     const sessionId = useSessionStore.getState().session?.id
-    const live = useSessionStore.getState().session
-    if (sessionId && live) {
-      const sessionDoc = buildSessionDoc(live, elapsedSeconds())
+    const updatedLive = useSessionStore.getState().session
+    if (sessionId && updatedLive) {
+      const sessionDoc = buildSessionDoc(updatedLive, elapsedSeconds())
       void sessionService.upsertSession(sessionDoc)
-      for (const ex of live.exercises) {
+      for (const ex of updatedLive.exercises) {
         void sessionService.upsertExerciseSession(uid, sessionId, buildExerciseDoc(ex))
       }
     }
