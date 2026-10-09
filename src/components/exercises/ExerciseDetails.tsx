@@ -30,7 +30,7 @@ export function ExerciseDetails({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 self-start rounded-xl border border-[#2A302A] bg-[#202420] px-3 py-1.5 text-xs font-bold text-[#B4BAB4] transition-all hover:bg-[#2A302A] hover:text-white active:scale-95 shadow-sm"
+        className="inline-flex items-center gap-1.5 self-start rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-[#A8A8A8] backdrop-blur-md transition-all hover:bg-white/10 hover:text-white active:scale-95 shadow-sm"
       >
         <ChevronLeft className="size-4" aria-hidden="true" />
         Back to library
@@ -39,13 +39,13 @@ export function ExerciseDetails({
       <header className="flex flex-col gap-1.5">
         <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">{exercise.name}</h1>
         <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-          <span className="rounded-lg border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-primary capitalize">
+          <span className="rounded-xl border border-primary/30 bg-primary/15 px-2.5 py-1 text-primary capitalize">
             {exercise.category}
           </span>
-          <span className="rounded-lg border border-[#2A302A] bg-[#202420] px-2.5 py-0.5 text-[#B4BAB4] capitalize">
+          <span className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[#A8A8A8] capitalize">
             {exercise.difficulty}
           </span>
-          <span className="rounded-lg border border-[#2A302A] bg-[#202420] px-2.5 py-0.5 text-[#858B85] capitalize">
+          <span className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[#8C8C8C] capitalize">
             {exercise.equipment}
           </span>
         </div>
@@ -55,15 +55,15 @@ export function ExerciseDetails({
       <ExerciseMedia exerciseId={exercise.id} name={exercise.name} mode="detail" />
 
       {/* Muscles Card */}
-      <section className="flex flex-col gap-3 rounded-2xl border border-[#2A302A] bg-[#171A17] p-4 sm:p-5 shadow-md">
-        <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#858B85]">
+      <section className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-md backdrop-blur-xl">
+        <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#8C8C8C]">
           Target Muscle Groups
         </h2>
         <div className="flex flex-wrap gap-2">
           {exercise.primaryMuscles.map((m) => (
             <span
               key={m}
-              className="rounded-xl border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-black text-primary capitalize shadow-sm"
+              className="rounded-xl border border-primary/30 bg-primary/15 px-3 py-1 text-xs font-black text-primary capitalize shadow-sm"
             >
               Primary: {m}
             </span>
@@ -71,7 +71,7 @@ export function ExerciseDetails({
           {exercise.secondaryMuscles.map((m) => (
             <span
               key={m}
-              className="rounded-xl border border-[#2A302A] bg-[#202420] px-3 py-1 text-xs font-semibold text-[#B4BAB4] capitalize"
+              className="rounded-xl border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-[#A8A8A8] capitalize"
             >
               Secondary: {m}
             </span>
@@ -81,14 +81,14 @@ export function ExerciseDetails({
 
       {/* How to Perform */}
       {exercise.instructions.length > 0 && (
-        <section className="flex flex-col gap-3 rounded-2xl border border-[#2A302A] bg-[#171A17] p-4 sm:p-5 shadow-md">
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#858B85]">
-            How to Perform
+        <section className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-md backdrop-blur-xl">
+          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#8C8C8C]">
+            Instructions &amp; Movement Steps
           </h2>
-          <ol className="space-y-2 text-sm text-[#B4BAB4]">
+          <ol className="space-y-2.5 text-sm">
             {exercise.instructions.map((step, i) => (
               <li key={i} className="flex items-start gap-3">
-                <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[#0A0A0A] text-xs font-black">
+                <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-white text-xs font-black shadow-[0_0_10px_rgba(255,107,53,0.3)]">
                   {i + 1}
                 </span>
                 <span className="leading-relaxed text-white">{step}</span>
@@ -100,15 +100,15 @@ export function ExerciseDetails({
 
       {/* Tips */}
       {exercise.tips.length > 0 && (
-        <section className="flex flex-col gap-3 rounded-2xl border border-[#2A302A] bg-[#171A17] p-4 sm:p-5 shadow-md">
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#858B85]">
+        <section className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-md backdrop-blur-xl">
+          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#8C8C8C]">
             Pro Coaching Tips
           </h2>
-          <ul className="space-y-2 text-sm text-[#B4BAB4]">
+          <ul className="space-y-2 text-sm">
             {exercise.tips.map((tip, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <span className="text-primary font-bold">✓</span>
-                <span className="leading-relaxed text-[#B4BAB4]">{tip}</span>
+                <span className="leading-relaxed text-[#A8A8A8]">{tip}</span>
               </li>
             ))}
           </ul>
@@ -117,8 +117,8 @@ export function ExerciseDetails({
 
       {/* Substitutions */}
       {substitutions.length > 0 && (
-        <section className="flex flex-col gap-3 rounded-2xl border border-[#2A302A] bg-[#171A17] p-4 sm:p-5 shadow-md">
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#858B85]">
+        <section className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 shadow-md backdrop-blur-xl">
+          <h2 className="text-xs font-extrabold uppercase tracking-widest text-[#8C8C8C]">
             Recommended Substitutions
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -128,7 +128,7 @@ export function ExerciseDetails({
                 variant="outline"
                 size="sm"
                 onClick={() => onSelect(sub)}
-                className="rounded-xl border-[#2A302A] bg-[#202420] text-xs font-semibold text-[#B4BAB4] hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-all"
+                className="rounded-xl border-white/10 bg-white/5 text-xs font-semibold text-[#A8A8A8] hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-all"
               >
                 {sub.name}
               </Button>
@@ -136,6 +136,16 @@ export function ExerciseDetails({
           </div>
         </section>
       )}
+
+      {/* Action CTA */}
+      <div className="sticky bottom-4 z-20">
+        <Button
+          onClick={onBack}
+          className="w-full min-h-[50px] rounded-2xl bg-primary text-sm font-black text-white shadow-[0_0_25px_rgba(255,107,53,0.4)] hover:bg-primary-hover active:scale-95 border-none"
+        >
+          Add to Workout Routine
+        </Button>
+      </div>
     </div>
   )
 }

@@ -106,11 +106,11 @@ export function GoalsAndAchievements() {
   return (
     <div className="flex flex-col gap-8">
       {/* Trophy Room Banner */}
-      <header className="flex flex-col gap-4 rounded-3xl border border-primary/30 bg-card p-5 shadow-lg">
+      <header className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/20 text-primary shadow-[0_0_20px_rgba(34,197,94,0.3)]">
-              <Trophy className="size-6 fill-primary" />
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/20 text-primary shadow-[0_0_20px_rgba(255,107,53,0.3)]">
+              <Trophy className="size-6 text-primary" />
             </div>
             <div className="flex flex-col">
               <span className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -135,7 +135,7 @@ export function GoalsAndAchievements() {
           </div>
           <div className="h-2.5 w-full overflow-hidden rounded-full bg-secondary">
             <div
-              className="h-full rounded-full bg-primary shadow-[0_0_12px_rgba(34,197,94,0.5)] transition-all duration-500"
+              className="h-full rounded-full bg-primary shadow-[0_0_12px_rgba(255,107,53,0.5)] transition-all duration-500"
               style={{ width: `${unlockPercentage}%` }}
             />
           </div>
@@ -143,28 +143,28 @@ export function GoalsAndAchievements() {
 
         {/* Live Milestone Metric Counters */}
         <div className="grid grid-cols-2 gap-2 pt-2 sm:grid-cols-4">
-          <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card-elevated p-2.5">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5">
             <CheckCircle2 className="size-4 text-primary" />
             <div className="flex flex-col">
               <span className="font-mono text-sm font-bold text-foreground">{metricValues.workouts}</span>
               <span className="text-[10px] text-muted-foreground uppercase">Workouts</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card-elevated p-2.5">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5">
             <Flame className="size-4 text-warning" />
             <div className="flex flex-col">
               <span className="font-mono text-sm font-bold text-foreground">{metricValues.streakDays}d</span>
               <span className="text-[10px] text-muted-foreground uppercase">Streak</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card-elevated p-2.5">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5">
             <Award className="size-4 text-accent" />
             <div className="flex flex-col">
               <span className="font-mono text-sm font-bold text-foreground">{metricValues.prCount}</span>
               <span className="text-[10px] text-muted-foreground uppercase">PRs</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-card-elevated p-2.5">
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2.5">
             <Dumbbell className="size-4 text-primary" />
             <div className="flex flex-col">
               <span className="font-mono text-sm font-bold text-foreground">

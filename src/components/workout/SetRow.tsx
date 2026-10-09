@@ -66,9 +66,9 @@ export function SetRow({
       className={cn(
         'flex flex-col gap-2.5 rounded-2xl border p-3.5 transition-all scroll-mt-20',
         set.isCompleted
-          ? 'border-primary/40 bg-primary/10 shadow-[0_0_15px_-3px_rgba(34,197,94,0.15)] opacity-95'
+          ? 'border-primary/40 bg-primary/10 shadow-[0_0_15px_-3px_rgba(255,107,53,0.15)] opacity-95'
           : isActive
-            ? 'border-primary bg-card shadow-[0_0_20px_-3px_rgba(34,197,94,0.25)] ring-1 ring-primary'
+            ? 'border-primary bg-card shadow-[0_0_20px_-3px_rgba(255,107,53,0.25)] ring-1 ring-primary'
             : 'border-border/80 bg-card hover:border-border',
       )}
     >
@@ -308,9 +308,9 @@ export function SetRow({
           className={cn(
             'flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2 text-xs font-extrabold transition-all active:scale-95',
             set.isCompleted
-              ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(34,197,94,0.4)]'
+              ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(255,107,53,0.4)]'
               : isActive
-                ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:bg-primary/90'
+                ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(255,107,53,0.35)] hover:bg-primary/90'
                 : 'border border-primary/50 bg-primary/10 text-primary hover:bg-primary/20',
           )}
         >

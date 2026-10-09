@@ -23,10 +23,10 @@ import type { TrendPoint } from '@/lib/analytics/trends'
  * Premium dark theme formatting with custom tooltips, gradients, and subtle grids.
  */
 
-const AXIS = { stroke: '#858B85', fontSize: 11 }
-const GRID = 'rgba(42, 48, 42, 0.6)'
-const PRIMARY = '#B6FF3B'
-const ACCENT = '#A3ED2E'
+const AXIS = { stroke: '#8C8C8C', fontSize: 11 }
+const GRID = 'rgba(255, 255, 255, 0.08)'
+const PRIMARY = '#FF6B35'
+const ACCENT = '#FFA07A'
 
 interface EmptyProps {
   message?: string
@@ -34,9 +34,9 @@ interface EmptyProps {
 
 function Empty({ message = 'No data available for this range' }: EmptyProps) {
   return (
-    <div className="flex h-64 w-full flex-col items-center justify-center rounded-2xl border border-border/80 bg-card p-6 text-center text-xs text-muted-foreground">
+    <div className="flex h-64 w-full flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-6 text-center text-xs text-[#8C8C8C] backdrop-blur-xl">
       <p>{message}</p>
-      <p className="mt-1 text-[10px] text-muted-foreground/60">
+      <p className="mt-1 text-[10px] text-[#8C8C8C]/60">
         Log workouts to see your progression trend.
       </p>
     </div>
@@ -44,9 +44,9 @@ function Empty({ message = 'No data available for this range' }: EmptyProps) {
 }
 
 const customTooltipStyle = {
-  backgroundColor: '#171A17',
-  borderColor: '#2A302A',
-  borderRadius: '0.75rem',
+  backgroundColor: '#1A1A1A',
+  borderColor: 'rgba(255, 255, 255, 0.15)',
+  borderRadius: '1rem',
   color: '#FFFFFF',
   fontSize: '0.75rem',
   boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.7)',
@@ -55,7 +55,7 @@ const customTooltipStyle = {
 export function ProgressChartView({ points }: { points: TrendPoint[] }) {
   if (points.length === 0) return <Empty />
   return (
-    <div className="rounded-2xl border border-border/80 bg-card p-3 shadow-sm">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-md backdrop-blur-xl">
       <ResponsiveContainer width="100%" height={260}>
         <LineChart data={points} margin={{ top: 12, right: 12, left: -10, bottom: 0 }}>
           <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
@@ -67,7 +67,7 @@ export function ProgressChartView({ points }: { points: TrendPoint[] }) {
             dataKey="value"
             stroke={PRIMARY}
             strokeWidth={3}
-            dot={{ r: 4, fill: PRIMARY, stroke: '#10141e', strokeWidth: 2 }}
+            dot={{ r: 4, fill: PRIMARY, stroke: '#1A1A1A', strokeWidth: 2 }}
             activeDot={{ r: 6, fill: ACCENT }}
           />
         </LineChart>
@@ -79,7 +79,7 @@ export function ProgressChartView({ points }: { points: TrendPoint[] }) {
 export function VolumeChartView({ points }: { points: VolumePoint[] }) {
   if (points.length === 0) return <Empty />
   return (
-    <div className="rounded-2xl border border-border/80 bg-card p-3 shadow-sm">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-md backdrop-blur-xl">
       <ResponsiveContainer width="100%" height={260}>
         <AreaChart data={points} margin={{ top: 12, right: 12, left: -10, bottom: 0 }}>
           <defs>
@@ -108,7 +108,7 @@ export function VolumeChartView({ points }: { points: VolumePoint[] }) {
 export function StrengthChartView({ points }: { points: StrengthPoint[] }) {
   if (points.length === 0) return <Empty />
   return (
-    <div className="rounded-2xl border border-border/80 bg-card p-3 shadow-sm">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-md backdrop-blur-xl">
       <ResponsiveContainer width="100%" height={260}>
         <LineChart data={points} margin={{ top: 12, right: 12, left: -10, bottom: 0 }}>
           <CartesianGrid stroke={GRID} strokeDasharray="3 3" />
@@ -120,7 +120,7 @@ export function StrengthChartView({ points }: { points: StrengthPoint[] }) {
             dataKey="e1rmKg"
             stroke={ACCENT}
             strokeWidth={3}
-            dot={{ r: 4, fill: ACCENT, stroke: '#10141e', strokeWidth: 2 }}
+            dot={{ r: 4, fill: ACCENT, stroke: '#1A1A1A', strokeWidth: 2 }}
             activeDot={{ r: 6, fill: PRIMARY }}
           />
         </LineChart>
@@ -136,7 +136,7 @@ export function MuscleVolumeChartView({
 }) {
   if (points.length === 0) return <Empty />
   return (
-    <div className="rounded-2xl border border-border/80 bg-card p-3 shadow-sm">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-md backdrop-blur-xl">
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={points} margin={{ top: 12, right: 12, left: -10, bottom: 0 }}>
           <CartesianGrid stroke={GRID} strokeDasharray="3 3" />

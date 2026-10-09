@@ -40,8 +40,8 @@ export function ProgressRing({
       >
         <defs>
           <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#22c55e" />
-            <stop offset="100%" stopColor="#06b6d4" />
+            <stop offset="0%" stopColor="#FF6B35" />
+            <stop offset="100%" stopColor="#FFA07A" />
           </linearGradient>
           <filter id="ringGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="4" result="glow" />

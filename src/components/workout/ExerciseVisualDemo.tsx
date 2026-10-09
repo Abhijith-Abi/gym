@@ -54,7 +54,7 @@ export function ExerciseVisualDemo({
       {/* Header bar */}
       <div className="flex items-center justify-between p-3.5 sm:p-4">
         <div className="flex min-w-0 flex-1 items-center gap-3">
-          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/20 text-primary shadow-[0_0_20px_rgba(34,197,94,0.3)] border border-primary/30">
+          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/20 text-primary shadow-[0_0_20px_rgba(255,107,53,0.3)] border border-primary/30">
             <Sparkles className="size-5" />
           </div>
 
@@ -71,7 +71,7 @@ export function ExerciseVisualDemo({
               {primary.map((m: MuscleGroup) => (
                 <span
                   key={m}
-                  className="rounded-lg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary bg-primary/10 border border-primary/30 shadow-[0_0_10px_rgba(34,197,94,0.15)]"
+                  className="rounded-lg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary bg-primary/10 border border-primary/30 shadow-[0_0_10px_rgba(255,107,53,0.15)]"
                 >
                   {m}
                 </span>

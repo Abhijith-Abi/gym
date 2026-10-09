@@ -406,7 +406,7 @@ function StartPrompt({
 }) {
   return (
     <main className="mx-auto flex min-h-[80vh] w-full max-w-xl min-w-0 flex-col items-center justify-center gap-6 p-4 text-center sm:p-6">
-      <div className="flex size-20 items-center justify-center rounded-3xl bg-primary/20 text-primary shadow-[0_0_35px_rgba(34,197,94,0.35)]">
+      <div className="flex size-20 items-center justify-center rounded-3xl bg-primary/20 text-primary shadow-[0_0_35px_rgba(255,107,53,0.35)]">
         {isRest ? (
           <Sparkles className="size-10" aria-hidden="true" />
         ) : (
@@ -424,7 +424,7 @@ function StartPrompt({
       </div>
 
       {isRest ? (
-        <div className="max-w-md rounded-2xl border border-border bg-card p-6">
+        <div className="max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-6">
           <p className="text-base text-muted-foreground">
             Today is a scheduled recovery day. Rest, refuel, and let your muscles rebuild for tomorrow&apos;s session.
           </p>
@@ -433,15 +433,15 @@ function StartPrompt({
         <div className="flex w-full flex-col gap-5">
           {entriesCount !== undefined && entriesCount > 0 && (
             <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-muted-foreground sm:gap-3 sm:text-sm">
-              <span className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 sm:px-3.5">
+              <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5">
                 <ListChecks className="size-3.5 text-primary sm:size-4" />
                 {entriesCount} Exercises
               </span>
-              <span className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 sm:px-3.5">
+              <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5">
                 <Flame className="size-3.5 text-warning sm:size-4" />
                 {totalSets} Total Sets
               </span>
-              <span className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 sm:px-3.5">
+              <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-3.5">
                 <Clock className="size-3.5 text-accent sm:size-4" />
                 ~45 min
               </span>
@@ -452,7 +452,7 @@ function StartPrompt({
             type="button"
             onClick={onStart}
             disabled={!canStart}
-            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_30px_rgba(34,197,94,0.4)] transition-all hover:bg-primary/90 disabled:opacity-50 active:scale-95 sm:min-h-[56px] sm:text-lg"
+            className="flex min-h-[52px] w-full items-center justify-center gap-3 rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_30px_rgba(255,107,53,0.4)] transition-all hover:bg-primary/90 disabled:opacity-50 active:scale-95 sm:min-h-[56px] sm:text-lg"
           >
             <Play className="size-5 fill-primary-foreground" />
             Start Workout

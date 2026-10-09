@@ -134,8 +134,8 @@ export function ProgressDashboard() {
             className={cn(
               'min-h-[36px] rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all active:scale-95',
               range === r
-                ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(34,197,94,0.3)]'
-                : 'border border-border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground',
+                ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(255,107,53,0.35)]'
+                : 'border border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground',
             )}
           >
             {r}
@@ -225,7 +225,7 @@ function ReportCard({
   bg: string
 }) {
   return (
-    <div className="flex flex-col justify-between rounded-3xl border border-border/80 bg-card p-5 shadow-sm">
+    <div className="flex flex-col justify-between rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           {title}

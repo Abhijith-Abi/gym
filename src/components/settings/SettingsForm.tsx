@@ -65,7 +65,7 @@ function Toggle({
         className={cn(
           'relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-95',
           checked
-            ? 'bg-primary shadow-[0_0_12px_rgba(34,197,94,0.35)]'
+            ? 'bg-primary shadow-[0_0_12px_rgba(255,107,53,0.35)]'
             : 'bg-secondary border border-border/80',
         )}
       >
@@ -206,8 +206,8 @@ export function SettingsForm() {
               className={cn(
                 'flex min-h-[44px] items-center justify-center gap-2 rounded-xl border p-2 text-xs font-bold transition-all active:scale-95',
                 theme === id
-                  ? 'border-primary bg-primary/15 text-primary shadow-[0_0_12px_rgba(34,197,94,0.2)]'
-                  : 'border-border bg-card-elevated text-muted-foreground hover:bg-secondary hover:text-foreground',
+                  ? 'border-primary bg-primary/15 text-primary shadow-[0_0_12px_rgba(255,107,53,0.2)]'
+                  : 'border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground',
               )}
             >
               <Icon className="size-4" />
@@ -218,7 +218,7 @@ export function SettingsForm() {
       </div>
 
       {/* Training & Tracking settings */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4">
+      <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4">
         <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Workout Tracking &amp; RPE
         </Label>
@@ -238,8 +238,8 @@ export function SettingsForm() {
                     className={cn(
                       'min-h-[40px] rounded-xl border px-2 py-1.5 text-xs font-bold transition-all',
                       field.value === m
-                        ? 'border-primary bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.3)]'
-                        : 'border-border bg-card-elevated text-muted-foreground hover:bg-secondary hover:text-foreground',
+                        ? 'border-primary bg-primary text-primary-foreground shadow-[0_0_12px_rgba(255,107,53,0.3)]'
+                        : 'border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground',
                     )}
                   >
                     {m}
@@ -419,7 +419,7 @@ export function SettingsForm() {
       <Button
         type="submit"
         size="lg"
-        className="min-h-[50px] rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:bg-primary/90 active:scale-95"
+        className="min-h-[50px] rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_20px_rgba(255,107,53,0.35)] hover:bg-primary/90 active:scale-95"
       >
         Save Preferences
       </Button>

@@ -177,7 +177,7 @@ export function GoalProgress() {
           <Button
             type="submit"
             disabled={formState.isSubmitting}
-            className="col-span-2 min-h-[44px] rounded-xl font-bold bg-primary text-primary-foreground shadow-[0_0_15px_rgba(34,197,94,0.3)]"
+            className="col-span-2 min-h-[44px] rounded-xl font-bold bg-primary text-primary-foreground shadow-[0_0_15px_rgba(255,107,53,0.3)]"
           >
             Save Target Goal
           </Button>
@@ -202,8 +202,8 @@ export function GoalProgress() {
                 className={cn(
                   'flex flex-col gap-3 rounded-2xl border p-4 transition-all',
                   isAchieved
-                    ? 'border-primary/50 bg-primary/10 shadow-[0_0_15px_rgba(34,197,94,0.15)]'
-                    : 'border-border/80 bg-card hover:border-border',
+                    ? 'border-primary/50 bg-primary/10 shadow-[0_0_15px_rgba(255,107,53,0.15)]'
+                    : 'border-white/10 bg-white/5 hover:border-white/20',
                 )}
               >
                 <div className="flex items-center justify-between">
@@ -258,7 +258,7 @@ export function GoalProgress() {
                     <div
                       className={cn(
                         'h-full rounded-full transition-all duration-500',
-                        isAchieved ? 'bg-primary shadow-[0_0_10px_rgba(34,197,94,0.6)]' : 'bg-primary',
+                        isAchieved ? 'bg-primary shadow-[0_0_10px_rgba(255,107,53,0.6)]' : 'bg-primary',
                       )}
                       style={{ width: `${pct}%` }}
                     />

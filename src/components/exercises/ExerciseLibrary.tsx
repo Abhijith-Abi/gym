@@ -140,7 +140,7 @@ export function ExerciseLibrary() {
       {/* Search Input */}
       <div className="relative">
         <Search
-          className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#858B85]"
+          className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#8C8C8C]"
           aria-hidden="true"
         />
         <Input
@@ -149,22 +149,22 @@ export function ExerciseLibrary() {
           aria-label="Search exercises"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="h-12 rounded-xl border-[#2A302A] bg-[#171A17] pl-11 text-white placeholder:text-[#858B85] transition-all focus:border-primary focus:bg-[#202420]"
+          className="h-12 rounded-2xl border-white/10 bg-white/5 pl-11 text-white placeholder:text-[#8C8C8C] backdrop-blur-xl transition-all focus:border-primary focus:bg-white/[0.08]"
         />
       </div>
 
       {/* Muscle Group Filter Chips */}
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#858B85] flex items-center gap-1.5">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#8C8C8C] flex items-center gap-1.5">
             <Filter className="size-3 text-primary" />
             Target Muscle Group
           </span>
           <span className="text-[10px] font-bold text-primary">
-            {list.length} Movements Available
+            {list.length} Movements
           </span>
         </div>
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by target muscle">
+        <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto pb-1" role="group" aria-label="Filter by target muscle">
           {MUSCLE_FILTERS.map((m) => (
             <button
               key={m.value}
@@ -175,10 +175,10 @@ export function ExerciseLibrary() {
                 setMuscleFilter(m.value)
               }}
               className={cn(
-                'rounded-lg px-3 py-1.5 text-xs font-bold transition-all active:scale-95',
+                'shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all backdrop-blur-md active:scale-95',
                 muscleFilter === m.value
-                  ? 'bg-primary text-[#0A0A0A] font-black shadow-[0_0_12px_rgba(182,255,59,0.3)]'
-                  : 'border border-[#2A302A] bg-[#202420] text-[#B4BAB4] hover:bg-[#2A302A] hover:text-white',
+                  ? 'bg-primary text-white shadow-[0_0_15px_rgba(255,107,53,0.35)]'
+                  : 'border border-white/10 bg-white/5 text-[#A8A8A8] hover:border-white/20 hover:text-white',
               )}
             >
               {m.label}
@@ -188,11 +188,11 @@ export function ExerciseLibrary() {
       </div>
 
       {/* Equipment Filter Chips */}
-      <div className="flex flex-col gap-2">
-        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#858B85]">
+      <div className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#8C8C8C]">
           Equipment
         </span>
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by equipment">
+        <div className="no-scrollbar flex items-center gap-1.5 overflow-x-auto pb-1" role="group" aria-label="Filter by equipment">
           {EQUIPMENT_FILTERS.map((eq) => (
             <button
               key={eq.value}
@@ -203,10 +203,10 @@ export function ExerciseLibrary() {
                 setEquipmentFilter(eq.value)
               }}
               className={cn(
-                'rounded-lg px-3 py-1 text-xs font-semibold transition-all active:scale-95',
+                'shrink-0 rounded-xl px-3 py-1 text-xs font-semibold transition-all backdrop-blur-md active:scale-95',
                 equipmentFilter === eq.value
-                  ? 'bg-primary text-[#0A0A0A] font-bold'
-                  : 'border border-[#2A302A] bg-[#202420] text-[#858B85] hover:bg-[#2A302A] hover:text-white',
+                  ? 'bg-primary text-white font-bold'
+                  : 'border border-white/10 bg-white/5 text-[#8C8C8C] hover:border-white/20 hover:text-white',
               )}
             >
               {eq.label}
@@ -217,25 +217,21 @@ export function ExerciseLibrary() {
 
       {/* Exercise Grid */}
       {list.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-[#2A302A] bg-[#171A17] p-12 text-center">
-          <div className="flex size-14 items-center justify-center rounded-xl bg-[#202420] text-[#858B85]">
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-12 text-center backdrop-blur-xl">
+          <div className="flex size-14 items-center justify-center rounded-2xl bg-white/10 text-primary">
             <Dumbbell className="size-7" />
           </div>
           <p className="mt-3 text-base font-bold text-white">
             No exercises match your filters
           </p>
-          <p className="mt-1 text-xs text-[#858B85] max-w-sm">
+          <p className="mt-1 text-xs text-[#8C8C8C] max-w-sm">
             Try resetting your muscle group or equipment filters, or check your search spelling.
           </p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-bold text-[#858B85]">
-            Showing <strong className="text-white">{list.length}</strong> movements
-          </span>
-
-          {/* Fully Responsive Black & Neon Green Grid */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+          {/* Responsive 2-col on mobile, 3-4 col on desktop Grid */}
+          <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {list.map((e) => (
               <li key={e.id}>
                 <button
@@ -244,18 +240,18 @@ export function ExerciseLibrary() {
                     triggerHaptic('light')
                     setSelected(e)
                   }}
-                  className="group flex flex-col w-full overflow-hidden rounded-xl border border-[#2A302A] bg-[#171A17] p-3 text-left transition-all duration-200 hover:border-primary/50 hover:bg-[#202420] hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)] active:scale-[0.98]"
+                  className="group flex flex-col w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-2.5 sm:p-3 text-left transition-all duration-200 backdrop-blur-xl hover:border-primary/50 hover:bg-white/[0.08] hover:shadow-[0_4px_25px_rgba(0,0,0,0.5)] active:scale-[0.98]"
                 >
                   {/* 16:9 Thumbnail Preview */}
-                  <div className="relative w-full overflow-hidden rounded-lg border border-[#2A302A] bg-[#0A0A0A]">
+                  <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#0A0A0A]">
                     <ExerciseMedia exerciseId={e.id} name={e.name} mode="card" />
                   </div>
 
                   {/* Metadata */}
-                  <div className="mt-3 flex flex-1 flex-col justify-between">
+                  <div className="mt-2.5 flex flex-1 flex-col justify-between">
                     <div>
                       <div className="flex w-full items-start justify-between gap-1.5">
-                        <h3 className="font-extrabold text-white text-sm line-clamp-1 group-hover:text-primary transition-colors">
+                        <h3 className="font-extrabold text-white text-xs sm:text-sm line-clamp-1 group-hover:text-primary transition-colors">
                           {e.name}
                         </h3>
                         {e.isCustom && (
@@ -265,24 +261,21 @@ export function ExerciseLibrary() {
                         )}
                       </div>
 
-                      <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs text-[#858B85]">
-                        <Target className="size-3 text-primary shrink-0" />
-                        <span className="font-bold text-primary capitalize text-[11px] truncate">
+                      <div className="mt-1 flex flex-wrap items-center gap-1 text-[10px] text-[#8C8C8C]">
+                        <span className="font-bold text-primary capitalize truncate">
                           {e.primaryMuscles.join(', ')}
                         </span>
                         <span>·</span>
-                        <span className="capitalize text-[11px] text-[#B4BAB4]">{e.equipment}</span>
-                        <span>·</span>
-                        <span className="capitalize text-[11px] text-[#858B85]">{e.category}</span>
+                        <span className="capitalize text-[#A8A8A8]">{e.equipment}</span>
                       </div>
                     </div>
 
-                    <div className="mt-2.5 flex items-center justify-between border-t border-[#2A302A] pt-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#858B85]">
+                    <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-1.5">
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#8C8C8C] capitalize">
                         {e.difficulty}
                       </span>
                       <span className="text-[10px] font-bold text-primary group-hover:underline">
-                        View Demo →
+                        Details →
                       </span>
                     </div>
                   </div>

@@ -15,8 +15,8 @@ export function ProfileHeader() {
     .slice(0, 2) || 'FF'
 
   return (
-    <div className="relative flex items-center gap-4 overflow-hidden rounded-3xl border border-border/80 bg-gradient-to-r from-card to-card-elevated p-5 shadow-lg">
-      <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-xl font-black text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)]">
+    <div className="relative flex items-center gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-lg">
+      <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-primary text-xl font-black text-primary-foreground shadow-[0_0_20px_rgba(255,107,53,0.35)]">
         {initials}
       </div>
 

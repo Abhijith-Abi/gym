@@ -107,12 +107,13 @@ export function TodayCard() {
   }))
 
   return (
-    <div className="relative w-full min-w-0 overflow-hidden rounded-2xl border border-[#2A302A] bg-[#171A17] p-4 shadow-xl sm:p-6">
+    <div className="relative w-full min-w-0 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-primary/10 p-5 shadow-2xl backdrop-blur-2xl sm:p-6">
       {/* Background Accent Glow */}
-      <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-primary/20 blur-3xl" />
+      <div className="pointer-events-none absolute -left-10 -bottom-10 size-40 rounded-full bg-primary/10 blur-2xl" />
 
       {/* Header Info */}
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-1 flex-col">
           <span className="text-[11px] font-black uppercase tracking-widest text-primary sm:text-xs">
             Today&apos;s Workout
@@ -120,40 +121,33 @@ export function TodayCard() {
           <h2 className="mt-1 truncate text-xl font-black tracking-tight text-white sm:text-2xl md:text-3xl">
             {planDay.workoutName}
           </h2>
+          <div className="mt-1 flex items-center gap-2 text-xs font-semibold text-[#A8A8A8]">
+            <span>{exerciseCount} Exercises</span>
+            <span>·</span>
+            <span>{estMinutes} min</span>
+          </div>
         </div>
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-[#0A0A0A] shadow-[0_0_15px_rgba(182,255,59,0.3)] sm:size-11">
-          <Dumbbell className="size-5 sm:size-6 stroke-[2.5]" aria-hidden="true" />
+        <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30 text-primary shadow-[0_0_20px_rgba(255,107,53,0.3)]">
+          <Dumbbell className="size-6 stroke-[2.5]" aria-hidden="true" />
         </div>
-      </div>
-
-      {/* Meta Stats Badges */}
-      <div className="mt-3.5 flex flex-wrap gap-2 text-xs font-semibold text-[#B4BAB4] sm:mt-4 sm:gap-2.5">
-        <span className="flex items-center gap-1.5 rounded-lg border border-[#2A302A] bg-[#202420] px-2.5 py-1 text-white sm:px-3 sm:py-1.5">
-          <ListChecks className="size-3.5 text-primary sm:size-4" aria-hidden="true" />
-          {exerciseCount} Exercises · {totalSets} Sets
-        </span>
-        <span className="flex items-center gap-1.5 rounded-lg border border-[#2A302A] bg-[#202420] px-2.5 py-1 text-white sm:px-3 sm:py-1.5">
-          <Clock className="size-3.5 text-primary sm:size-4" aria-hidden="true" />
-          ~{estMinutes} min
-        </span>
       </div>
 
       {/* Exercise Preview List */}
-      <div className="mt-3.5 flex flex-col gap-1.5 sm:mt-4">
-        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#858B85]">
+      <div className="mt-4 flex flex-col gap-1.5">
+        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#8C8C8C]">
           Exercise Lineup
         </span>
         <div className="flex flex-wrap gap-1.5">
           {preview.map(({ name }) => (
             <span
               key={name}
-              className="rounded-md border border-[#2A302A] bg-[#202420] px-2 py-0.5 text-[11px] font-medium text-[#B4BAB4] sm:px-2.5 sm:py-1 sm:text-xs"
+              className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-[#A8A8A8] backdrop-blur-md sm:text-xs"
             >
               {name}
             </span>
           ))}
           {exerciseCount > 4 && (
-            <span className="rounded-md border border-[#2A302A] bg-[#202420] px-2 py-0.5 text-[11px] font-medium text-[#858B85] sm:px-2 sm:py-1 sm:text-xs">
+            <span className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-[#8C8C8C] backdrop-blur-md sm:text-xs">
               +{exerciseCount - 4} more
             </span>
           )}
@@ -165,10 +159,10 @@ export function TodayCard() {
         <Link
           href="/workout"
           onClick={() => triggerHaptic('medium')}
-          className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-black text-[#0A0A0A] shadow-[0_0_20px_rgba(182,255,59,0.35)] transition-all hover:bg-primary-hover active:scale-95 sm:min-h-[52px] sm:text-base"
+          className="flex min-h-[50px] w-full items-center justify-center gap-2 rounded-2xl bg-primary text-sm font-black text-white shadow-[0_0_25px_rgba(255,107,53,0.4)] transition-all hover:bg-primary-hover active:scale-95 sm:min-h-[54px] sm:text-base"
         >
-          <Play className="size-4 fill-current" />
-          Start Workout
+          <span>Start Workout</span>
+          <span className="text-base font-bold">→</span>
         </Link>
       </div>
     </div>

@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center gap-6 px-6 text-center">
-      <div className="relative flex size-20 items-center justify-center rounded-3xl bg-primary text-primary-foreground shadow-[0_0_40px_rgba(34,197,94,0.45)]">
+      <div className="relative flex size-20 items-center justify-center rounded-3xl bg-primary text-primary-foreground shadow-[0_0_40px_rgba(255,107,53,0.45)]">
         <Dumbbell className="size-10 animate-pulse" aria-hidden="true" />
       </div>
       <div className="flex flex-col gap-1">

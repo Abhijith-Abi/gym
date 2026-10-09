@@ -62,10 +62,10 @@ export function WorkoutExerciseListItem({
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-2xl border transition-all duration-200 ${
+      className={`group relative overflow-hidden rounded-2xl border transition-all duration-200 backdrop-blur-xl ${
         isCompleted
-          ? 'border-primary/40 bg-[#171A17] shadow-[0_0_15px_rgba(182,255,59,0.08)]'
-          : 'border-[#2A302A] bg-[#171A17] hover:border-[#384238]'
+          ? 'border-primary/40 bg-primary/[0.06] shadow-[0_0_15px_rgba(255,107,53,0.15)]'
+          : 'border-white/10 bg-white/5 hover:border-white/20'
       }`}
     >
       <div className="p-3.5 sm:p-4">
@@ -76,8 +76,8 @@ export function WorkoutExerciseListItem({
             <div
               className={`flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-xl text-xs sm:text-sm font-black transition-all ${
                 isCompleted
-                  ? 'bg-primary text-[#0A0A0A] shadow-[0_0_12px_rgba(182,255,59,0.35)]'
-                  : 'border border-[#2A302A] bg-[#202420] text-white'
+                  ? 'bg-primary text-white shadow-[0_0_12px_rgba(255,107,53,0.35)]'
+                  : 'border border-white/10 bg-white/10 text-white'
               }`}
             >
               {isCompleted ? <Check className="size-4 sm:size-5 stroke-[3]" /> : index + 1}
@@ -87,13 +87,13 @@ export function WorkoutExerciseListItem({
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-1.5">
                 {meta?.primaryMuscles && meta.primaryMuscles.length > 0 && (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-primary">
+                  <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold text-primary">
                     <Target className="size-2.5" />
                     {meta.primaryMuscles.join(', ')}
                   </span>
                 )}
                 {meta?.equipment && (
-                  <span className="rounded-full border border-[#2A302A] bg-[#202420] px-2 py-0.5 text-[9px] sm:text-[10px] font-medium text-[#B4BAB4] capitalize">
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[9px] sm:text-[10px] font-medium text-[#A8A8A8] capitalize">
                     {meta.equipment}
                   </span>
                 )}
@@ -103,7 +103,7 @@ export function WorkoutExerciseListItem({
                 <h3
                   className={`text-sm sm:text-base font-black tracking-tight transition-colors truncate ${
                     isCompleted
-                      ? 'text-primary/70 line-through decoration-primary/50'
+                      ? 'text-primary/80 line-through decoration-primary/50'
                       : 'text-white'
                   }`}
                 >
@@ -113,14 +113,14 @@ export function WorkoutExerciseListItem({
                   type="button"
                   onClick={handleSpeakGuide}
                   aria-label="Listen to exercise tips"
-                  className="flex size-5 shrink-0 items-center justify-center rounded-full text-[#858B85] hover:text-white transition-colors"
+                  className="flex size-5 shrink-0 items-center justify-center rounded-full text-[#8C8C8C] hover:text-white transition-colors"
                 >
                   <Volume2 className="size-3" />
                 </button>
               </div>
 
               {/* Prescription Target */}
-              <div className="mt-1 flex items-center gap-2 text-xs font-semibold text-[#858B85]">
+              <div className="mt-1 flex items-center gap-2 text-xs font-semibold text-[#8C8C8C]">
                 {isInterval ? (
                   <span>
                     {targetSetsCount} Rnds · {exercise.intervalWorkSeconds}s Work / {exercise.intervalRestSeconds}s Rest
@@ -150,8 +150,8 @@ export function WorkoutExerciseListItem({
             }}
             className={`relative flex h-14 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border transition-all active:scale-95 ${
               showDemo
-                ? 'border-primary shadow-[0_0_12px_rgba(182,255,59,0.25)]'
-                : 'border-[#2A302A] hover:border-primary/50'
+                ? 'border-primary shadow-[0_0_12px_rgba(255,107,53,0.3)]'
+                : 'border-white/10 hover:border-primary/50'
             }`}
           >
             <ExerciseMedia
@@ -161,7 +161,7 @@ export function WorkoutExerciseListItem({
               className="h-full w-full object-cover"
             />
             {/* Minimalist expand indicator */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 hover:opacity-100 transition-opacity">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 transition-opacity">
               <span className="rounded-md bg-black/80 px-1.5 py-0.5 text-[9px] font-bold text-primary">
                 {showDemo ? 'Close' : 'Watch'}
               </span>
@@ -177,7 +177,7 @@ export function WorkoutExerciseListItem({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="mt-3 overflow-hidden rounded-xl border border-[#2A302A] bg-[#0A0A0A] p-2 shadow-xl"
+              className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] p-2 shadow-xl"
             >
               <div className="flex items-center justify-between pb-1.5 px-1">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
@@ -186,7 +186,7 @@ export function WorkoutExerciseListItem({
                 <button
                   type="button"
                   onClick={() => setShowDemo(false)}
-                  className="text-[10px] font-bold text-[#858B85] hover:text-white"
+                  className="text-[10px] font-bold text-[#8C8C8C] hover:text-white"
                 >
                   Close Video ✕
                 </button>
@@ -208,8 +208,8 @@ export function WorkoutExerciseListItem({
             aria-label={isCompleted ? 'Mark exercise incomplete' : 'Mark exercise complete'}
             className={`flex min-h-[42px] sm:min-h-[44px] w-full items-center justify-center gap-2 rounded-xl text-xs sm:text-sm font-bold transition-all active:scale-[0.98] ${
               isCompleted
-                ? 'border border-[#2A302A] bg-[#202420] text-[#B4BAB4] hover:text-white hover:bg-[#2A302A]'
-                : 'bg-primary text-[#0A0A0A] shadow-[0_0_15px_rgba(182,255,59,0.3)] hover:bg-[#A3ED2E]'
+                ? 'border border-white/10 bg-white/5 text-[#A8A8A8] hover:text-white hover:bg-white/10'
+                : 'bg-primary text-white shadow-[0_0_20px_rgba(255,107,53,0.35)] hover:bg-primary-hover'
             }`}
           >
             {isCompleted ? (

@@ -108,11 +108,11 @@ export function WorkoutCompleteModal({
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: 'spring', damping: 20, stiffness: 260 }}
-          className="relative flex w-full max-w-md flex-col items-center rounded-3xl border border-primary/40 bg-card p-6 text-center shadow-2xl"
+          className="relative flex w-full max-w-md flex-col items-center rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl p-6 text-center shadow-2xl"
         >
           {/* Glowing Header Icon */}
-          <div className="relative mb-3 flex size-20 items-center justify-center rounded-full bg-primary/20 text-primary shadow-[0_0_35px_rgba(34,197,94,0.5)]">
-            <Trophy className="size-10" aria-hidden="true" />
+          <div className="relative mb-3 flex size-20 items-center justify-center rounded-full bg-primary/20 text-primary shadow-[0_0_35px_rgba(255,107,53,0.5)]">
+            <Trophy className="size-10 text-primary" aria-hidden="true" />
           </div>
 
           <span className="text-xs font-bold uppercase tracking-widest text-primary">
@@ -131,7 +131,7 @@ export function WorkoutCompleteModal({
 
           {/* Stats Summary Grid */}
           <div className="mt-6 grid w-full grid-cols-2 gap-3">
-            <div className="flex flex-col items-center rounded-2xl border border-border bg-card-elevated p-3.5">
+            <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-3.5">
               <Clock className="size-5 text-primary" />
               <span className="mt-1 font-mono text-xl font-bold text-foreground">
                 {minutes} <span className="text-xs font-normal text-muted-foreground">min</span>
@@ -141,7 +141,7 @@ export function WorkoutCompleteModal({
               </span>
             </div>
 
-            <div className="flex flex-col items-center rounded-2xl border border-border bg-card-elevated p-3.5">
+            <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-3.5">
               <Dumbbell className="size-5 text-accent" />
               <span className="mt-1 font-mono text-xl font-bold text-foreground">
                 {toDisplay(totalVolumeKg, unit)}{' '}
@@ -152,7 +152,7 @@ export function WorkoutCompleteModal({
               </span>
             </div>
 
-            <div className="flex flex-col items-center rounded-2xl border border-border bg-card-elevated p-3.5">
+            <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-3.5">
               <CheckCircle2 className="size-5 text-primary" />
               <span className="mt-1 font-mono text-xl font-bold text-foreground">
                 {completedSets}
@@ -162,7 +162,7 @@ export function WorkoutCompleteModal({
               </span>
             </div>
 
-            <div className="flex flex-col items-center rounded-2xl border border-border bg-card-elevated p-3.5">
+            <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-3.5">
               <Flame className="size-5 text-warning" />
               <span className="mt-1 font-mono text-xl font-bold text-foreground">
                 {caloriesBurned} <span className="text-xs font-normal text-muted-foreground">kcal</span>
@@ -188,7 +188,7 @@ export function WorkoutCompleteModal({
               playSound('button-click')
               onConfirmFinish()
             }}
-            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_25px_rgba(34,197,94,0.4)] transition-all hover:bg-primary/90 active:scale-95"
+            className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-2xl bg-primary text-base font-bold text-primary-foreground shadow-[0_0_25px_rgba(255,107,53,0.4)] transition-all hover:bg-primary/90 active:scale-95"
           >
             Save &amp; View Summary
           </button>

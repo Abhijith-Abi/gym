@@ -4,44 +4,47 @@
 
 @layer base {
   :root {
-    /* Premium Athletic Black, Neon Green (#B6FF3B), and White Design System */
-    --background: 0 0% 3.9%;           /* #0A0A0A */
-    --background-secondary: 120 6% 7.1%; /* #111311 */
-    --foreground: 0 0% 100%;           /* #FFFFFF */
-    --foreground-secondary: 120 4% 72%; /* #B4BAB4 */
+    /* Premium Black, Burnt Orange (#FF6B35), and Glassmorphism Design System */
+    --background: 0 0% 6.3%;            /* #101010 */
+    --background-secondary: 0 0% 10.2%; /* #1A1A1A */
+    --foreground: 0 0% 100%;            /* #FFFFFF */
+    --foreground-secondary: 0 0% 65.9%; /* #A8A8A8 */
     
-    --card: 120 6% 9.6%;               /* #171A17 */
-    --card-foreground: 0 0% 100%;      /* #FFFFFF */
-    --card-elevated: 120 6% 13.3%;     /* #202420 */
+    --card: 0 0% 10.2%;                /* #1A1A1A */
+    --card-foreground: 0 0% 100%;       /* #FFFFFF */
+    --card-elevated: 0 0% 13.3%;        /* #222222 */
     
-    --popover: 120 6% 9.6%;
+    --popover: 0 0% 10.2%;
     --popover-foreground: 0 0% 100%;
     
-    /* Neon Green Primary (#B6FF3B) */
-    --primary: 82 100% 61.6%;          /* #B6FF3B */
-    --primary-hover: 84 84% 55.5%;     /* #A3ED2E */
-    --primary-foreground: 0 0% 4%;     /* #0A0A0A */
+    /* Burnt Orange Primary (#FF6B35) */
+    --primary: 16 100% 60.4%;          /* #FF6B35 */
+    --primary-hover: 16 85% 52%;       /* #E55A25 */
+    --primary-foreground: 0 0% 100%;   /* #FFFFFF */
     
-    /* Dark Surface Secondary */
-    --secondary: 120 6% 13.3%;         /* #202420 */
+    /* Dark Glass Surfaces */
+    --secondary: 0 0% 14%;             /* #242424 */
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 120 6% 13.3%;             /* #202420 */
-    --muted-foreground: 120 3% 53.3%;  /* #858B85 */
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;       /* #8C8C8C */
     
-    --accent: 82 100% 61.6%;           /* #B6FF3B */
-    --accent-foreground: 0 0% 4%;
+    --accent: 16 100% 60.4%;           /* #FF6B35 */
+    --accent-foreground: 0 0% 100%;
     
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 4%;
+    --warning: 40 90% 61%;             /* #F5B942 */
+    --warning-foreground: 0 0% 100%;
     
-    --destructive: 358 100% 67.6%;     /* #FF5A5F */
+    --success: 150 67% 51.6%;          /* #32D583 */
+    --success-foreground: 0 0% 100%;
+    
+    --destructive: 359 100% 65.1%;     /* #FF4D4F */
     --destructive-foreground: 0 0% 100%;
     
-    --border: 120 7% 17.6%;            /* #2A302A */
-    --input: 120 7% 17.6%;
-    --ring: 82 100% 61.6%;
-    --radius: 0.875rem;
+    --border: 0 0% 20%;                /* rgba(255,255,255,0.12) */
+    --input: 0 0% 20%;
+    --ring: 16 100% 60.4%;
+    --radius: 1.125rem;                /* 18px */
   }
 }
 
@@ -53,7 +56,7 @@
   
   html, body {
     @apply bg-background text-foreground font-sans min-h-screen antialiased selection:bg-primary/30 selection:text-primary;
-    background-color: #0A0A0A;
+    background-color: #101010;
     touch-action: manipulation;
   }
 
@@ -83,33 +86,62 @@
   }
 }
 
-/* Commercial Fitness Card & Badge Utility Classes */
-.fitness-card {
-  background-color: #171A17;
-  border: 1px solid #2A302A;
-  border-radius: 1rem;
+/* Glassmorphism System Utilities */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
 }
 
-.fitness-card-elevated {
-  background-color: #202420;
-  border: 1px solid #2A302A;
-  border-radius: 1rem;
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
-.fitness-badge-primary {
-  background-color: rgba(182, 255, 59, 0.12);
-  border: 1px solid rgba(182, 255, 59, 0.3);
-  color: #B6FF3B;
+.glass-card-elevated {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.25rem;
 }
 
-.fitness-badge-muted {
-  background-color: #202420;
-  border: 1px solid #2A302A;
-  color: #B4BAB4;
+.glass-card-active {
+  background: rgba(255, 107, 53, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 107, 53, 0.35);
+  box-shadow: 0 0 25px -5px rgba(255, 107, 53, 0.25);
 }
 
-.fitness-glow-primary {
-  box-shadow: 0 0 20px -2px rgba(182, 255, 59, 0.35);
+.glass-pill {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-pill-active {
+  background: #FF6B35;
+  color: #FFFFFF;
+  border: 1px solid #FF6B35;
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.35);
+}
+
+.glass-nav {
+  background: rgba(16, 16, 16, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.orange-glow {
+  box-shadow: 0 0 25px rgba(255, 107, 53, 0.35);
+}
+
+.orange-glow-sm {
+  box-shadow: 0 0 12px rgba(255, 107, 53, 0.25);
 }
 
 /* Custom Webkit Scrollbars */
@@ -119,14 +151,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: #101010;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A302A;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #858B85;
+  background: rgba(255, 107, 53, 0.5);
 }

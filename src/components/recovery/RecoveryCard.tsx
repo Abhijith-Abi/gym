@@ -96,7 +96,7 @@ export function RecoveryCard() {
   }
 
   return (
-    <section className="flex flex-col gap-4 rounded-3xl border border-border/80 bg-card p-5 shadow-sm">
+    <section className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
@@ -104,7 +104,7 @@ export function RecoveryCard() {
           </span>
           <h2 className="text-base font-extrabold text-foreground sm:text-lg">Recovery Score</h2>
         </div>
-        <div className="flex items-baseline gap-1 rounded-2xl border border-border bg-card-elevated px-3 py-1">
+        <div className="flex items-baseline gap-1 rounded-2xl border border-white/10 bg-white/5 px-3 py-1">
           <span className={`font-mono text-2xl font-black tabular-nums ${BAND_CLASS[band]}`}>
             {score}
           </span>
@@ -176,7 +176,7 @@ export function RecoveryCard() {
           triggerHaptic('success')
           void onSave()
         }}
-        className="min-h-[48px] w-full rounded-2xl font-bold bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] active:scale-95"
+        className="min-h-[48px] w-full rounded-2xl font-bold bg-primary text-primary-foreground shadow-[0_0_20px_rgba(255,107,53,0.35)] active:scale-95"
       >
         {saved ? '✓ Recovery Log Saved' : 'Save Recovery Log'}
       </Button>

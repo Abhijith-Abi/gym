@@ -74,7 +74,7 @@ export function CountdownOverlay({
         >
           {isGo ? (
             <div className="flex flex-col items-center">
-              <span className="text-7xl font-black tracking-wider text-primary drop-shadow-[0_0_35px_rgba(34,197,94,0.8)] sm:text-8xl">
+              <span className="text-7xl font-black tracking-wider text-primary drop-shadow-[0_0_35px_rgba(255,107,53,0.8)] sm:text-8xl">
                 GO!
               </span>
               <span className="mt-2 text-xl font-bold text-foreground">

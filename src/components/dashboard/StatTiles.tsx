@@ -88,10 +88,10 @@ export function StatTiles() {
       {tiles.map(({ label, value, unitLabel, icon: Icon, color, bg }) => (
         <div
           key={label}
-          className="flex min-w-0 flex-col justify-between rounded-2xl border border-border/80 bg-card p-3 shadow-sm transition-all hover:border-border sm:rounded-3xl sm:p-4"
+          className="flex min-w-0 flex-col justify-between rounded-2xl border border-white/10 bg-white/5 p-3.5 shadow-md backdrop-blur-xl transition-all hover:border-primary/40 hover:bg-white/[0.08] sm:rounded-3xl sm:p-4"
         >
           <div className="flex items-center justify-between gap-1">
-            <span className="truncate text-[10px] font-bold uppercase tracking-wider text-muted-foreground sm:text-[11px]">
+            <span className="truncate text-[10px] font-bold uppercase tracking-wider text-[#8C8C8C] sm:text-[11px]">
               {label}
             </span>
             <div className={`flex size-7 shrink-0 items-center justify-center rounded-xl sm:size-8 ${bg} ${color}`}>
@@ -99,11 +99,11 @@ export function StatTiles() {
             </div>
           </div>
 
-          <div className="mt-2 flex flex-wrap items-baseline gap-1 sm:mt-3">
-            <span className="font-mono text-xl font-black tracking-tight text-foreground tabular-nums sm:text-2xl md:text-3xl">
+          <div className="mt-2.5 flex flex-wrap items-baseline gap-1 sm:mt-3">
+            <span className="font-mono text-xl font-black tracking-tight text-white tabular-nums sm:text-2xl md:text-3xl">
               {value}
             </span>
-            <span className="truncate text-[10px] font-semibold text-muted-foreground sm:text-xs">
+            <span className="truncate text-[10px] font-semibold text-[#8C8C8C] sm:text-xs">
               {unitLabel}
             </span>
           </div>

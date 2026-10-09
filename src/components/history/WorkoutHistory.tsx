@@ -115,8 +115,8 @@ export function WorkoutHistory() {
               className={cn(
                 'min-h-[36px] rounded-xl px-3 py-1.5 text-xs font-bold transition-all active:scale-95',
                 dayFilter === d
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.3)]'
-                  : 'border border-border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground',
+                  ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(255,107,53,0.35)]'
+                  : 'border border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground',
               )}
             >
               {d === 'all' ? 'All Days' : DAY_LABEL[d]}
@@ -137,7 +137,7 @@ export function WorkoutHistory() {
           {filtered.map((s) => (
             <li
               key={s.id}
-              className="flex flex-col gap-2.5 rounded-3xl border border-border/80 bg-card p-5 shadow-sm transition-all hover:border-border hover:shadow-md"
+              className="flex flex-col gap-2.5 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-sm transition-all hover:border-white/20 hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex flex-col">
@@ -155,15 +155,15 @@ export function WorkoutHistory() {
               </div>
 
               <div className="mt-1 flex flex-wrap gap-2 text-xs font-semibold text-muted-foreground">
-                <span className="flex items-center gap-1 rounded-lg border border-border/60 bg-card-elevated px-2.5 py-1 text-foreground">
+                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
                   <CheckCircle2 className="size-3.5 text-primary" />
                   {s.completedSets} sets
                 </span>
-                <span className="flex items-center gap-1 rounded-lg border border-border/60 bg-card-elevated px-2.5 py-1 text-foreground">
+                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
                   <Dumbbell className="size-3.5 text-accent" />
                   {toDisplay(s.totalVolumeKg, unit)} {unit}
                 </span>
-                <span className="flex items-center gap-1 rounded-lg border border-border/60 bg-card-elevated px-2.5 py-1 text-foreground">
+                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
                   <Clock className="size-3.5 text-warning" />
                   {Math.round(s.durationSeconds / 60)} min
                 </span>

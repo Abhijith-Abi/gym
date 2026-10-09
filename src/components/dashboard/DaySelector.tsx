@@ -57,10 +57,10 @@ export function DaySelector() {
               selectDay(day)
             }}
             className={cn(
-              'relative flex min-w-[56px] flex-1 shrink-0 snap-center flex-col items-center gap-1 rounded-2xl border p-2 text-xs font-bold transition-all active:scale-95 sm:min-w-[70px] sm:p-2.5 sm:text-sm',
+              'relative flex min-w-[56px] flex-1 shrink-0 snap-center flex-col items-center gap-1 rounded-2xl border p-2 text-xs font-bold transition-all backdrop-blur-md active:scale-95 sm:min-w-[70px] sm:p-2.5 sm:text-sm',
               active
-                ? 'border-primary bg-primary/15 text-primary shadow-[0_0_15px_rgba(34,197,94,0.15)]'
-                : 'border-border/80 bg-card text-muted-foreground hover:border-border hover:text-foreground',
+                ? 'border-primary bg-primary/20 text-primary shadow-[0_0_15px_rgba(255,107,53,0.25)]'
+                : 'border-white/10 bg-white/5 text-[#A8A8A8] hover:border-white/20 hover:text-white',
             )}
           >
             {active && (
@@ -82,10 +82,10 @@ export function DaySelector() {
               className={cn(
                 'rounded-md px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider',
                 planDay?.isRest
-                  ? 'bg-secondary text-muted-foreground'
+                  ? 'bg-white/5 text-[#8C8C8C]'
                   : active
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary/60 text-muted-foreground',
+                    ? 'bg-primary text-white'
+                    : 'bg-white/10 text-[#A8A8A8]',
               )}
             >
               {planDay?.isRest ? 'Rest' : isToday ? 'Today' : 'Train'}

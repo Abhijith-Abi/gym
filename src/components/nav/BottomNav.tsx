@@ -18,16 +18,16 @@ interface NavItem {
 
 const ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'Home', icon: Home },
-  { href: '/workout', label: 'Workout', icon: Dumbbell, isWorkout: true },
+  { href: '/exercises', label: 'Exercises', icon: Dumbbell },
+  { href: '/workout', label: 'Workouts', icon: Dumbbell, isWorkout: true },
   { href: '/progress', label: 'Progress', icon: TrendingUp },
-  { href: '/history', label: 'History', icon: History },
   { href: '/settings', label: 'Profile', icon: User },
 ]
 
 /**
  * Mobile Bottom Navigation Bar (FR-35).
- * Native mobile app look & feel with animated active indicator,
- * workout-in-progress pulse badge, haptics, and safe-area padding.
+ * Native mobile app look & feel with animated burnt-orange indicator,
+ * glassmorphism surface, and safe-area padding.
  */
 export function BottomNav() {
   const pathname = usePathname()
@@ -38,7 +38,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 w-full border-t border-[#2A302A] bg-[#111311]/95 pb-safe backdrop-blur-md md:hidden shadow-[0_-5px_20px_rgba(0,0,0,0.5)]"
+      className="fixed inset-x-0 bottom-0 z-40 w-full border-t border-white/10 bg-[#121212]/90 pb-safe backdrop-blur-xl md:hidden shadow-[0_-8px_30px_rgba(0,0,0,0.6)]"
     >
       <ul className="mx-auto flex w-full max-w-md items-center justify-around px-2 py-1.5">
         {ITEMS.map(({ href, label, icon: Icon, isWorkout }) => {
@@ -54,14 +54,14 @@ export function BottomNav() {
                 }}
                 className={cn(
                   'relative flex min-h-[50px] w-full flex-col items-center justify-center gap-1 px-1 py-1 text-[10px] font-bold transition-all',
-                  active ? 'text-primary' : 'text-[#858B85] hover:text-white',
+                  active ? 'text-primary' : 'text-[#8C8C8C] hover:text-white',
                 )}
               >
                 {/* Active Indicator Pill */}
                 {active && (
                   <motion.div
                     layoutId="bottom-nav-active-pill"
-                    className="absolute inset-x-1.5 inset-y-1 -z-10 rounded-xl bg-primary/15 border border-primary/30"
+                    className="absolute inset-x-1.5 inset-y-1 -z-10 rounded-xl bg-primary/15 border border-primary/35 shadow-[0_0_12px_rgba(255,107,53,0.2)]"
                     transition={{ type: 'spring', damping: 24, stiffness: 320 }}
                   />
                 )}
@@ -77,7 +77,7 @@ export function BottomNav() {
                   {isWorkout && isWorkoutActive && (
                     <span className="absolute -right-1.5 -top-1 flex size-2.5">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex size-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(182,255,59,0.8)]" />
+                      <span className="relative inline-flex size-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(255,107,53,0.8)]" />
                     </span>
                   )}
                 </div>

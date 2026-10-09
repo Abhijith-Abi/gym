@@ -67,8 +67,8 @@ function Pills<T extends string>({
           className={cn(
             'min-h-[40px] rounded-xl border px-3.5 py-2 text-xs font-bold transition-all active:scale-95',
             value === o.value
-              ? 'border-primary bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.3)]'
-              : 'border-border bg-card-elevated text-muted-foreground hover:bg-secondary hover:text-foreground',
+              ? 'border-primary bg-primary text-primary-foreground shadow-[0_0_12px_rgba(255,107,53,0.3)]'
+              : 'border-white/10 bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground',
           )}
         >
           {o.label}
@@ -214,7 +214,7 @@ export function ProfileEditForm() {
         type="submit"
         disabled={isSubmitting}
         size="lg"
-        className="min-h-[48px] rounded-2xl bg-primary font-bold text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:bg-primary/90 active:scale-95"
+        className="min-h-[48px] rounded-2xl bg-primary font-bold text-primary-foreground shadow-[0_0_20px_rgba(255,107,53,0.35)] hover:bg-primary/90 active:scale-95"
       >
         {isSubmitting ? 'Saving…' : 'Save Profile Changes'}
       </Button>

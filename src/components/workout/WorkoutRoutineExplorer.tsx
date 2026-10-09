@@ -92,10 +92,10 @@ export function WorkoutRoutineExplorer({
                 triggerHaptic('light')
                 setActiveCategory(cat.id)
               }}
-              className={`flex shrink-0 items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold transition-all sm:text-sm ${
+              className={`flex shrink-0 items-center gap-2 rounded-2xl px-4 py-2 text-xs font-bold transition-all sm:text-sm backdrop-blur-md ${
                 isActive
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)]'
-                  : 'border border-border/80 bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                  ? 'bg-primary text-white shadow-[0_0_20px_rgba(255,107,53,0.35)]'
+                  : 'border border-white/10 bg-white/5 text-[#A8A8A8] hover:border-white/20 hover:text-white'
               }`}
             >
               <Icon className="size-4" />
@@ -107,11 +107,11 @@ export function WorkoutRoutineExplorer({
 
       {/* Educational Notice for Fat Loss category */}
       {activeCategory === 'fat_loss' && (
-        <div className="flex items-start gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-xs text-foreground sm:text-sm">
+        <div className="flex items-start gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-xs text-white sm:text-sm backdrop-blur-md">
           <Info className="size-5 shrink-0 text-primary mt-0.5" />
           <div className="flex flex-col gap-1">
             <span className="font-bold text-primary">Science-Backed Fat Loss</span>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-[#A8A8A8] leading-relaxed">
               Ab exercises strengthen your core, but body fat reduction occurs systemically across the entire body.
               These routines combine full-body compound resistance with cardio intervals to maximize energy expenditure.
             </p>
@@ -130,10 +130,10 @@ export function WorkoutRoutineExplorer({
           return (
             <div
               key={preset.id}
-              className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border p-5 transition-all duration-300 ${
+              className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl border p-5 transition-all duration-300 backdrop-blur-xl ${
                 isCurrentActive
-                  ? 'border-primary/60 bg-primary/[0.04] shadow-[0_0_25px_rgba(34,197,94,0.15)]'
-                  : 'border-border/80 bg-card hover:border-primary/40 shadow-md'
+                  ? 'border-primary/60 bg-primary/[0.08] shadow-[0_0_25px_rgba(255,107,53,0.2)]'
+                  : 'border-white/10 bg-white/5 hover:border-white/20 shadow-md'
               }`}
             >
               <div className="flex flex-col gap-3">
@@ -141,17 +141,17 @@ export function WorkoutRoutineExplorer({
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex flex-col">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                      <span className="rounded-md bg-primary/15 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary">
                         {preset.category.toUpperCase()}
                       </span>
-                      <span className="rounded-md bg-secondary px-2 py-0.5 text-[10px] font-semibold text-muted-foreground capitalize">
+                      <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-[#A8A8A8] capitalize">
                         {preset.difficulty}
                       </span>
                     </div>
-                    <h3 className="mt-1.5 text-lg font-extrabold tracking-tight text-foreground sm:text-xl">
+                    <h3 className="mt-1.5 text-lg font-extrabold tracking-tight text-white sm:text-xl">
                       {preset.title}
                     </h3>
-                    <p className="text-xs font-semibold text-muted-foreground">
+                    <p className="text-xs font-semibold text-[#8C8C8C]">
                       {preset.subtitle}
                     </p>
                   </div>
@@ -164,28 +164,28 @@ export function WorkoutRoutineExplorer({
                   )}
                 </div>
 
-                <p className="text-xs text-muted-foreground leading-relaxed">
+                <p className="text-xs text-[#A8A8A8] leading-relaxed">
                   {preset.description}
                 </p>
 
                 {/* Metrics */}
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-semibold text-foreground">
-                  <span className="flex items-center gap-1.5 rounded-xl border border-border/80 bg-secondary/80 px-2.5 py-1 text-muted-foreground">
-                    <Clock className="size-3.5 text-accent" />
+                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-semibold text-white">
+                  <span className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[#A8A8A8]">
+                    <Clock className="size-3.5 text-primary" />
                     ~{preset.durationMinutes} min
                   </span>
-                  <span className="flex items-center gap-1.5 rounded-xl border border-border/80 bg-secondary/80 px-2.5 py-1 text-muted-foreground">
+                  <span className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[#A8A8A8]">
                     <Target className="size-3.5 text-primary" />
                     {preset.daysCount} Days/Week
                   </span>
-                  <span className="rounded-xl border border-border/80 bg-secondary/80 px-2.5 py-1 text-muted-foreground">
+                  <span className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1 text-[#A8A8A8]">
                     {preset.equipment}
                   </span>
                 </div>
 
-                {/* Workout Days Preview */}
-                <div className="mt-2 flex flex-col gap-1.5 border-t border-border/60 pt-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                {/* Workout Days Breakdown */}
+                <div className="mt-2 flex flex-col gap-1.5 border-t border-white/10 pt-3">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#8C8C8C]">
                     Weekly Routine Breakdown
                   </span>
                   <div className="flex flex-col gap-1">
@@ -194,14 +194,14 @@ export function WorkoutRoutineExplorer({
                         key={dayKey}
                         className="flex items-center justify-between text-xs"
                       >
-                        <span className="font-bold uppercase text-muted-foreground w-10">
+                        <span className="font-bold uppercase text-[#8C8C8C] w-10">
                           {dayKey}
                         </span>
                         <span
                           className={`truncate text-right flex-1 ${
                             dayPlan.isRest
-                              ? 'text-muted-foreground italic'
-                              : 'font-semibold text-foreground'
+                              ? 'text-[#8C8C8C] italic'
+                              : 'font-semibold text-white'
                           }`}
                         >
                           {dayPlan.workoutName}
@@ -217,7 +217,7 @@ export function WorkoutRoutineExplorer({
                 <button
                   type="button"
                   onClick={() => handleStartWorkoutNow(preset)}
-                  className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 text-xs font-bold text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] transition-all hover:bg-primary/90 active:scale-95 sm:text-sm"
+                  className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 text-xs font-bold text-white shadow-[0_0_20px_rgba(255,107,53,0.35)] transition-all hover:bg-primary-hover active:scale-95 sm:text-sm"
                 >
                   <Dumbbell className="size-4" />
                   <span>Start Workout</span>
@@ -230,7 +230,7 @@ export function WorkoutRoutineExplorer({
                   className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-2xl border px-3.5 text-xs font-bold transition-all active:scale-95 ${
                     isCurrentActive
                       ? 'border-primary/40 bg-primary/10 text-primary cursor-default'
-                      : 'border-border bg-secondary hover:border-primary/40 text-foreground'
+                      : 'border-white/10 bg-white/5 hover:border-white/20 text-[#A8A8A8] hover:text-white'
                   }`}
                 >
                   {isJustActivated ? (

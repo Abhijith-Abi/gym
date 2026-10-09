@@ -28,8 +28,8 @@ export function AchievementCard({
       className={cn(
         'relative flex flex-col items-center gap-2 rounded-2xl border p-4 text-center transition-all',
         unlocked
-          ? 'border-primary/50 bg-primary/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]'
-          : 'border-border/80 bg-card opacity-70 hover:opacity-90',
+          ? 'border-primary/50 bg-primary/10 shadow-[0_0_20px_rgba(255,107,53,0.2)]'
+          : 'border-white/10 bg-white/5 opacity-70 hover:opacity-90',
       )}
     >
       {unlocked && (
@@ -42,12 +42,12 @@ export function AchievementCard({
         className={cn(
           'flex size-12 items-center justify-center rounded-2xl shadow-sm',
           unlocked
-            ? 'bg-primary/20 text-primary shadow-[0_0_15px_rgba(34,197,94,0.3)]'
+            ? 'bg-primary/20 text-primary shadow-[0_0_15px_rgba(255,107,53,0.3)]'
             : 'bg-secondary text-muted-foreground',
         )}
       >
         {unlocked ? (
-          <Trophy className="size-6 fill-primary text-primary" aria-hidden="true" />
+          <Trophy className="size-6 text-primary" aria-hidden="true" />
         ) : (
           <Lock className="size-5 text-muted-foreground" aria-hidden="true" />
         )}

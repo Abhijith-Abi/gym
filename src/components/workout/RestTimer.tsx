@@ -222,9 +222,9 @@ export function RestTimer() {
 
       {/* Floating Quick-Rest Bar for Mobile when scrolling */}
       <div className="fixed bottom-22 left-4 right-4 z-30 mx-auto max-w-lg md:hidden">
-        <div className="flex items-center justify-between gap-2 rounded-2xl border border-primary/50 bg-card/95 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-md">
+        <div className="flex items-center justify-between gap-2 rounded-2xl border border-white/15 bg-black/80 p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.7)] backdrop-blur-xl">
           <div className="flex items-center gap-2">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-primary/20 text-primary shadow-[0_0_10px_rgba(34,197,94,0.3)]">
+            <div className="flex size-9 items-center justify-center rounded-xl bg-primary/20 text-primary shadow-[0_0_10px_rgba(255,107,53,0.3)]">
               <Timer className={cn('size-4', !isPaused && 'animate-pulse')} />
             </div>
             <div className="flex flex-col">
@@ -242,7 +242,7 @@ export function RestTimer() {
               type="button"
               onClick={() => handleAdjustTime(15)}
               aria-label="Add 15 seconds"
-              className="flex size-9 items-center justify-center rounded-xl border border-border bg-secondary/80 text-xs font-bold text-foreground active:scale-95"
+              className="flex size-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs font-bold text-foreground active:scale-95"
             >
               +15s
             </button>
@@ -250,7 +250,7 @@ export function RestTimer() {
               type="button"
               onClick={handleTogglePause}
               aria-label={isPaused ? 'Resume rest' : 'Pause rest'}
-              className="flex size-9 items-center justify-center rounded-xl border border-border bg-secondary/80 text-foreground active:scale-95"
+              className="flex size-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-foreground active:scale-95"
             >
               {isPaused ? <Play className="size-3.5 fill-primary text-primary" /> : <Pause className="size-3.5" />}
             </button>
@@ -258,7 +258,7 @@ export function RestTimer() {
               type="button"
               onClick={handleSkip}
               aria-label="Skip rest interval"
-              className="flex min-h-[36px] items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground shadow-[0_0_15px_rgba(34,197,94,0.4)] active:scale-95"
+              className="flex min-h-[36px] items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground shadow-[0_0_15px_rgba(255,107,53,0.4)] active:scale-95"
             >
               <FastForward className="size-3.5" />
               Skip
