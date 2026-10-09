@@ -75,14 +75,14 @@ export function StickyControls({
     const allDone = completedCount >= totalCount && totalCount > 0
 
     return (
-      <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-white/10 bg-slate-950/85 p-3 sm:p-4 pb-3 backdrop-blur-2xl shadow-[0_-10px_30px_rgba(0,0,0,0.6)]">
+      <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-[#2A302A] bg-[#111311]/95 p-3 sm:p-4 pb-3 backdrop-blur-md shadow-[0_-5px_20px_rgba(0,0,0,0.6)]">
         {!allDone && (
           <button
             type="button"
             onClick={handleCompleteAll}
-            className="flex min-h-[46px] items-center gap-1.5 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-slate-300 transition-all hover:bg-white/10 hover:text-white active:scale-95 sm:px-3.5 sm:text-sm"
+            className="flex min-h-[46px] items-center gap-1.5 rounded-xl border border-[#2A302A] bg-[#202420] px-3 py-2 text-xs font-bold text-[#B4BAB4] transition-all hover:bg-[#2A302A] hover:text-white active:scale-95 sm:px-3.5 sm:text-sm"
           >
-            <CheckCheck className="size-4 text-emerald-400" />
+            <CheckCheck className="size-4 text-primary" />
             <span className="hidden sm:inline">Mark All Done</span>
             <span className="sm:hidden">All Done</span>
           </button>
@@ -91,11 +91,11 @@ export function StickyControls({
         <button
           type="button"
           onClick={handleFinish}
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500 to-cyan-500 px-4 py-2 text-sm font-black text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all hover:opacity-95 active:scale-95 sm:px-5 sm:text-base"
+          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-black text-[#0A0A0A] shadow-[0_0_20px_rgba(182,255,59,0.35)] transition-all hover:bg-primary-hover active:scale-95 sm:px-5 sm:text-base"
         >
           <Check className="size-5 stroke-[3]" />
           <span>Finish Workout</span>
-          <span className="rounded-full bg-slate-950/25 px-2 py-0.5 text-xs font-extrabold text-slate-950">
+          <span className="rounded-full bg-[#0A0A0A]/20 px-2 py-0.5 text-xs font-black text-[#0A0A0A]">
             {completedCount}/{totalCount} Done
           </span>
         </button>
@@ -104,14 +104,14 @@ export function StickyControls({
   }
 
   return (
-    <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-white/10 bg-slate-950/85 p-3 sm:p-4 pb-3 backdrop-blur-2xl shadow-[0_-10px_30px_rgba(0,0,0,0.6)]">
+    <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-[#2A302A] bg-[#111311]/95 p-3 sm:p-4 pb-3 backdrop-blur-md shadow-[0_-5px_20px_rgba(0,0,0,0.6)]">
       <Button
         variant="outline"
         size="icon"
         aria-label="Previous exercise"
         disabled={idx === 0}
         onClick={handlePrev}
-        className="size-11 rounded-2xl border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+        className="size-11 rounded-xl border-[#2A302A] bg-[#202420] text-[#B4BAB4] hover:text-white"
       >
         <ChevronLeft className="size-5" />
       </Button>
@@ -120,7 +120,7 @@ export function StickyControls({
         <button
           type="button"
           onClick={handleFinish}
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl border border-emerald-400/40 bg-gradient-to-r from-emerald-500 to-cyan-500 px-5 text-sm font-black text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all hover:opacity-95 active:scale-95"
+          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-black text-[#0A0A0A] shadow-[0_0_20px_rgba(182,255,59,0.35)] transition-all hover:bg-primary-hover active:scale-95"
         >
           <Check className="size-5 stroke-[3]" />
           Finish Workout
@@ -129,12 +129,12 @@ export function StickyControls({
         <button
           type="button"
           onClick={handleNext}
-          className="flex min-h-[46px] flex-1 items-center justify-between rounded-2xl border border-white/10 bg-slate-900/80 px-4 text-sm font-semibold text-white transition-all hover:bg-slate-800 active:scale-95"
+          className="flex min-h-[46px] flex-1 items-center justify-between rounded-xl border border-[#2A302A] bg-[#202420] px-4 text-sm font-semibold text-white transition-all hover:bg-[#2A302A] active:scale-95"
         >
           <span className="truncate">
             Next{nextExerciseName ? `: ${nextExerciseName}` : ''}
           </span>
-          <ChevronRight className="size-5 text-emerald-400" />
+          <ChevronRight className="size-5 text-primary" />
         </button>
       )}
     </div>

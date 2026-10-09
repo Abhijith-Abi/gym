@@ -364,12 +364,12 @@ export function ActiveWorkout() {
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-2xl flex-col">
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-3.5 p-3.5 sm:p-5">
         <WorkoutHeader />
         <WorkoutProgressBar />
         <RestTimer />
 
-        <div className="flex flex-col gap-3.5">
+        <div className="flex flex-col gap-3">
           {session.exercises.map((exercise, index) => (
             <WorkoutExerciseListItem
               key={exercise.exerciseSessionId}

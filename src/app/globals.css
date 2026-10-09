@@ -4,65 +4,44 @@
 
 @layer base {
   :root {
-    /* Ultra-Modern Glass Obsidian Palette (Deep obsidian midnight with emerald neon & cyan accents) */
-    --background: 224 35% 4%;        /* #06080e */
-    --foreground: 210 40% 98%;       /* #f8fafc */
+    /* Premium Athletic Black, Neon Green (#B6FF3B), and White Design System */
+    --background: 0 0% 3.9%;           /* #0A0A0A */
+    --background-secondary: 120 6% 7.1%; /* #111311 */
+    --foreground: 0 0% 100%;           /* #FFFFFF */
+    --foreground-secondary: 120 4% 72%; /* #B4BAB4 */
     
-    --card: 224 28% 7%;              /* rgba(12, 16, 26, 0.75) */
-    --card-foreground: 210 40% 98%;
-    --card-elevated: 224 28% 10%;    /* #141a29 */
+    --card: 120 6% 9.6%;               /* #171A17 */
+    --card-foreground: 0 0% 100%;      /* #FFFFFF */
+    --card-elevated: 120 6% 13.3%;     /* #202420 */
     
-    --popover: 224 28% 6%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 120 6% 9.6%;
+    --popover-foreground: 0 0% 100%;
     
-    /* Vibrant Electric Emerald Primary */
-    --primary: 152 82% 46%;          /* #10b981 / #059669 */
-    --primary-foreground: 160 84% 6%;
+    /* Neon Green Primary (#B6FF3B) */
+    --primary: 82 100% 61.6%;          /* #B6FF3B */
+    --primary-hover: 84 84% 55.5%;     /* #A3ED2E */
+    --primary-foreground: 0 0% 4%;     /* #0A0A0A */
     
-    /* Sleek Obsidian Secondary */
-    --secondary: 224 22% 14%;        /* #1b2130 */
-    --secondary-foreground: 210 40% 98%;
+    /* Dark Surface Secondary */
+    --secondary: 120 6% 13.3%;         /* #202420 */
+    --secondary-foreground: 0 0% 100%;
     
-    --muted: 224 20% 12%;
-    --muted-foreground: 220 15% 65%;
+    --muted: 120 6% 13.3%;             /* #202420 */
+    --muted-foreground: 120 3% 53.3%;  /* #858B85 */
     
-    /* Electric Cyan Accent */
-    --accent: 191 95% 46%;           /* #06b6d4 */
-    --accent-foreground: 224 35% 4%;
+    --accent: 82 100% 61.6%;           /* #B6FF3B */
+    --accent-foreground: 0 0% 4%;
     
-    --warning: 38 92% 50%;           /* #f59e0b */
-    --warning-foreground: 224 35% 4%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 4%;
     
-    --destructive: 0 84% 60%;        /* #ef4444 */
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 358 100% 67.6%;     /* #FF5A5F */
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 224 20% 16%;           /* rgba(255,255,255,0.08) */
-    --input: 224 20% 16%;
-    --ring: 152 82% 46%;
-    --radius: 1rem;
-  }
-
-  .light {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --card-elevated: 210 40% 96%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 152 82% 38%;
-    --primary-foreground: 355 100% 97%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 191 95% 38%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 152 82% 38%;
+    --border: 120 7% 17.6%;            /* #2A302A */
+    --input: 120 7% 17.6%;
+    --ring: 82 100% 61.6%;
+    --radius: 0.875rem;
   }
 }
 
@@ -74,11 +53,7 @@
   
   html, body {
     @apply bg-background text-foreground font-sans min-h-screen antialiased selection:bg-primary/30 selection:text-primary;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
-    background-attachment: fixed;
+    background-color: #0A0A0A;
     touch-action: manipulation;
   }
 
@@ -108,59 +83,50 @@
   }
 }
 
-/* Glassmorphism System Utilities */
-.glass-card {
-  background: rgba(18, 24, 38, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* Commercial Fitness Card & Badge Utility Classes */
+.fitness-card {
+  background-color: #171A17;
+  border: 1px solid #2A302A;
+  border-radius: 1rem;
 }
 
-.glass-card-elevated {
-  background: rgba(24, 32, 50, 0.75);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+.fitness-card-elevated {
+  background-color: #202420;
+  border: 1px solid #2A302A;
+  border-radius: 1rem;
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.fitness-badge-primary {
+  background-color: rgba(182, 255, 59, 0.12);
+  border: 1px solid rgba(182, 255, 59, 0.3);
+  color: #B6FF3B;
 }
 
-.glass-glow-primary {
-  box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.4);
+.fitness-badge-muted {
+  background-color: #202420;
+  border: 1px solid #2A302A;
+  color: #B4BAB4;
 }
 
-.glass-glow-accent {
-  box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.4);
-}
-
-.glass-gradient-border {
-  position: relative;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2));
-  padding: 1px;
+.fitness-glow-primary {
+  box-shadow: 0 0 20px -2px rgba(182, 255, 59, 0.35);
 }
 
 /* Custom Webkit Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(6, 8, 14, 0.5);
+  background: #0A0A0A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: #2A302A;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.4);
+  background: #858B85;
 }

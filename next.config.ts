@@ -28,11 +28,8 @@ const withPWA = withPWAInit({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
   register: true,
-  cacheOnFrontEndNav: true,
-  // Serve /offline when a navigation request fails with no cache (FR-30/34).
-  fallbacks: {
-    document: '/offline',
-  },
+  // Cache navigation requests
+  cacheStartUrl: true,
   workboxOptions: {
     // NEVER route Firebase/Firestore/Storage/Auth traffic through the SW cache —
     // the Firestore SDK owns its own durable offline persistence (design C.7/C.10).

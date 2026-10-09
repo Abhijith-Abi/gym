@@ -15,28 +15,28 @@ export function WorkoutProgressBar() {
       : Math.min(100, Math.round((completedSets / plannedSets) * 100))
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-slate-900/50 p-3.5 shadow-lg backdrop-blur-xl">
-      <div className="flex items-center justify-between text-xs font-semibold text-slate-400">
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between text-xs font-semibold text-[#858B85]">
         <div className="flex items-center gap-2">
-          <span className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-extrabold text-emerald-400">
+          <span className="rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
             {completedExercises}/{totalExercises} Exercises
           </span>
-          <span className="hidden text-slate-600 sm:inline">·</span>
-          <span className="hidden sm:inline text-slate-300">
+          <span className="text-[#858B85]">·</span>
+          <span className="text-[#B4BAB4]">
             <strong className="text-white font-bold">{completedSets}</strong>/{plannedSets} Sets
           </span>
         </div>
-        <span className="font-mono font-black text-emerald-400">{pct}% Done</span>
+        <span className="font-mono text-xs font-black text-primary">{pct}%</span>
       </div>
       <div
-        className="h-2 w-full overflow-hidden rounded-full bg-white/10"
+        className="h-1.5 w-full overflow-hidden rounded-full bg-[#202420]"
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400 transition-all duration-500 ease-out shadow-[0_0_12px_rgba(16,185,129,0.5)]"
+          className="h-full rounded-full bg-primary transition-all duration-300 ease-out shadow-[0_0_8px_rgba(182,255,59,0.5)]"
           style={{ width: `${pct}%` }}
         />
       </div>

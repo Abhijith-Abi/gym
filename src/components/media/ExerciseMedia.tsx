@@ -3,8 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import {
-  Play,
-  Pause,
   RotateCcw,
   Sparkles,
   AlertCircle,
@@ -44,14 +42,13 @@ export function ExerciseMedia({
   mode = 'detail',
   className = '',
   autoPlay = true,
-  showControls = true,
+  showControls: _showControls = true,
   showGenderToggle = true,
   onMediaError,
 }: ExerciseMediaProps) {
   const media: ExerciseMediaType = getExerciseMedia(exerciseId, fallbackName)
   const [gender, setGender] = useState<'male' | 'female'>('male')
   const [mediaType, setMediaType] = useState<'video' | 'poster'>('video')
-  const [isPlaying, setIsPlaying] = useState<boolean>(autoPlay)
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [hasError, setHasError] = useState<boolean>(false)
 
@@ -61,7 +58,6 @@ export function ExerciseMedia({
   useEffect(() => {
     setIsLoaded(false)
     setHasError(false)
-    setIsPlaying(autoPlay)
 
     if (videoRef.current) {
       if (typeof videoRef.current.load === 'function') {
@@ -72,7 +68,6 @@ export function ExerciseMedia({
         if (p && typeof p.catch === 'function') {
           p.catch(() => {
             // Autoplay policy fallback: pause silently without error
-            setIsPlaying(false)
           })
         }
       }
@@ -106,16 +101,13 @@ export function ExerciseMedia({
       if (typeof videoRef.current.play === 'function') {
         const p = videoRef.current.play()
         if (p && typeof p.then === 'function') {
-          p.then(() => setIsPlaying(true)).catch(() => {})
-        } else {
-          setIsPlaying(true)
+          p.then(() => {}).catch(() => {})
         }
       }
     } else {
       if (typeof videoRef.current.pause === 'function') {
         videoRef.current.pause()
       }
-      setIsPlaying(false)
     }
   }
 
@@ -126,9 +118,7 @@ export function ExerciseMedia({
     if (typeof videoRef.current.play === 'function') {
       const p = videoRef.current.play()
       if (p && typeof p.then === 'function') {
-        p.then(() => setIsPlaying(true)).catch(() => {})
-      } else {
-        setIsPlaying(true)
+        p.then(() => {}).catch(() => {})
       }
     }
   }
@@ -166,16 +156,6 @@ export function ExerciseMedia({
         {!isLoaded && !hasError && hasPoster && (
           <div className="absolute inset-0 animate-pulse bg-secondary/60" />
         )}
-
-        {/* Badges */}
-        <div className="absolute bottom-2 left-2 flex items-center gap-1">
-          {media.mediaVerified && (
-            <span className="flex items-center gap-1 rounded-md bg-black/75 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-primary backdrop-blur-md">
-              <Sparkles className="size-2.5" />
-              HD Video
-            </span>
-          )}
-        </div>
       </div>
     )
   }
@@ -183,12 +163,12 @@ export function ExerciseMedia({
   // ---- PLAYER / DETAIL MODE ----
   return (
     <div
-      className={`relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-950/80 shadow-2xl backdrop-blur-xl ${className}`}
+      className={`relative flex flex-col overflow-hidden rounded-2xl border border-border bg-[#171A17] shadow-xl ${className}`}
     >
       {/* Top Media Header & Controls */}
-      <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-white/10 bg-slate-900/70 px-4 py-2.5 backdrop-blur-md">
+      <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-border bg-[#111311] px-4 py-2.5">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+          <div className="flex size-7 items-center justify-center rounded-lg bg-primary/15 text-primary border border-primary/30">
             {mediaType === 'video' ? (
               <Video className="size-3.5" />
             ) : (
@@ -199,8 +179,8 @@ export function ExerciseMedia({
             <span className="text-xs font-black uppercase tracking-wider text-white truncate">
               {media.name}
             </span>
-            <span className="text-[10px] font-semibold text-slate-400">
-              {media.mediaVerified ? 'Verified 1080p HD Video' : 'Biomechanical Guide'}
+            <span className="text-[10px] font-medium text-muted-foreground">
+              {media.mediaVerified ? 'Verified 1080p HD Video' : 'Movement Guide'}
             </span>
           </div>
         </div>
@@ -209,15 +189,15 @@ export function ExerciseMedia({
         <div className="flex items-center gap-1.5">
           {/* Video / Poster Mode Switch */}
           {hasVideo && hasPoster && (
-            <div className="flex rounded-xl bg-white/5 border border-white/10 p-0.5">
+            <div className="flex rounded-lg bg-[#202420] border border-border p-0.5">
               <button
                 type="button"
                 onClick={() => setMediaType('video')}
                 aria-label="Switch to video demo"
-                className={`rounded-lg px-2 py-0.5 text-[10px] font-bold transition-all ${
+                className={`rounded-md px-2.5 py-0.5 text-[10px] font-bold transition-all ${
                   mediaType === 'video'
-                    ? 'bg-emerald-500 text-slate-950 font-black shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-primary text-[#0A0A0A] shadow-sm'
+                    : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 Video
@@ -226,10 +206,10 @@ export function ExerciseMedia({
                 type="button"
                 onClick={() => setMediaType('poster')}
                 aria-label="Switch to static poster"
-                className={`rounded-lg px-2 py-0.5 text-[10px] font-bold transition-all ${
+                className={`rounded-md px-2.5 py-0.5 text-[10px] font-bold transition-all ${
                   mediaType === 'poster'
-                    ? 'bg-emerald-500 text-slate-950 font-black shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-primary text-[#0A0A0A] shadow-sm'
+                    : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 Photo
@@ -239,7 +219,7 @@ export function ExerciseMedia({
 
           {/* Male / Female Gender Model Switch */}
           {showGenderToggle && (media.maleVideoUrl || media.femaleVideoUrl) && (
-            <div className="flex rounded-xl bg-white/5 border border-white/10 p-0.5">
+            <div className="flex rounded-lg bg-[#202420] border border-border p-0.5">
               <button
                 type="button"
                 onClick={() => {
@@ -247,10 +227,10 @@ export function ExerciseMedia({
                   setIsLoaded(false)
                 }}
                 aria-label="Demonstration by male model"
-                className={`flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold transition-all ${
+                className={`flex items-center gap-1 rounded-md px-2.5 py-0.5 text-[10px] font-bold transition-all ${
                   gender === 'male'
-                    ? 'bg-cyan-500 text-slate-950 font-black shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-primary text-[#0A0A0A] shadow-sm'
+                    : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 <User className="size-2.5" />
@@ -263,10 +243,10 @@ export function ExerciseMedia({
                   setIsLoaded(false)
                 }}
                 aria-label="Demonstration by female model"
-                className={`flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold transition-all ${
+                className={`flex items-center gap-1 rounded-md px-2.5 py-0.5 text-[10px] font-bold transition-all ${
                   gender === 'female'
-                    ? 'bg-cyan-500 text-slate-950 font-black shadow-sm'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-primary text-[#0A0A0A] shadow-sm'
+                    : 'text-muted-foreground hover:text-white'
                 }`}
               >
                 <User className="size-2.5" />
@@ -279,12 +259,13 @@ export function ExerciseMedia({
 
       {/* Main Video/Poster Display Canvas */}
       <div
-        className="relative w-full overflow-hidden bg-black flex items-center justify-center"
+        className="relative w-full overflow-hidden bg-[#0A0A0A] flex items-center justify-center cursor-pointer select-none"
         style={{ aspectRatio: '16/9', minHeight: '220px' }}
+        onClick={togglePlayPause}
       >
         {/* Loading skeleton */}
         {!isLoaded && !hasError && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-neutral-950/80 backdrop-blur-sm animate-pulse">
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#0A0A0A]/90 animate-pulse">
             <Dumbbell className="size-8 text-primary animate-bounce" />
             <span className="text-xs font-bold text-muted-foreground">
               Loading 1080p HD Demonstration...
@@ -309,8 +290,6 @@ export function ExerciseMedia({
             }`}
             onLoadedData={() => setIsLoaded(true)}
             onError={handleVideoError}
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
           />
         ) : hasPoster && !hasError ? (
           /* Poster Mode or Video Fallback */
@@ -330,55 +309,34 @@ export function ExerciseMedia({
             />
           </div>
         ) : (
-          /* Biomechanical fallback when media is unavailable/offline */
-          <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center bg-gradient-to-br from-neutral-900 to-neutral-950">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/25 text-primary">
+          /* Fallback when media is offline */
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center bg-[#111311]">
+            <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/30 text-primary">
               <Dumbbell className="size-7" />
             </div>
             <div className="flex flex-col gap-1 max-w-sm">
-              <h4 className="text-sm font-black text-foreground">
+              <h4 className="text-sm font-black text-white">
                 {media.name}
               </h4>
               <p className="text-xs text-muted-foreground">
-                Follow standard biomechanical cues: brace core, control the eccentric phase, and maintain full range of motion.
+                Follow standard biomechanical cues: brace core, control eccentric movement, and maintain proper joint alignment.
               </p>
             </div>
-            <span className="rounded-full bg-secondary/80 px-3 py-1 text-[10px] font-bold text-muted-foreground">
-              Biomechanical Movement Guide
-            </span>
           </div>
         )}
 
-        {/* Floating Play/Pause overlay button for Video */}
-        {mediaType === 'video' && hasVideo && !hasError && showControls && isLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/20 transition-colors pointer-events-none">
-            <button
-              type="button"
-              onClick={togglePlayPause}
-              aria-label={isPlaying ? 'Pause demonstration' : 'Play demonstration'}
-              className="pointer-events-auto flex size-12 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20 transition-transform hover:scale-110 active:scale-95 shadow-lg"
-            >
-              {isPlaying ? (
-                <Pause className="size-5 fill-current" />
-              ) : (
-                <Play className="size-5 fill-current ml-0.5" />
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* Bottom Bar Info & Replay Action */}
+        {/* Bottom Bar Info & Replay Action (Non-blocking) */}
         <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between pointer-events-none">
           <div className="flex items-center gap-1.5">
             {media.mediaVerified ? (
-              <span className="flex items-center gap-1 rounded-lg bg-slate-950/85 px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-md">
+              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary border border-primary/30 shadow-md">
                 <ShieldCheck className="size-3" />
                 Verified 1080p
               </span>
             ) : (
-              <span className="flex items-center gap-1 rounded-lg bg-slate-950/85 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-white/10 backdrop-blur-md">
-                <AlertCircle className="size-3 text-cyan-400" />
-                Cued Demonstration
+              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground border border-border">
+                <AlertCircle className="size-3 text-primary" />
+                Cued Demo
               </span>
             )}
           </div>
@@ -388,22 +346,22 @@ export function ExerciseMedia({
               type="button"
               onClick={handleRestart}
               aria-label="Restart video"
-              className="pointer-events-auto flex size-8 items-center justify-center rounded-xl bg-slate-950/80 text-slate-200 border border-white/15 backdrop-blur-md transition-all hover:bg-slate-900 hover:text-emerald-400 active:scale-95"
+              className="pointer-events-auto flex size-7 items-center justify-center rounded-lg bg-[#0A0A0A]/85 text-white border border-border transition-all hover:bg-black hover:text-primary active:scale-95"
             >
-              <RotateCcw className="size-3.5" />
+              <RotateCcw className="size-3" />
             </button>
           )}
         </div>
       </div>
 
-      {/* Detail Mode: Form Cues & Steps Footer */}
+      {/* Detail Mode: Key Execution Cues */}
       {mode === 'detail' && media.formCues && media.formCues.length > 0 && (
-        <div className="flex flex-col gap-2 border-t border-white/10 bg-slate-900/60 p-4">
+        <div className="flex flex-col gap-2 border-t border-border bg-[#111311] p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400">
+            <span className="text-[11px] font-black uppercase tracking-wider text-primary">
               ⚡ Key Execution Cues
             </span>
-            <span className="text-[10px] font-semibold text-slate-400">
+            <span className="text-[10px] font-medium text-muted-foreground">
               {media.mediaAttribution}
             </span>
           </div>
@@ -411,12 +369,12 @@ export function ExerciseMedia({
             {media.formCues.slice(0, 4).map((cue, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-2 rounded-xl bg-white/[0.03] p-2.5 border border-white/5"
+                className="flex items-start gap-2 rounded-xl bg-[#202420] p-2.5 border border-border"
               >
-                <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-[10px] font-bold text-emerald-400">
+                <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold text-primary">
                   {idx + 1}
                 </div>
-                <span className="text-xs text-slate-300 leading-snug">
+                <span className="text-xs text-secondary-foreground leading-snug">
                   {cue}
                 </span>
               </div>

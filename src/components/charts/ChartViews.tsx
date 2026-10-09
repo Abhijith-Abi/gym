@@ -23,10 +23,10 @@ import type { TrendPoint } from '@/lib/analytics/trends'
  * Premium dark theme formatting with custom tooltips, gradients, and subtle grids.
  */
 
-const AXIS = { stroke: '#94a3b8', fontSize: 11 }
-const GRID = 'rgba(255, 255, 255, 0.06)'
-const PRIMARY = '#22c55e'
-const ACCENT = '#06b6d4'
+const AXIS = { stroke: '#858B85', fontSize: 11 }
+const GRID = 'rgba(42, 48, 42, 0.6)'
+const PRIMARY = '#B6FF3B'
+const ACCENT = '#A3ED2E'
 
 interface EmptyProps {
   message?: string
@@ -44,12 +44,12 @@ function Empty({ message = 'No data available for this range' }: EmptyProps) {
 }
 
 const customTooltipStyle = {
-  backgroundColor: '#10141e',
-  borderColor: 'rgba(255, 255, 255, 0.12)',
+  backgroundColor: '#171A17',
+  borderColor: '#2A302A',
   borderRadius: '0.75rem',
-  color: '#f8fafc',
+  color: '#FFFFFF',
   fontSize: '0.75rem',
-  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
+  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.7)',
 }
 
 export function ProgressChartView({ points }: { points: TrendPoint[] }) {
