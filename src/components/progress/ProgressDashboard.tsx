@@ -163,48 +163,51 @@ export function ProgressDashboard() {
         />
       </div>
 
-      <ChartSection title="Weekly Training Volume" icon={Dumbbell}>
-        <VolumeChart points={volumePoints} />
-      </ChartSection>
+      {/* Responsive 2-Column Chart Grid for Desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ChartSection title="Weekly Training Volume" icon={Dumbbell}>
+          <VolumeChart points={volumePoints} />
+        </ChartSection>
 
-      <ChartSection title="Muscle Group Distribution" icon={TrendingUp}>
-        <MuscleVolumeChart points={musclePoints} />
-      </ChartSection>
+        <ChartSection title="Muscle Group Distribution" icon={TrendingUp}>
+          <MuscleVolumeChart points={musclePoints} />
+        </ChartSection>
 
-      <ChartSection
-        title="Estimated 1RM Strength Trend"
-        icon={Trophy}
-        headerRight={
-          <select
-            value={selectedExerciseId || histories[0]?.exerciseId || ''}
-            onChange={(e) => setSelectedExerciseId(e.target.value)}
-            className="max-w-[180px] truncate rounded-xl border border-input bg-card px-2.5 py-1.5 text-xs font-semibold text-foreground focus:outline-none"
-          >
-            {histories.length > 0 ? (
-              histories.map((h) => {
-                const ex = allExercises.find((e) => e.id === h.exerciseId)
-                return (
-                  <option key={h.exerciseId} value={h.exerciseId}>
-                    {ex?.name ?? h.exerciseId}
+        <ChartSection
+          title="Estimated 1RM Strength Trend"
+          icon={Trophy}
+          headerRight={
+            <select
+              value={selectedExerciseId || histories[0]?.exerciseId || ''}
+              onChange={(e) => setSelectedExerciseId(e.target.value)}
+              className="max-w-[180px] truncate rounded-xl border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-semibold text-white focus:outline-none"
+            >
+              {histories.length > 0 ? (
+                histories.map((h) => {
+                  const ex = allExercises.find((e) => e.id === h.exerciseId)
+                  return (
+                    <option key={h.exerciseId} value={h.exerciseId} className="bg-[#171A17] text-white">
+                      {ex?.name ?? h.exerciseId}
+                    </option>
+                  )
+                })
+              ) : (
+                allExercises.slice(0, 10).map((e) => (
+                  <option key={e.id} value={e.id} className="bg-[#171A17] text-white">
+                    {e.name}
                   </option>
-                )
-              })
-            ) : (
-              allExercises.slice(0, 10).map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.name}
-                </option>
-              ))
-            )}
-          </select>
-        }
-      >
-        <StrengthChart points={strengthPoints} />
-      </ChartSection>
+                ))
+              )}
+            </select>
+          }
+        >
+          <StrengthChart points={strengthPoints} />
+        </ChartSection>
 
-      <ChartSection title="Body Weight Trend" icon={Scale}>
-        <ProgressChart points={bodyPoints} />
-      </ChartSection>
+        <ChartSection title="Body Weight Trend" icon={Scale}>
+          <ProgressChart points={bodyPoints} />
+        </ChartSection>
+      </div>
     </div>
   )
 }

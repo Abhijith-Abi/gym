@@ -16,27 +16,27 @@ export function WorkoutProgressBar() {
 
   return (
     <div className="flex flex-col gap-1.5">
-      <div className="flex items-center justify-between text-xs font-semibold text-[#858B85]">
+      <div className="flex items-center justify-between text-xs font-semibold text-[#A8A8A8]">
         <div className="flex items-center gap-2">
-          <span className="rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
+          <span className="rounded-lg border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
             {completedExercises}/{totalExercises} Exercises
           </span>
-          <span className="text-[#858B85]">·</span>
-          <span className="text-[#B4BAB4]">
+          <span className="text-white/20">·</span>
+          <span className="text-[#A8A8A8]">
             <strong className="text-white font-bold">{completedSets}</strong>/{plannedSets} Sets
           </span>
         </div>
         <span className="font-mono text-xs font-black text-primary">{pct}%</span>
       </div>
       <div
-        className="h-1.5 w-full overflow-hidden rounded-full bg-[#202420]"
+        className="h-2 w-full overflow-hidden rounded-full bg-white/10"
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
       >
         <div
-          className="h-full rounded-full bg-primary transition-all duration-300 ease-out shadow-[0_0_8px_rgba(182,255,59,0.5)]"
+          className="h-full rounded-full bg-primary transition-all duration-300 ease-out shadow-[0_0_8px_rgba(255,107,53,0.6)]"
           style={{ width: `${pct}%` }}
         />
       </div>

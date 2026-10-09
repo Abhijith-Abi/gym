@@ -363,25 +363,46 @@ export function ActiveWorkout() {
   }
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-2xl flex-col">
-      <div className="flex flex-col gap-3.5 p-3.5 sm:p-5">
-        <WorkoutHeader />
-        <WorkoutProgressBar />
-        <RestTimer />
+    <div className="w-full min-w-0 flex flex-col gap-5">
+      {/* Desktop 2-Column or Mobile Stack */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
+        {/* Left Column: Workout Stats & Sticky Summary on Large Screens */}
+        <div className="lg:col-span-4 xl:col-span-4 flex flex-col gap-4 lg:sticky lg:top-4">
+          <div className="flex flex-col gap-3.5 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-2xl p-4 sm:p-5 shadow-lg">
+            <WorkoutHeader />
+            <WorkoutProgressBar />
+          </div>
+          <RestTimer />
+        </div>
 
-        <div className="flex flex-col gap-3">
-          {session.exercises.map((exercise, index) => (
-            <WorkoutExerciseListItem
-              key={exercise.exerciseSessionId}
-              exercise={exercise}
-              index={index}
-            />
-          ))}
+        {/* Right Column: Exercises Lineup */}
+        <div className="lg:col-span-8 xl:col-span-8 flex flex-col gap-3.5">
+          <div className="flex items-center justify-between px-1">
+            <span className="text-xs font-black uppercase tracking-wider text-primary">
+              Exercise Routine ({session.exercises.length})
+            </span>
+            <span className="text-xs font-semibold text-[#A8A8A8]">
+              Tap card to watch demo or log sets
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            {session.exercises.map((exercise, index) => (
+              <WorkoutExerciseListItem
+                key={exercise.exerciseSessionId}
+                exercise={exercise}
+                index={index}
+              />
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Sticky Finish / Complete Controls (Single Source) */}
       <div className="mt-auto">
         <StickyControls onFinish={handleFinish} />
       </div>
+
       <PRCelebration />
     </div>
   )
