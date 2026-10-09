@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Dumbbell, Clock, ListChecks, Play, Sparkles } from 'lucide-react'
+import { Dumbbell, Sparkles } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { useWorkoutStore, todayDayId } from '@/store/workoutStore'
@@ -123,6 +123,8 @@ export function TodayCard() {
           </h2>
           <div className="mt-1 flex items-center gap-2 text-xs font-semibold text-[#A8A8A8]">
             <span>{exerciseCount} Exercises</span>
+            <span>·</span>
+            <span>{totalSets} Sets</span>
             <span>·</span>
             <span>{estMinutes} min</span>
           </div>

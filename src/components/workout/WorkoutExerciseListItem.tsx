@@ -4,11 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Check,
-  ChevronDown,
-  ChevronUp,
-  Dumbbell,
   Target,
-  Sparkles,
   RotateCcw,
   Volume2,
 } from 'lucide-react'

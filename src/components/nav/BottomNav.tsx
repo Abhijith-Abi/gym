@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Dumbbell, History, Home, TrendingUp, User, type LucideIcon } from 'lucide-react'
+import { Dumbbell, Home, TrendingUp, User, type LucideIcon } from 'lucide-react'
 import { triggerHaptic } from '@/hooks/useHaptics'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { useSessionStore } from '@/store/sessionStore'

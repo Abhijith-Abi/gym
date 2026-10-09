@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { Search, Plus, Dumbbell, Target, Sparkles, Filter } from 'lucide-react'
+import { Search, Plus, Dumbbell, Sparkles, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'

@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import {
   RotateCcw,
-  Sparkles,
   AlertCircle,
   Dumbbell,
   ShieldCheck,
