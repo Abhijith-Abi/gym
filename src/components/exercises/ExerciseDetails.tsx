@@ -3,7 +3,6 @@
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useExerciseStore } from '@/store/exerciseStore'
-import { ExerciseVisualFrames } from '@/components/workout/ExerciseVisualFrames'
 import { ExerciseMedia } from '@/components/media/ExerciseMedia'
 import type { Exercise } from '@/types'
 
@@ -31,24 +30,21 @@ export function ExerciseDetails({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1 self-start text-sm text-muted-foreground hover:text-foreground"
+        className="inline-flex items-center gap-1.5 self-start rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-muted-foreground backdrop-blur-md transition-all hover:bg-white/10 hover:text-foreground active:scale-95"
       >
         <ChevronLeft className="size-4" aria-hidden="true" />
         Back to library
       </button>
 
       <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">{exercise.name}</h1>
-        <p className="text-sm capitalize text-muted-foreground">
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-foreground">{exercise.name}</h1>
+        <p className="text-xs sm:text-sm font-semibold capitalize text-primary">
           {exercise.category} · {exercise.difficulty} · {exercise.equipment}
         </p>
       </header>
 
       {/* Verified 1080p Video Demonstration & Posteriors */}
       <ExerciseMedia exerciseId={exercise.id} name={exercise.name} mode="detail" />
-
-      {/* 3-Step Visual Frame Demonstration */}
-      <ExerciseVisualFrames exerciseId={exercise.id} name={exercise.name} />
 
       <section className="flex flex-col gap-2">
         <h2 className="text-sm font-semibold uppercase text-muted-foreground">

@@ -13,11 +13,11 @@ import {
 import { SEED_PLAN_DAYS } from '@/data/workoutPlan'
 
 describe('Exercise Media Manifest & Free Exercise DB API Integration', () => {
-  it('preserves all 59 canonical seed exercise IDs without alteration', () => {
-    expect(SEED_EXERCISES.length).toBe(59)
+  it('preserves all canonical seed exercise IDs without alteration and provides 370+ exercises', () => {
+    expect(SEED_EXERCISES.length).toBeGreaterThanOrEqual(370)
     const seedIds = SEED_EXERCISES.map((e) => e.id)
     const uniqueIds = new Set(seedIds)
-    expect(uniqueIds.size).toBe(59)
+    expect(uniqueIds.size).toBe(SEED_EXERCISES.length)
 
     // Verify key canonical IDs specified in prompt
     const requiredCanonicalIds = [

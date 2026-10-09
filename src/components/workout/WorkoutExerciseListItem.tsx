@@ -173,7 +173,7 @@ export function WorkoutExerciseListItem({
         </div>
 
         {/* Demo view toggle button */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-border/60 pt-3">
+        <div className="mt-3.5 flex items-center justify-between border-t border-white/10 pt-3">
           <button
             type="button"
             aria-label={showDemo ? 'Hide form & demo' : 'View form & demo'}
@@ -183,11 +183,11 @@ export function WorkoutExerciseListItem({
             }}
             className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
               showDemo
-                ? 'bg-primary text-primary-foreground shadow-[0_0_12px_rgba(34,197,94,0.3)]'
-                : 'border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20'
+                ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                : 'border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 backdrop-blur-md'
             }`}
           >
-            <span>{showDemo ? '✕ Hide Movement Demo & Images' : '📸 View Form & Demo (3-Step Images)'}</span>
+            <span>{showDemo ? '✕ Hide Video Demo' : '⚡ View 1080p Video & Form Guide'}</span>
             {showDemo ? (
               <ChevronUp className="size-3.5 text-current" />
             ) : (

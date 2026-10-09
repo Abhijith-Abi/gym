@@ -10,20 +10,21 @@ import {
   CheckCircle2,
   Shield,
   Activity,
-  Image as ImageIcon,
+  Sparkles,
+  Wind,
 } from 'lucide-react'
 import { getExerciseFormGuide } from '@/lib/exerciseDefaults'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { triggerHaptic } from '@/hooks/useHaptics'
-import { ExerciseVisualFrames } from './ExerciseVisualFrames'
 import { ExerciseMedia } from '@/components/media/ExerciseMedia'
+import { getExerciseMedia } from '@/data/exerciseMedia'
 import type { Equipment, MuscleGroup } from '@/types'
 
 /**
- * Interactive Exercise Visual Demo & Form Guide (FR-4, FR-20).
- * Displays 3-step visual frame illustrations, anatomical muscle target map,
- * movement path diagram, step-by-step coaching cues, and voice audio explanation.
+ * Glassmorphic Exercise Visual Demo & Form Coaching System (FR-4, FR-20).
+ * Displays verified 1080p male & female HD demonstrations, motion paths,
+ * step-by-step coaching cues, breathing notes, and synthesized audio coaching.
  */
 export function ExerciseVisualDemo({
   exerciseId,
@@ -33,6 +34,7 @@ export function ExerciseVisualDemo({
   equipment?: Equipment
 }) {
   const meta = useExerciseStore((s) => s.byId(exerciseId))
+  const media = getExerciseMedia(exerciseId, meta?.name)
   const { speak } = useWorkoutSounds()
   const [isOpen, setIsOpen] = useState(true)
 
@@ -48,29 +50,28 @@ export function ExerciseVisualDemo({
   }
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card-elevated/70 shadow-sm transition-all">
-      {/* Visual Header / Muscle highlights & Expand button */}
-      <div className="flex items-center justify-between p-3 sm:p-3.5">
-        <div className="flex min-w-0 flex-1 items-center gap-2.5">
-          {/* Visual Step Icon */}
-          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-            <ImageIcon className="size-5" />
+    <div className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.07] to-white/[0.02] shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] backdrop-blur-2xl transition-all">
+      {/* Header bar */}
+      <div className="flex items-center justify-between p-3.5 sm:p-4">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/20 text-primary shadow-[0_0_20px_rgba(34,197,94,0.3)] border border-primary/30">
+            <Sparkles className="size-5" />
           </div>
 
           <div className="flex min-w-0 flex-col">
-            <div className="flex items-center gap-1.5">
-              <span className="truncate text-xs font-extrabold uppercase tracking-wide text-foreground">
-                3-Step Visual Exercise Guide
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-xs font-black uppercase tracking-wider text-foreground">
+                Movement Demo &amp; Form Guide
               </span>
-              <span className="rounded-md bg-secondary/80 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
+              <span className="rounded-full bg-white/10 border border-white/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
                 {equipment}
               </span>
             </div>
-            <div className="mt-0.5 flex flex-wrap gap-1">
+            <div className="mt-1 flex flex-wrap gap-1">
               {primary.map((m: MuscleGroup) => (
                 <span
                   key={m}
-                  className="rounded px-1.5 py-0.2 text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 border border-primary/20"
+                  className="rounded-lg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-primary bg-primary/10 border border-primary/30 shadow-[0_0_10px_rgba(34,197,94,0.15)]"
                 >
                   {m}
                 </span>
@@ -78,7 +79,7 @@ export function ExerciseVisualDemo({
               {secondary.map((m: MuscleGroup) => (
                 <span
                   key={m}
-                  className="rounded px-1.5 py-0.2 text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 border border-accent/20"
+                  className="rounded-lg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-accent bg-accent/10 border border-accent/30"
                 >
                   {m}
                 </span>
@@ -87,13 +88,13 @@ export function ExerciseVisualDemo({
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             type="button"
             onClick={handleReadGuide}
             aria-label="Listen to exercise form cues"
             title="Listen to form guide"
-            className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-secondary hover:text-primary active:scale-95"
+            className="flex size-9 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-muted-foreground transition-all hover:bg-white/10 hover:text-primary active:scale-95 shadow-sm"
           >
             <Volume2 className="size-4" />
           </button>
@@ -106,7 +107,7 @@ export function ExerciseVisualDemo({
             }}
             aria-expanded={isOpen}
             aria-label={isOpen ? 'Collapse form guide' : 'Expand form guide'}
-            className="flex items-center gap-1 rounded-lg border border-border bg-card px-2.5 py-1 text-xs font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-bold text-foreground backdrop-blur-md transition-all hover:bg-white/20 active:scale-95 shadow-sm"
           >
             <span>{isOpen ? 'Hide' : 'Show Demo'}</span>
             {isOpen ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
@@ -114,7 +115,7 @@ export function ExerciseVisualDemo({
         </div>
       </div>
 
-      {/* Expandable Form Guide & 3-Step Visual Frame Cards */}
+      {/* Expandable Glass Content */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -122,68 +123,92 @@ export function ExerciseVisualDemo({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="flex flex-col gap-3.5 border-t border-border/60 bg-card/60 p-3.5 sm:p-4"
+            className="flex flex-col gap-4 border-t border-white/10 bg-black/40 p-4 sm:p-5"
           >
             {/* 1080p HD Video & Demonstration Canvas */}
             <ExerciseMedia exerciseId={exerciseId} name={name} mode="player" />
 
-            {/* 3-Frame Visual Step Demonstration (Start, Mid/Peak, Finish) */}
-            <ExerciseVisualFrames exerciseId={exerciseId} name={name} />
-
-            {/* Motion Path Visualization */}
-            <div className="flex items-center justify-between rounded-xl border border-primary/20 bg-primary/5 p-3">
-              <div className="flex items-center gap-2">
-                <Activity className="size-4 text-primary animate-pulse" />
-                <span className="text-xs font-bold text-foreground">
-                  Motion Bar Path:{' '}
-                  <span className="text-primary font-mono capitalize">{guide.barPath}</span>
+            {/* Motion Bar Path & Breathing Cadence Badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="flex items-center justify-between rounded-2xl border border-primary/25 bg-primary/10 p-3 backdrop-blur-md">
+                <div className="flex items-center gap-2">
+                  <Activity className="size-4 text-primary animate-pulse" />
+                  <span className="text-xs font-bold text-foreground">
+                    Bar Path:{' '}
+                    <span className="text-primary font-mono capitalize">{guide.barPath}</span>
+                  </span>
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Optimal Recruitment
                 </span>
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                Optimal Muscle Recruitment
-              </span>
+
+              {media.breathing && (
+                <div className="flex items-center gap-2.5 rounded-2xl border border-accent/25 bg-accent/10 p-3 backdrop-blur-md">
+                  <Wind className="size-4 text-accent shrink-0" />
+                  <span className="text-xs text-foreground/90 leading-tight">
+                    <strong className="text-accent uppercase text-[10px] tracking-wider block">Breathing Cadence</strong>
+                    {media.breathing}
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Setup instructions */}
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
-                <Shield className="size-3.5" />
-                <span>1. Setup &amp; Posture</span>
+            {/* Setup & Execution Step Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {/* Setup instructions */}
+              <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-primary">
+                  <Shield className="size-4" />
+                  <span>1. Setup &amp; Posture</span>
+                </div>
+                <ul className="ml-5 list-disc space-y-1 text-xs leading-relaxed text-muted-foreground">
+                  {guide.setup.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="ml-5 list-disc space-y-1 text-xs leading-relaxed text-muted-foreground">
-                {guide.setup.map((step, i) => (
-                  <li key={i}>{step}</li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Execution instructions */}
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent">
-                <CheckCircle2 className="size-3.5" />
-                <span>2. Movement Execution</span>
+              {/* Execution instructions */}
+              <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-accent">
+                  <CheckCircle2 className="size-4" />
+                  <span>2. Movement Execution</span>
+                </div>
+                <ul className="ml-5 list-disc space-y-1 text-xs leading-relaxed text-muted-foreground">
+                  {guide.execution.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="ml-5 list-disc space-y-1 text-xs leading-relaxed text-muted-foreground">
-                {guide.execution.map((step, i) => (
-                  <li key={i}>{step}</li>
-                ))}
-              </ul>
             </div>
 
             {/* Common Mistakes to Avoid */}
-            {guide.mistakes.length > 0 && (
-              <div className="flex flex-col gap-1.5 rounded-xl border border-destructive/20 bg-destructive/5 p-2.5">
-                <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-destructive">
-                  <AlertTriangle className="size-3.5" />
-                  <span>Mistakes to Avoid</span>
+            {(media.commonMistakes?.length ?? 0) > 0 ? (
+              <div className="flex flex-col gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 p-3.5 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-destructive">
+                  <AlertTriangle className="size-4" />
+                  <span>Form Mistakes to Avoid</span>
                 </div>
-                <ul className="ml-4 list-disc space-y-0.5 text-xs text-muted-foreground">
+                <ul className="ml-5 list-disc space-y-0.5 text-xs text-muted-foreground">
+                  {media.commonMistakes!.map((m, i) => (
+                    <li key={i}>{m}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : guide.mistakes.length > 0 ? (
+              <div className="flex flex-col gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 p-3.5 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-destructive">
+                  <AlertTriangle className="size-4" />
+                  <span>Form Mistakes to Avoid</span>
+                </div>
+                <ul className="ml-5 list-disc space-y-0.5 text-xs text-muted-foreground">
                   {guide.mistakes.map((m, i) => (
                     <li key={i}>{m}</li>
                   ))}
                 </ul>
               </div>
-            )}
+            ) : null}
           </motion.div>
         )}
       </AnimatePresence>
