@@ -8,6 +8,9 @@ import * as sessionService from '@/services/sessionService'
 import * as progressService from '@/services/progressService'
 import type { Unit, WorkoutSession } from '@/types'
 
+import { computeStreak } from '@/lib/analytics/consistency'
+import { useWorkoutStore } from '@/store/workoutStore'
+
 interface Stats {
   streakDays: number
   weeklyVolumeKg: number
@@ -22,6 +25,7 @@ interface Stats {
  */
 export function StatTiles() {
   const { uid, profile } = useAuth()
+  const plan = useWorkoutStore((s) => s.plan)
   const unit: Unit = profile?.preferredUnit ?? 'kg'
   const [stats, setStats] = useState<Stats>({
     streakDays: 0,
@@ -40,13 +44,13 @@ export function StatTiles() {
       if (!active) return
       const sessions = sessionsRes.ok ? sessionsRes.data : []
       const prCount = prsRes.ok ? prsRes.data.length : 0
-      const derived = deriveStats(sessions)
+      const derived = deriveStats(sessions, plan ?? undefined)
       setStats({ ...derived, newPrs: prCount })
     })
     return () => {
       active = false
     }
-  }, [uid])
+  }, [uid, plan])
 
   const tiles = [
     {
@@ -66,7 +70,7 @@ export function StatTiles() {
       bg: 'bg-accent/15',
     },
     {
-      label: 'New PRs',
+      label: 'Personal Records',
       value: String(stats.newPrs),
       unitLabel: 'records',
       icon: Trophy,
@@ -76,7 +80,7 @@ export function StatTiles() {
     {
       label: 'This Week',
       value: String(stats.workoutsThisWeek),
-      unitLabel: 'sessions',
+      unitLabel: 'workouts',
       icon: CalendarCheck,
       color: 'text-primary',
       bg: 'bg-primary/15',
@@ -114,17 +118,28 @@ export function StatTiles() {
 }
 
 /** Pure derivation of dashboard stats from completed sessions. */
-export function deriveStats(sessions: ReadonlyArray<WorkoutSession>): Stats {
+export function deriveStats(
+  sessions: ReadonlyArray<WorkoutSession>,
+  plan?: import('@/types').WorkoutPlan,
+): Stats {
   const now = new Date()
   const weekStart = startOfWeek(now)
 
-  const thisWeek = sessions.filter(
-    (s) => s.completedAt && s.completedAt >= weekStart,
+  // Normalize completed sessions and dates
+  const completedSessions = sessions
+    .filter((s) => s.status === 'COMPLETED' && s.completedAt)
+    .map((s) => ({
+      ...s,
+      completedAt: new Date(s.completedAt as Date | string | number),
+    }))
+
+  const thisWeek = completedSessions.filter(
+    (s) => s.completedAt && s.completedAt >= weekStart && s.completedAt <= now,
   )
-  const weeklyVolumeKg = thisWeek.reduce((acc, s) => acc + s.totalVolumeKg, 0)
+  const weeklyVolumeKg = thisWeek.reduce((acc, s) => acc + (s.totalVolumeKg || 0), 0)
 
   return {
-    streakDays: computeStreak(sessions, now),
+    streakDays: computeStreak(completedSessions, plan, now),
     weeklyVolumeKg,
     newPrs: 0,
     workoutsThisWeek: thisWeek.length,
@@ -137,30 +152,4 @@ function startOfWeek(d: Date): Date {
   copy.setHours(0, 0, 0, 0)
   copy.setDate(copy.getDate() - day)
   return copy
-}
-
-/** Consecutive-day training streak counting back from today. */
-function computeStreak(
-  sessions: ReadonlyArray<WorkoutSession>,
-  now: Date,
-): number {
-  const days = new Set(
-    sessions
-      .filter((s) => s.completedAt)
-      .map((s) => dayKey(s.completedAt as Date)),
-  )
-  let streak = 0
-  const cursor = new Date(now)
-  cursor.setHours(0, 0, 0, 0)
-  // Allow today to be missing (streak continues if yesterday trained).
-  if (!days.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1)
-  while (days.has(dayKey(cursor))) {
-    streak += 1
-    cursor.setDate(cursor.getDate() - 1)
-  }
-  return streak
-}
-
-function dayKey(d: Date): string {
-  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
 }

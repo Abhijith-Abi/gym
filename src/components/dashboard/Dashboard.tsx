@@ -6,7 +6,6 @@ import { ContinueWorkoutCard } from './ContinueWorkoutCard'
 import { DaySelector } from './DaySelector'
 import { TodayCard } from './TodayCard'
 import { StatTiles } from './StatTiles'
-import { AICoachCard } from './AICoachCard'
 import { WorkoutRoutineExplorer } from '@/components/workout/WorkoutRoutineExplorer'
 import { useAuth } from '@/hooks/useAuth'
 import { useWorkoutStore } from '@/store/workoutStore'
@@ -20,7 +19,7 @@ import { Dumbbell, ChevronDown, ChevronUp } from 'lucide-react'
 export function Dashboard() {
   const { uid, profile } = useAuth()
   const ensureSeedPlan = useWorkoutStore((s) => s.ensureSeedPlan)
-  const [showAllPrograms, setShowAllPrograms] = useState(false)
+  const [showAllPrograms, setShowAllPrograms] = useState(true)
 
   useEffect(() => {
     if (uid) ensureSeedPlan(uid, profile?.goal, profile?.experience)
@@ -42,18 +41,20 @@ export function Dashboard() {
 
       {/* Main Responsive Grid: 2 Columns on Desktop, Single Stack on Mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column (Hero Today Workout & Schedule) */}
-        <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-6">
+        {/* Left Column (Weekly Schedule & Hero Today Workout) */}
+        <div className="lg:col-span-6 xl:col-span-6 flex flex-col gap-6">
           <div className="flex w-full min-w-0 flex-col gap-2.5">
             <span className="text-xs font-bold uppercase tracking-wider text-[#A8A8A8]">
-              Weekly Training Schedule
+              Weekly Training Schedule (Mon–Sat)
             </span>
             <DaySelector />
           </div>
 
           <TodayCard />
+        </div>
 
-          {/* Explore More Workouts & Preset Programs */}
+        {/* Right Column (Workout Programs & Routine Explorer) */}
+        <div className="lg:col-span-6 xl:col-span-6 flex flex-col gap-6">
           <div className="flex w-full min-w-0 flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-5 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
@@ -75,7 +76,7 @@ export function Dashboard() {
                 onClick={() => setShowAllPrograms(!showAllPrograms)}
                 className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/10 transition-colors"
               >
-                <span>{showAllPrograms ? 'Hide' : 'Browse All'}</span>
+                <span>{showAllPrograms ? 'Collapse' : 'Browse All'}</span>
                 {showAllPrograms ? (
                   <ChevronUp className="size-3.5" />
                 ) : (
@@ -90,11 +91,6 @@ export function Dashboard() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Right Column (AI Coach & Smart Workouts) */}
-        <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
-          <AICoachCard />
         </div>
       </div>
     </main>

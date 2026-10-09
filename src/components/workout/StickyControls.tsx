@@ -75,28 +75,27 @@ export function StickyControls({
     const allDone = completedCount >= totalCount && totalCount > 0
 
     return (
-      <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-white/10 bg-[#121212]/90 p-3.5 sm:p-4 pb-3 backdrop-blur-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.7)]">
+      <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2.5 sm:gap-3 border-t border-white/10 bg-[#121212]/95 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-2xl shadow-[0_-10px_35px_rgba(0,0,0,0.7)]">
         {!allDone && (
           <button
             type="button"
             onClick={handleCompleteAll}
-            className="flex min-h-[46px] items-center gap-1.5 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-[#A8A8A8] backdrop-blur-md transition-all hover:bg-white/10 hover:text-white active:scale-95 sm:px-3.5 sm:text-sm"
+            className="flex h-12 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-2xl border border-white/10 bg-white/5 px-3.5 sm:px-4 text-xs sm:text-sm font-bold text-[#D4D4D4] backdrop-blur-xl transition-all hover:bg-white/10 hover:text-white hover:border-white/20 active:scale-95"
           >
-            <CheckCheck className="size-4 text-primary" />
-            <span className="hidden sm:inline">Mark All Done</span>
-            <span className="sm:hidden">All Done</span>
+            <CheckCheck className="size-4 text-primary shrink-0" />
+            <span>All Done</span>
           </button>
         )}
 
         <button
           type="button"
           onClick={handleFinish}
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-2 text-sm font-black text-white shadow-[0_0_25px_rgba(255,107,53,0.4)] transition-all hover:bg-primary-hover active:scale-95 sm:px-5 sm:text-base"
+          className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-primary px-4 sm:px-5 text-sm sm:text-base font-black text-white shadow-[0_0_30px_rgba(255,107,53,0.45)] transition-all hover:bg-primary-hover active:scale-95"
         >
-          <Check className="size-5 stroke-[3]" />
+          <Check className="size-5 shrink-0 stroke-[3]" />
           <span>Finish Workout</span>
-          <span className="rounded-full bg-black/25 px-2 py-0.5 text-xs font-black text-white">
-            {completedCount}/{totalCount} Done
+          <span className="shrink-0 rounded-full bg-black/25 border border-white/15 px-2 py-0.5 text-xs font-bold text-white">
+            {completedCount}/{totalCount}
           </span>
         </button>
       </div>
@@ -104,14 +103,14 @@ export function StickyControls({
   }
 
   return (
-    <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2 sm:gap-3 border-t border-white/10 bg-[#121212]/90 p-3.5 sm:p-4 pb-3 backdrop-blur-2xl shadow-[0_-8px_30px_rgba(0,0,0,0.7)]">
+    <div className="sticky bottom-[60px] md:bottom-0 z-30 flex items-center gap-2.5 sm:gap-3 border-t border-white/10 bg-[#121212]/95 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-2xl shadow-[0_-10px_35px_rgba(0,0,0,0.7)]">
       <Button
         variant="outline"
         size="icon"
         aria-label="Previous exercise"
         disabled={idx === 0}
         onClick={handlePrev}
-        className="size-11 rounded-2xl border-white/10 bg-white/5 text-[#A8A8A8] hover:text-white hover:bg-white/10"
+        className="size-12 shrink-0 rounded-2xl border-white/10 bg-white/5 text-[#A8A8A8] hover:text-white hover:bg-white/10"
       >
         <ChevronLeft className="size-5" />
       </Button>
@@ -120,21 +119,24 @@ export function StickyControls({
         <button
           type="button"
           onClick={handleFinish}
-          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-2xl bg-primary px-5 text-sm font-black text-white shadow-[0_0_25px_rgba(255,107,53,0.4)] transition-all hover:bg-primary-hover active:scale-95"
+          className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-2xl bg-primary px-5 text-sm sm:text-base font-black text-white shadow-[0_0_30px_rgba(255,107,53,0.45)] transition-all hover:bg-primary-hover active:scale-95"
         >
-          <Check className="size-5 stroke-[3]" />
-          Finish Workout
+          <Check className="size-5 shrink-0 stroke-[3]" />
+          <span>Finish Workout</span>
+          <span className="shrink-0 rounded-full bg-black/25 border border-white/15 px-2 py-0.5 text-xs font-bold text-white">
+            {completedCount}/{totalCount}
+          </span>
         </button>
       ) : (
         <button
           type="button"
           onClick={handleNext}
-          className="flex min-h-[46px] flex-1 items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-sm font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
+          className="flex h-12 min-w-0 flex-1 items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-sm font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
         >
           <span className="truncate">
             Next{nextExerciseName ? `: ${nextExerciseName}` : ''}
           </span>
-          <ChevronRight className="size-5 text-primary" />
+          <ChevronRight className="size-5 text-primary shrink-0" />
         </button>
       )}
     </div>

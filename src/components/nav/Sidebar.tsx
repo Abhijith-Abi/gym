@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Dumbbell,
+  Flame,
   History,
   Home,
   Settings,
@@ -26,7 +27,7 @@ interface SidebarItem {
 const MAIN_ITEMS: SidebarItem[] = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/exercises', label: 'Exercises', icon: Dumbbell },
-  { href: '/workout', label: 'Workouts', icon: Dumbbell, isWorkout: true },
+  { href: '/workout', label: 'Workouts', icon: Flame, isWorkout: true },
   { href: '/progress', label: 'Progress', icon: TrendingUp },
   { href: '/history', label: 'History', icon: History },
 ]

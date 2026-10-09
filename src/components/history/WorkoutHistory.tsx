@@ -134,42 +134,67 @@ export function WorkoutHistory() {
         />
       ) : (
         <ul className="flex flex-col gap-3">
-          {filtered.map((s) => (
-            <li
-              key={s.id}
-              className="flex flex-col gap-2.5 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-sm transition-all hover:border-white/20 hover:shadow-md"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
-                    {s.dayId ? DAY_LABEL[s.dayId as DayOfWeek] : 'Workout'}
-                  </span>
-                  <h3 className="text-lg font-bold tracking-tight text-foreground">
-                    {s.workoutName}
-                  </h3>
-                </div>
-                <span className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                  <Calendar className="size-3.5" />
-                  {s.completedAt ? format(s.completedAt, 'MMM d, yyyy') : '—'}
-                </span>
-              </div>
+          {filtered.map((s) => {
+            const isFullyCompleted = s.totalSets > 0 ? s.completedSets >= s.totalSets : s.completedSets > 0
+            const skippedSets = s.totalSets > 0 ? Math.max(0, s.totalSets - s.completedSets) : 0
+            const pct = s.totalSets > 0 ? Math.min(100, Math.round((s.completedSets / s.totalSets) * 100)) : 100
 
-              <div className="mt-1 flex flex-wrap gap-2 text-xs font-semibold text-muted-foreground">
-                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
-                  <CheckCircle2 className="size-3.5 text-primary" />
-                  {s.completedSets} sets
-                </span>
-                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
-                  <Dumbbell className="size-3.5 text-accent" />
-                  {toDisplay(s.totalVolumeKg, unit)} {unit}
-                </span>
-                <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
-                  <Clock className="size-3.5 text-warning" />
-                  {Math.round(s.durationSeconds / 60)} min
-                </span>
-              </div>
-            </li>
-          ))}
+            return (
+              <li
+                key={s.id}
+                className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-sm transition-all hover:border-white/20 hover:shadow-md"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                        {s.dayId ? DAY_LABEL[s.dayId as DayOfWeek] : 'Workout'}
+                      </span>
+                      {isFullyCompleted ? (
+                        <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-[9px] font-black uppercase text-primary">
+                          ✓ Fully Completed
+                        </span>
+                      ) : (
+                        <span className="rounded-full border border-amber-500/30 bg-amber-500/15 px-2 py-0.5 text-[9px] font-black uppercase text-amber-400">
+                          ⚡ Partial ({pct}%)
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-0.5 text-lg font-bold tracking-tight text-foreground">
+                      {s.workoutName}
+                    </h3>
+                  </div>
+                  <span className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Calendar className="size-3.5" />
+                    {s.completedAt ? format(s.completedAt, 'MMM d, yyyy') : '—'}
+                  </span>
+                </div>
+
+                <div className="mt-1 flex flex-wrap gap-2 text-xs font-semibold text-muted-foreground">
+                  <span className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
+                    <CheckCircle2 className="size-3.5 text-primary" />
+                    <span>
+                      <strong>{s.completedSets}</strong>
+                      {s.totalSets > 0 ? `/${s.totalSets}` : ''} sets logged
+                    </span>
+                  </span>
+                  {skippedSets > 0 && (
+                    <span className="flex items-center gap-1 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-amber-400">
+                      {skippedSets} sets skipped
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
+                    <Dumbbell className="size-3.5 text-accent" />
+                    {toDisplay(s.totalVolumeKg, unit)} {unit}
+                  </span>
+                  <span className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-foreground">
+                    <Clock className="size-3.5 text-warning" />
+                    {Math.round(s.durationSeconds / 60)} min
+                  </span>
+                </div>
+              </li>
+            )
+          })}
         </ul>
       )}
 

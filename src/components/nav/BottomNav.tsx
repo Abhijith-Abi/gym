@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Dumbbell, Home, TrendingUp, User, type LucideIcon } from 'lucide-react'
+import { Dumbbell, Flame, Home, TrendingUp, User, type LucideIcon } from 'lucide-react'
 import { triggerHaptic } from '@/hooks/useHaptics'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { useSessionStore } from '@/store/sessionStore'
@@ -19,7 +19,7 @@ interface NavItem {
 const ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/exercises', label: 'Exercises', icon: Dumbbell },
-  { href: '/workout', label: 'Workouts', icon: Dumbbell, isWorkout: true },
+  { href: '/workout', label: 'Workouts', icon: Flame, isWorkout: true },
   { href: '/progress', label: 'Progress', icon: TrendingUp },
   { href: '/settings', label: 'Profile', icon: User },
 ]
