@@ -10,6 +10,7 @@ import { triggerHaptic } from '@/hooks/useHaptics'
 import type { Exercise, MuscleGroup } from '@/types'
 import { ExerciseDetails } from './ExerciseDetails'
 import { CustomExerciseForm } from './CustomExerciseForm'
+import { ExerciseMedia } from '@/components/media/ExerciseMedia'
 
 const MUSCLE_FILTERS = [
   { value: 'all', label: 'All Muscles' },
@@ -206,7 +207,7 @@ export function ExerciseLibrary() {
           <span className="text-xs font-semibold text-muted-foreground">
             Showing {list.length} movements
           </span>
-          <ul className="flex flex-col gap-2.5">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {list.map((e) => (
               <li key={e.id}>
                 <button
@@ -215,27 +216,35 @@ export function ExerciseLibrary() {
                     triggerHaptic('light')
                     setSelected(e)
                   }}
-                  className="flex w-full flex-col items-start gap-1.5 rounded-2xl border border-border/80 bg-card p-4 text-left transition-all hover:border-border hover:bg-card-elevated active:scale-[0.99]"
+                  className="flex w-full items-center gap-3.5 rounded-2xl border border-border/80 bg-card p-3 sm:p-4 text-left transition-all hover:border-primary/50 hover:bg-card-elevated active:scale-[0.99] shadow-sm"
                 >
-                  <div className="flex w-full items-center justify-between">
-                    <span className="font-bold text-foreground sm:text-base">
-                      {e.name}
-                    </span>
-                    {e.isCustom && (
-                      <span className="rounded-full bg-accent/20 px-2 py-0.5 text-[10px] font-bold text-accent">
-                        Custom
-                      </span>
-                    )}
+                  {/* Thumbnail */}
+                  <div className="w-24 sm:w-28 shrink-0 overflow-hidden rounded-xl border border-border/60">
+                    <ExerciseMedia exerciseId={e.id} name={e.name} mode="card" />
                   </div>
-                  <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-                    <Target className="size-3.5 text-primary" />
-                    <span className="font-semibold text-primary capitalize">
-                      {e.primaryMuscles.join(', ')}
-                    </span>
-                    <span>·</span>
-                    <span className="capitalize">{e.equipment}</span>
-                    <span>·</span>
-                    <span className="capitalize">{e.category}</span>
+
+                  {/* Metadata */}
+                  <div className="flex flex-1 flex-col min-w-0">
+                    <div className="flex w-full items-center justify-between gap-1">
+                      <span className="font-bold text-foreground text-sm sm:text-base truncate">
+                        {e.name}
+                      </span>
+                      {e.isCustom && (
+                        <span className="shrink-0 rounded-full bg-accent/20 px-2 py-0.5 text-[10px] font-bold text-accent">
+                          Custom
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+                      <Target className="size-3 text-primary shrink-0" />
+                      <span className="font-semibold text-primary capitalize truncate">
+                        {e.primaryMuscles.join(', ')}
+                      </span>
+                      <span>·</span>
+                      <span className="capitalize">{e.equipment}</span>
+                      <span>·</span>
+                      <span className="capitalize">{e.category}</span>
+                    </div>
                   </div>
                 </button>
               </li>

@@ -17,6 +17,7 @@ import { useExerciseStore } from '@/store/exerciseStore'
 import { useSessionStore, type ActiveExercise } from '@/store/sessionStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { triggerHaptic } from '@/hooks/useHaptics'
+import { ExerciseMedia } from '@/components/media/ExerciseMedia'
 
 interface WorkoutExerciseListItemProps {
   exercise: ActiveExercise
@@ -151,6 +152,23 @@ export function WorkoutExerciseListItem({
                 )}
               </div>
             </div>
+
+            {/* Visual Thumbnail Preview */}
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('light')
+                setShowDemo(!showDemo)
+              }}
+              aria-label="View demonstration video"
+              className="hidden sm:block w-20 shrink-0 overflow-hidden rounded-xl border border-border/70 transition-transform hover:scale-105"
+            >
+              <ExerciseMedia
+                exerciseId={exercise.exerciseId}
+                name={meta?.name ?? exercise.exerciseId}
+                mode="card"
+              />
+            </button>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import { useExerciseStore } from '@/store/exerciseStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
 import { triggerHaptic } from '@/hooks/useHaptics'
 import { ExerciseVisualFrames } from './ExerciseVisualFrames'
+import { ExerciseMedia } from '@/components/media/ExerciseMedia'
 import type { Equipment, MuscleGroup } from '@/types'
 
 /**
@@ -123,6 +124,9 @@ export function ExerciseVisualDemo({
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="flex flex-col gap-3.5 border-t border-border/60 bg-card/60 p-3.5 sm:p-4"
           >
+            {/* 1080p HD Video & Demonstration Canvas */}
+            <ExerciseMedia exerciseId={exerciseId} name={name} mode="player" />
+
             {/* 3-Frame Visual Step Demonstration (Start, Mid/Peak, Finish) */}
             <ExerciseVisualFrames exerciseId={exerciseId} name={name} />
 

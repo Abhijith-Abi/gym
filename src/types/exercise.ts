@@ -23,6 +23,40 @@ export interface Exercise {
   /** present only for custom exercises. */
   uid?: string
   createdAt?: Date
+  /** Optional media fields integrated from Free Exercise DB / media manifest. */
+  imageUrl?: string
+  thumbnailUrl?: string
+  videoUrl?: string
+  femaleVideoUrl?: string
+  maleVideoUrl?: string
+  femaleThumbnailUrl?: string
+  maleThumbnailUrl?: string
+  mediaSource?: string
+  mediaAttribution?: string
+  mediaVerified?: boolean
+}
+
+/** Verified media asset container for an exercise (images, male/female videos, cues). */
+export interface ExerciseMedia {
+  exerciseId: string
+  name: string
+  imageUrl?: string
+  thumbnailUrl?: string
+  videoUrl?: string
+  maleVideoUrl?: string
+  femaleVideoUrl?: string
+  maleThumbnailUrl?: string
+  femaleThumbnailUrl?: string
+  mediaSource: string
+  mediaAttribution: string
+  mediaVerified: boolean
+  matchedExternalId?: string
+  matchedExternalName?: string
+  confidence?: 'exact' | 'high' | 'fallback'
+  steps?: string[]
+  formCues?: string[]
+  commonMistakes?: string[]
+  breathing?: string
 }
 
 /** Plan prescription for an exercise within a PlanEntry. */

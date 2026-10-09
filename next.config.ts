@@ -3,6 +3,20 @@ import withPWAInit from '@ducanh2912/next-pwa'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-585d42eb1aa64a67aedf483ec328d3fe.r2.dev',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 // @ducanh2912/next-pwa wraps the Next config (design C.10). The service worker

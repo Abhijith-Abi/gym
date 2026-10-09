@@ -4,6 +4,7 @@ import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { ExerciseVisualFrames } from '@/components/workout/ExerciseVisualFrames'
+import { ExerciseMedia } from '@/components/media/ExerciseMedia'
 import type { Exercise } from '@/types'
 
 /**
@@ -42,6 +43,9 @@ export function ExerciseDetails({
           {exercise.category} · {exercise.difficulty} · {exercise.equipment}
         </p>
       </header>
+
+      {/* Verified 1080p Video Demonstration & Posteriors */}
+      <ExerciseMedia exerciseId={exercise.id} name={exercise.name} mode="detail" />
 
       {/* 3-Step Visual Frame Demonstration */}
       <ExerciseVisualFrames exerciseId={exercise.id} name={exercise.name} />
