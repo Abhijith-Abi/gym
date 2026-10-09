@@ -60,6 +60,6 @@ describe('WorkoutExerciseListItem', () => {
     const expandBtn = screen.getByRole('button', { name: /view form & demo/i })
     fireEvent.click(expandBtn)
 
-    expect(screen.getByText(/hide video demo/i)).toBeDefined()
+    expect(screen.getByText(/close video/i)).toBeDefined()
   })
 })

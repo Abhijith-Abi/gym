@@ -17,19 +17,15 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: [
-          'var(--font-comic)',
-          '"Comic Neue"',
-          '"Comic Sans MS"',
-          '"Chalkboard SE"',
-          'cursive',
-          'sans-serif',
-        ],
-        comic: [
-          'var(--font-comic)',
-          '"Comic Neue"',
-          '"Comic Sans MS"',
-          '"Chalkboard SE"',
-          'cursive',
+          'var(--font-sans)',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
           'sans-serif',
         ],
       },

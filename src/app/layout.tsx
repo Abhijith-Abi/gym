@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { Comic_Neue } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
 
-const comicNeue = Comic_Neue({
-  weight: ['300', '400', '700'],
+const fontSans = Plus_Jakarta_Sans({
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-comic',
+  variable: '--font-sans',
   display: 'swap',
 })
 
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#22c55e',
+  themeColor: '#10b981',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -44,12 +44,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${comicNeue.variable}`} suppressHydrationWarning>
-      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject
-          data-* attributes onto <body> before React hydrates, which triggers a
-          harmless attribute-mismatch warning. Scoped to this element only; it
-          does not hide real hydration mismatches inside the app tree. */}
-      <body className="min-h-dvh font-sans antialiased" suppressHydrationWarning>
+    <html lang="en" className={`dark ${fontSans.variable}`} suppressHydrationWarning>
+      <body className="min-h-dvh font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
     </html>

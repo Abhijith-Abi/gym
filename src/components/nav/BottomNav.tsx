@@ -38,9 +38,9 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 w-full border-t border-border/60 bg-background/90 pb-safe backdrop-blur-xl md:hidden shadow-[0_-10px_25px_rgba(0,0,0,0.3)]"
+      className="fixed inset-x-0 bottom-0 z-40 w-full border-t border-white/10 bg-slate-950/85 pb-safe backdrop-blur-2xl md:hidden shadow-[0_-10px_30px_rgba(0,0,0,0.6)]"
     >
-      <ul className="mx-auto flex w-full max-w-md items-center justify-around px-1 py-1">
+      <ul className="mx-auto flex w-full max-w-md items-center justify-around px-2 py-1.5">
         {ITEMS.map(({ href, label, icon: Icon, isWorkout }) => {
           const active = pathname === href || pathname.startsWith(`${href}/`)
           return (
@@ -53,16 +53,16 @@ export function BottomNav() {
                   playSound('button-click')
                 }}
                 className={cn(
-                  'relative flex min-h-[54px] w-full flex-col items-center justify-center gap-0.5 px-0.5 py-1 text-[10px] font-semibold transition-colors sm:text-[11px]',
-                  active ? 'text-primary font-bold' : 'text-muted-foreground hover:text-foreground',
+                  'relative flex min-h-[52px] w-full flex-col items-center justify-center gap-1 px-1 py-1 text-[10px] font-bold transition-all',
+                  active ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200',
                 )}
               >
-                {/* Active Pill Animation */}
+                {/* Active Glow Pill */}
                 {active && (
                   <motion.div
                     layoutId="bottom-nav-active-pill"
-                    className="absolute inset-x-1 inset-y-1 -z-10 rounded-xl bg-primary/15 shadow-[0_0_15px_rgba(34,197,94,0.2)]"
-                    transition={{ type: 'spring', damping: 22, stiffness: 300 }}
+                    className="absolute inset-x-1.5 inset-y-1 -z-10 rounded-xl bg-gradient-to-r from-emerald-500/20 to-cyan-500/15 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.25)]"
+                    transition={{ type: 'spring', damping: 24, stiffness: 320 }}
                   />
                 )}
 
@@ -70,14 +70,14 @@ export function BottomNav() {
                   <Icon
                     className={cn(
                       'size-5 transition-transform',
-                      active ? 'scale-110 stroke-[2.5]' : 'stroke-[1.8]',
+                      active ? 'scale-110 text-emerald-400 stroke-[2.4]' : 'stroke-[1.8]',
                     )}
                     aria-hidden="true"
                   />
                   {isWorkout && isWorkoutActive && (
-                    <span className="absolute -right-1 -top-1 flex size-2.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex size-2.5 rounded-full bg-primary" />
+                    <span className="absolute -right-1.5 -top-1 flex size-2.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
                     </span>
                   )}
                 </div>

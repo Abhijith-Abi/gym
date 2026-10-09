@@ -23,9 +23,9 @@ export function WorkoutTimer() {
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-border bg-card-elevated px-3 py-1.5 shadow-xs">
+    <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md shadow-sm">
       <span
-        className="font-mono text-base font-bold tabular-nums text-foreground sm:text-lg"
+        className="font-mono text-sm sm:text-base font-extrabold tabular-nums text-white"
         aria-label="Workout elapsed time"
         role="timer"
       >
@@ -35,12 +35,12 @@ export function WorkoutTimer() {
         type="button"
         onClick={handleToggle}
         aria-label={isPaused ? 'Resume workout' : 'Pause workout'}
-        className="flex size-8 items-center justify-center rounded-lg bg-secondary text-muted-foreground transition-all hover:bg-secondary/80 hover:text-foreground active:scale-95"
+        className="flex size-7 items-center justify-center rounded-lg bg-white/10 text-slate-300 transition-all hover:bg-emerald-500/20 hover:text-emerald-400 active:scale-95"
       >
         {isPaused ? (
-          <Play className="size-3.5 fill-primary text-primary" />
+          <Play className="size-3 fill-emerald-400 text-emerald-400" />
         ) : (
-          <Pause className="size-3.5" />
+          <Pause className="size-3 text-slate-300" />
         )}
       </button>
     </div>

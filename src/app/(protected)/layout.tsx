@@ -15,9 +15,13 @@ export default function ProtectedLayout({
 }) {
   return (
     <AuthGuard>
-      <div className="flex min-h-dvh w-full overflow-x-hidden">
+      <div className="flex h-dvh w-full overflow-hidden bg-background">
         <Sidebar />
-        <div className="flex-1 w-full min-w-0 max-w-full overflow-x-hidden pb-24 md:pb-6">{children}</div>
+        <main className="flex-1 h-dvh overflow-y-auto overflow-x-hidden pb-24 md:pb-8">
+          <div className="mx-auto w-full max-w-7xl px-3.5 sm:px-6 lg:px-8 py-4 sm:py-6">
+            {children}
+          </div>
+        </main>
       </div>
       <BottomNav />
       <InstallPrompt />

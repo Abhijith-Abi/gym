@@ -12,7 +12,6 @@ import {
   RotateCcw,
   Volume2,
 } from 'lucide-react'
-import { ExerciseVisualDemo } from './ExerciseVisualDemo'
 import { useExerciseStore } from '@/store/exerciseStore'
 import { useSessionStore, type ActiveExercise } from '@/store/sessionStore'
 import { useWorkoutSounds } from '@/hooks/useWorkoutSounds'
@@ -58,15 +57,15 @@ export function WorkoutExerciseListItem({
     const targetText = isInterval
       ? `${targetSetsCount} rounds of ${exercise.intervalWorkSeconds} seconds work`
       : `${targetSetsCount} sets of ${exercise.prescription.targetRepMax || 10} reps`
-    speak(`${exerciseName}. Target is ${targetText}. Focus on controlled form and full range of motion.`)
+    speak(`${exerciseName}. Target is ${targetText}.`)
   }
 
   return (
     <div
-      className={`group relative overflow-hidden rounded-3xl border transition-all duration-300 ${
+      className={`group relative overflow-hidden rounded-3xl border backdrop-blur-xl transition-all duration-300 ${
         isCompleted
-          ? 'border-primary/60 bg-primary/[0.05] shadow-[0_0_25px_rgba(34,197,94,0.15)]'
-          : 'border-border/80 bg-card hover:border-primary/40 shadow-md'
+          ? 'border-emerald-500/40 bg-emerald-950/20 shadow-[0_0_25px_rgba(16,185,129,0.15)]'
+          : 'border-white/10 bg-slate-900/65 hover:border-emerald-500/30 shadow-lg'
       }`}
     >
       <div className="p-4 sm:p-5">
@@ -75,29 +74,29 @@ export function WorkoutExerciseListItem({
           <div className="flex flex-1 items-start gap-3 min-w-0">
             {/* Number / Check circle */}
             <div
-              className={`flex size-11 shrink-0 items-center justify-center rounded-2xl text-base font-black transition-all ${
+              className={`flex size-10 sm:size-11 shrink-0 items-center justify-center rounded-2xl text-sm sm:text-base font-black transition-all ${
                 isCompleted
-                  ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.45)]'
-                  : 'bg-secondary text-foreground'
+                  ? 'bg-gradient-to-tr from-emerald-500 to-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.4)]'
+                  : 'border border-white/10 bg-white/5 text-slate-200'
               }`}
             >
-              {isCompleted ? <Check className="size-6 stroke-[3]" /> : index + 1}
+              {isCompleted ? <Check className="size-5 sm:size-6 stroke-[3]" /> : index + 1}
             </div>
 
             {/* Title and Badges */}
             <div className="flex flex-col min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
                   Exercise {index + 1}
                 </span>
                 {meta?.primaryMuscles && meta.primaryMuscles.length > 0 && (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-primary/25 bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary">
-                    <Target className="size-3" />
+                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+                    <Target className="size-2.5" />
                     {meta.primaryMuscles.join(', ')}
                   </span>
                 )}
                 {meta?.equipment && (
-                  <span className="rounded-full bg-secondary/80 px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground capitalize">
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-300 capitalize">
                     {meta.equipment}
                   </span>
                 )}
@@ -105,10 +104,10 @@ export function WorkoutExerciseListItem({
 
               <div className="mt-1 flex items-center gap-2">
                 <h3
-                  className={`text-lg font-extrabold tracking-tight sm:text-xl transition-colors truncate ${
+                  className={`text-base font-extrabold tracking-tight sm:text-lg transition-colors truncate ${
                     isCompleted
-                      ? 'text-primary line-through decoration-primary/50'
-                      : 'text-foreground'
+                      ? 'text-emerald-400/80 line-through decoration-emerald-500/50'
+                      : 'text-white'
                   }`}
                 >
                   {meta?.name ?? exercise.exerciseId}
@@ -117,24 +116,24 @@ export function WorkoutExerciseListItem({
                   type="button"
                   onClick={handleSpeakGuide}
                   aria-label="Listen to exercise tips"
-                  className="flex size-7 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  className="flex size-6 items-center justify-center rounded-full text-slate-400 hover:bg-white/10 hover:text-white transition-colors"
                 >
-                  <Volume2 className="size-4" />
+                  <Volume2 className="size-3.5" />
                 </button>
               </div>
 
               {/* Target Prescription Info */}
               <div className="mt-2 flex flex-wrap items-center gap-2">
                 {isInterval ? (
-                  <div className="flex items-center gap-1.5 rounded-xl bg-secondary/80 px-3 py-1 text-xs font-bold text-accent">
-                    <Dumbbell className="size-3.5" />
+                  <div className="flex items-center gap-1.5 rounded-xl border border-cyan-500/20 bg-cyan-500/10 px-2.5 py-0.5 text-xs font-bold text-cyan-300">
+                    <Dumbbell className="size-3 text-cyan-400" />
                     <span>
-                      {targetSetsCount} Rounds · {exercise.intervalWorkSeconds}s Work / {exercise.intervalRestSeconds}s Rest
+                      {targetSetsCount} Rnds · {exercise.intervalWorkSeconds}s Work / {exercise.intervalRestSeconds}s Rest
                     </span>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-1.5 rounded-xl bg-secondary/80 px-3 py-1 text-xs font-bold text-foreground">
-                    <Dumbbell className="size-3.5 text-primary" />
+                  <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-semibold text-slate-200">
+                    <Dumbbell className="size-3 text-emerald-400" />
                     <span>
                       {targetSetsCount} Sets ×{' '}
                       {exercise.prescription.targetRepMin === exercise.prescription.targetRepMax
@@ -145,15 +144,15 @@ export function WorkoutExerciseListItem({
                 )}
 
                 {isCompleted && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary/20 px-2.5 py-1 text-xs font-black text-primary">
-                    <Sparkles className="size-3.5" />
+                  <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/20 px-2 py-0.5 text-[11px] font-extrabold text-emerald-300">
+                    <Sparkles className="size-3" />
                     Completed
                   </span>
                 )}
               </div>
             </div>
 
-            {/* Visual Thumbnail Preview */}
+            {/* Desktop Quick Video Demo Toggle */}
             <button
               type="button"
               onClick={() => {
@@ -161,7 +160,7 @@ export function WorkoutExerciseListItem({
                 setShowDemo(!showDemo)
               }}
               aria-label="View demonstration video"
-              className="hidden sm:block w-20 shrink-0 overflow-hidden rounded-xl border border-border/70 transition-transform hover:scale-105"
+              className="hidden sm:block w-20 shrink-0 overflow-hidden rounded-xl border border-white/10 transition-transform hover:scale-105"
             >
               <ExerciseMedia
                 exerciseId={exercise.exerciseId}
@@ -172,35 +171,35 @@ export function WorkoutExerciseListItem({
           </div>
         </div>
 
-        {/* Demo view toggle button */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-white/10 pt-3">
+        {/* Demo view toggle button & status */}
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-2.5">
           <button
             type="button"
-            aria-label={showDemo ? 'Hide form & demo' : 'View form & demo'}
+            aria-label={showDemo ? 'Hide video demo' : 'View form & demo'}
             onClick={() => {
               triggerHaptic('light')
               setShowDemo(!showDemo)
             }}
-            className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all active:scale-95 ${
+            className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-bold transition-all active:scale-95 ${
               showDemo
-                ? 'bg-primary text-primary-foreground shadow-[0_0_15px_rgba(16,185,129,0.35)]'
-                : 'border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 backdrop-blur-md'
+                ? 'border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.3)]'
+                : 'border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
             }`}
           >
-            <span>{showDemo ? '✕ Hide Video Demo' : '⚡ View 1080p Video & Form Guide'}</span>
+            <span>{showDemo ? '✕ Close Video' : '▶ 1080p Video'}</span>
             {showDemo ? (
-              <ChevronUp className="size-3.5 text-current" />
+              <ChevronUp className="size-3" />
             ) : (
-              <ChevronDown className="size-3.5 text-current" />
+              <ChevronDown className="size-3" />
             )}
           </button>
 
-          <span className="text-[11px] font-semibold text-muted-foreground">
-            {isCompleted ? '✓ Done' : 'Tap below to complete'}
+          <span className="text-[10px] font-medium text-slate-400">
+            {isCompleted ? '✓ Completed' : 'Tap below when finished'}
           </span>
         </div>
 
-        {/* Expandable Visual Demo Animation */}
+        {/* Expandable 1080p Video Player Only (Clean & Fast) */}
         <AnimatePresence>
           {showDemo && (
             <motion.div
@@ -208,36 +207,37 @@ export function WorkoutExerciseListItem({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25, ease: 'easeInOut' }}
-              className="mt-3 overflow-hidden rounded-2xl border border-border/80 bg-background/50 p-3"
+              className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/80 p-2.5 shadow-2xl"
             >
-              <ExerciseVisualDemo
+              <ExerciseMedia
                 exerciseId={exercise.exerciseId}
-                equipment={meta?.equipment ?? 'other'}
+                name={meta?.name ?? exercise.exerciseId}
+                mode="player"
               />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Big One-Tap Complete / Incomplete Button */}
-        <div className="mt-4">
+        {/* Modern Glass Complete / Incomplete Button */}
+        <div className="mt-3.5">
           <button
             type="button"
             onClick={handleToggleCompleted}
             aria-label={isCompleted ? 'Mark exercise incomplete' : 'Mark exercise complete'}
-            className={`flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-2xl text-sm font-bold transition-all active:scale-[0.98] sm:min-h-[52px] sm:text-base ${
+            className={`flex min-h-[46px] w-full items-center justify-center gap-2 rounded-2xl text-sm font-bold transition-all active:scale-[0.98] ${
               isCompleted
-                ? 'border border-primary/40 bg-primary/15 text-primary hover:bg-primary/25 shadow-sm'
-                : 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:bg-primary/90'
+                ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
+                : 'border border-emerald-400/40 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] hover:opacity-95'
             }`}
           >
             {isCompleted ? (
               <>
                 <RotateCcw className="size-4 opacity-80" />
-                <span>Completed (Tap to Undo)</span>
+                <span>Marked Done (Tap to Undo)</span>
               </>
             ) : (
               <>
-                <Check className="size-5 stroke-[3]" />
+                <Check className="size-4 stroke-[3]" />
                 <span>Mark as Completed</span>
               </>
             )}
