@@ -112,7 +112,7 @@ export function ProgressDashboard() {
   const mr = monthlyReport(currentMonth)
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="w-full min-w-0 flex flex-col gap-6">
       <header className="flex flex-col gap-1">
         <span className="text-xs font-bold uppercase tracking-widest text-primary">
           Performance Analytics

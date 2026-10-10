@@ -104,7 +104,7 @@ export function ExerciseLibrary() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full min-w-0">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex flex-col">
@@ -230,8 +230,8 @@ export function ExerciseLibrary() {
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {/* Responsive 2-col on mobile, 3-4 col on desktop Grid */}
-          <ul className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+          {/* Responsive 2-col on mobile, up to 5-col on desktop Grid */}
+          <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4">
             {list.map((e) => (
               <li key={e.id}>
                 <button

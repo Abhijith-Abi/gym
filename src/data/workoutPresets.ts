@@ -69,16 +69,16 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
   {
     id: 'ppl-hypertrophy',
     title: 'Push Pull Legs Pro',
-    subtitle: 'Classic 5-Day Hypertrophy Split',
+    subtitle: 'Classic 6-Day Hypertrophy Split',
     goal: 'muscle_gain',
     difficulty: 'intermediate',
     durationMinutes: 50,
     category: 'strength',
     equipment: 'Full Gym',
-    daysCount: 5,
+    daysCount: 6,
     description:
       'High-yield muscle building split targeting chest, back, shoulders, arms, and legs with optimal weekly frequency.',
-    tags: ['Muscle Gain', 'Hypertrophy', '5 Days/Week', 'PPL Split'],
+    tags: ['Muscle Gain', 'Hypertrophy', '6 Days/Week', 'PPL Split'],
     days: {
       mon: makeDay('mon', 'Push Day (Chest & Triceps)', [
         { exerciseId: 'flat-barbell-bench', sets: 4, repMin: 8, repMax: 10, restSeconds: 120 },
@@ -114,7 +114,14 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'hanging-leg-raise', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Active Rest / Recovery', []),
+      sat: makeDay('sat', 'Arms & Core Finisher', [
+        { exerciseId: 'barbell-curl', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'skull-crushers', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'hammer-curl', sets: 3, repMin: 12, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'tricep-rope-pushdowns', sets: 3, repMin: 12, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'cable-crunch', sets: 3, repMin: 15, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -127,10 +134,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 40,
     category: 'fat_loss',
     equipment: 'Dumbbells & Bodyweight',
-    daysCount: 4,
+    daysCount: 6,
     description:
       'Full-body resistance movements paired with core exercises and cardio conditioning to accelerate overall body fat loss safely.',
-    tags: ['Fat Loss', 'Metabolic', 'Full Body', 'Belly Fat Focus'],
+    tags: ['Fat Loss', 'Metabolic', 'Full Body', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Full Body Fat Burn A', [
         { exerciseId: 'goblet-squat', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
@@ -146,7 +153,13 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'russian-twist', sets: 3, repMin: 20, repMax: 20, restSeconds: 45 },
         { exerciseId: 'high-knees', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
       ]),
-      wed: makeDay('wed', 'Active Recovery Walk & Stretch', []),
+      wed: makeDay('wed', 'Lower Body Burn & Glutes', [
+        { exerciseId: 'goblet-squat', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'walking-lunge', sets: 3, repMin: 12, repMax: 15, restSeconds: 60, perSide: true },
+        { exerciseId: 'romanian-deadlift', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'mountain-climbers', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+        { exerciseId: 'side-plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+      ]),
       thu: makeDay('thu', 'Full Body Fat Burn B', [
         { exerciseId: 'walking-lunge', sets: 3, repMin: 12, repMax: 15, restSeconds: 60, perSide: true },
         { exerciseId: 'incline-db-press', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
@@ -160,7 +173,13 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'cable-crunch', sets: 3, repMin: 15, repMax: 15, restSeconds: 45 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Light Cardio / Rest', []),
+      sat: makeDay('sat', 'Full-Body HIIT Shred', [
+        { exerciseId: 'burpees', sets: 4, repMin: 12, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'box-jump', sets: 4, repMin: 12, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'kb-swing', sets: 4, repMin: 20, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'jumping-jacks', sets: 3, repMin: 30, repMax: 30, restSeconds: 30 },
+        { exerciseId: 'bicycle-crunches', sets: 3, repMin: 20, repMax: 20, restSeconds: 45 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -173,10 +192,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 55,
     category: 'strength',
     equipment: 'Barbell & Rack',
-    daysCount: 3,
+    daysCount: 6,
     description:
       'Heavy compound focus engineered around progressive overload on the squat, bench press, overhead press, and deadlift.',
-    tags: ['Strength', 'Powerlifting', 'Big 3', 'Compound Heavy'],
+    tags: ['Strength', 'Powerlifting', 'Big 3', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Heavy Squat & Bench', [
         { exerciseId: 'back-squat', sets: 5, repMin: 5, repMax: 5, restSeconds: 180 },
@@ -184,21 +203,37 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'bent-over-row', sets: 4, repMin: 8, repMax: 8, restSeconds: 120 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 60 },
       ]),
-      tue: makeDay('tue', 'Rest Day', []),
+      tue: makeDay('tue', 'Heavy Back & Pull Strength', [
+        { exerciseId: 'deadlift', sets: 4, repMin: 5, repMax: 5, restSeconds: 180 },
+        { exerciseId: 'bent-over-row', sets: 4, repMin: 8, repMax: 8, restSeconds: 120 },
+        { exerciseId: 'pull-ups', sets: 3, repMin: 6, repMax: 8, restSeconds: 120 },
+        { exerciseId: 'barbell-curl', sets: 3, repMin: 10, repMax: 12, restSeconds: 60 },
+      ]),
       wed: makeDay('wed', 'Deadlift & Overhead Press', [
         { exerciseId: 'deadlift', sets: 4, repMin: 5, repMax: 5, restSeconds: 180 },
         { exerciseId: 'overhead-press', sets: 4, repMin: 6, repMax: 6, restSeconds: 150 },
         { exerciseId: 'pull-ups', sets: 4, repMin: 6, repMax: 8, restSeconds: 120 },
         { exerciseId: 'farmers-walk', sets: 3, repMin: 0, repMax: 0, restSeconds: 90, durationSeconds: 45 },
       ]),
-      thu: makeDay('thu', 'Rest Day', []),
+      thu: makeDay('thu', 'Leg Power & Accessory', [
+        { exerciseId: 'leg-press', sets: 4, repMin: 8, repMax: 10, restSeconds: 120 },
+        { exerciseId: 'romanian-deadlift', sets: 4, repMin: 8, repMax: 8, restSeconds: 120 },
+        { exerciseId: 'walking-lunge', sets: 3, repMin: 10, repMax: 10, restSeconds: 90, perSide: true },
+        { exerciseId: 'standing-calf-raise', sets: 4, repMin: 15, repMax: 15, restSeconds: 60 },
+      ]),
       fri: makeDay('fri', 'Volume Squat & Hypertrophy', [
         { exerciseId: 'back-squat', sets: 4, repMin: 8, repMax: 8, restSeconds: 150 },
         { exerciseId: 'incline-db-press', sets: 4, repMin: 8, repMax: 10, restSeconds: 120 },
         { exerciseId: 'romanian-deadlift', sets: 3, repMin: 8, repMax: 10, restSeconds: 120 },
         { exerciseId: 'dips', sets: 3, repMin: 8, repMax: 12, restSeconds: 90 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'Upper Body Power & Grip', [
+        { exerciseId: 'incline-barbell-bench', sets: 4, repMin: 8, repMax: 8, restSeconds: 120 },
+        { exerciseId: 'dips', sets: 3, repMin: 8, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'farmers-walk', sets: 3, repMin: 0, repMax: 0, restSeconds: 90, durationSeconds: 45 },
+        { exerciseId: 'hanging-leg-raise', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 60 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -211,10 +246,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 35,
     category: 'fitness',
     equipment: 'Dumbbells & Machines',
-    daysCount: 3,
+    daysCount: 6,
     description:
       'Simple, balanced routine with forgiving rep ranges, straightforward movements, and clear form demonstrations.',
-    tags: ['Beginner Friendly', 'Full Body', 'Foundation', 'Easy to Learn'],
+    tags: ['Beginner Friendly', 'Full Body', 'Foundation', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Full Body Starter A', [
         { exerciseId: 'goblet-squat', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
@@ -222,21 +257,36 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'lat-pulldown', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 30 },
       ]),
-      tue: makeDay('tue', 'Rest Day', []),
+      tue: makeDay('tue', 'Core & Conditioning Starter', [
+        { exerciseId: 'bicycle-crunches', sets: 3, repMin: 15, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'mountain-climbers', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+        { exerciseId: 'jumping-jacks', sets: 3, repMin: 25, repMax: 30, restSeconds: 45 },
+        { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+      ]),
       wed: makeDay('wed', 'Full Body Starter B', [
         { exerciseId: 'leg-press', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
         { exerciseId: 'incline-db-press', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
         { exerciseId: 'seated-cable-row', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
         { exerciseId: 'bicycle-crunches', sets: 3, repMin: 15, repMax: 15, restSeconds: 60 },
       ]),
-      thu: makeDay('thu', 'Rest Day', []),
+      thu: makeDay('thu', 'Upper Body Fundamentals', [
+        { exerciseId: 'push-ups', sets: 3, repMin: 8, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'seated-cable-row', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'overhead-press', sets: 3, repMin: 10, repMax: 10, restSeconds: 90 },
+        { exerciseId: 'barbell-curl', sets: 3, repMin: 10, repMax: 12, restSeconds: 60 },
+      ]),
       fri: makeDay('fri', 'Full Body Starter C', [
         { exerciseId: 'walking-lunge', sets: 3, repMin: 10, repMax: 10, restSeconds: 90, perSide: true },
         { exerciseId: 'overhead-press', sets: 3, repMin: 10, repMax: 10, restSeconds: 90 },
         { exerciseId: 'cable-flyes', sets: 3, repMin: 12, repMax: 12, restSeconds: 90 },
         { exerciseId: 'standing-calf-raise', sets: 3, repMin: 15, repMax: 15, restSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'Lower Body & Conditioning', [
+        { exerciseId: 'goblet-squat', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'leg-press', sets: 3, repMin: 10, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'standing-calf-raise', sets: 3, repMin: 15, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'side-plank', sets: 2, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -249,29 +299,44 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 25,
     category: 'mobility',
     equipment: 'Bodyweight & Mat',
-    daysCount: 3,
+    daysCount: 6,
     description:
       'Restore joint range of motion, open hips and thoracic spine, release lower back tension, and promote muscular recovery.',
-    tags: ['Mobility', 'Stretching', 'Recovery', 'Joint Health'],
+    tags: ['Mobility', 'Stretching', 'Recovery', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Spine & Hip Flow', [
         { exerciseId: 'cat-cow', sets: 3, repMin: 10, repMax: 10, restSeconds: 45 },
         { exerciseId: 'worlds-greatest-stretch', sets: 3, repMin: 6, repMax: 6, restSeconds: 45, perSide: true },
         { exerciseId: 'cobra-stretch', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
       ]),
-      tue: makeDay('tue', 'Rest Day', []),
+      tue: makeDay('tue', 'Upper Body & Shoulder Mobility', [
+        { exerciseId: 'cat-cow', sets: 3, repMin: 10, repMax: 10, restSeconds: 45 },
+        { exerciseId: 'push-ups', sets: 2, repMin: 8, repMax: 10, restSeconds: 60 },
+        { exerciseId: 'cobra-stretch', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+        { exerciseId: 'plank', sets: 2, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+      ]),
       wed: makeDay('wed', 'Lower Body Mobility & Glutes', [
         { exerciseId: 'cat-cow', sets: 3, repMin: 10, repMax: 10, restSeconds: 45 },
         { exerciseId: 'goblet-squat', sets: 3, repMin: 8, repMax: 10, restSeconds: 60 },
         { exerciseId: 'side-plank', sets: 2, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
       ]),
-      thu: makeDay('thu', 'Rest Day', []),
+      thu: makeDay('thu', 'Thoracic Spine & Core Mobility', [
+        { exerciseId: 'worlds-greatest-stretch', sets: 3, repMin: 6, repMax: 6, restSeconds: 45, perSide: true },
+        { exerciseId: 'side-plank', sets: 2, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 30 },
+        { exerciseId: 'cat-cow', sets: 3, repMin: 10, repMax: 10, restSeconds: 45 },
+        { exerciseId: 'bicycle-crunches', sets: 2, repMin: 15, repMax: 15, restSeconds: 45 },
+      ]),
       fri: makeDay('fri', 'Full Body Stretch & Decompress', [
         { exerciseId: 'worlds-greatest-stretch', sets: 3, repMin: 6, repMax: 6, restSeconds: 45, perSide: true },
         { exerciseId: 'cobra-stretch', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
         { exerciseId: 'cat-cow', sets: 3, repMin: 10, repMax: 10, restSeconds: 45 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'Total Body Dynamic Flow', [
+        { exerciseId: 'goblet-squat', sets: 3, repMin: 8, repMax: 10, restSeconds: 60 },
+        { exerciseId: 'walking-lunge', sets: 3, repMin: 8, repMax: 8, restSeconds: 60, perSide: true },
+        { exerciseId: 'worlds-greatest-stretch', sets: 3, repMin: 6, repMax: 6, restSeconds: 45, perSide: true },
+        { exerciseId: 'cobra-stretch', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -284,10 +349,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 40,
     category: 'core',
     equipment: 'Full Gym & Cables',
-    daysCount: 4,
+    daysCount: 6,
     description:
       'Laser-focused abdominal program targeting upper abs, lower abs, obliques, and rotational core stability paired with conditioning.',
-    tags: ['Six Pack', 'Abs & Core', 'Obliques', 'V-Taper'],
+    tags: ['Six Pack', 'Abs & Core', 'Obliques', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Upper Abs & Core Compression', [
         { exerciseId: 'cable-crunch', sets: 4, repMin: 15, repMax: 20, restSeconds: 45 },
@@ -301,7 +366,12 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'bicycle-crunches', sets: 3, repMin: 20, repMax: 20, restSeconds: 45 },
         { exerciseId: 'side-plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
       ]),
-      wed: makeDay('wed', 'Active Recovery Walk', []),
+      wed: makeDay('wed', 'Lower Body & Core Stabilization', [
+        { exerciseId: 'deadlift', sets: 3, repMin: 8, repMax: 8, restSeconds: 120 },
+        { exerciseId: 'goblet-squat', sets: 3, repMin: 12, repMax: 12, restSeconds: 90 },
+        { exerciseId: 'hanging-leg-raise', sets: 3, repMin: 12, repMax: 12, restSeconds: 45 },
+        { exerciseId: 'side-plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+      ]),
       thu: makeDay('thu', 'Lower Abs & Deep Core Stabilizers', [
         { exerciseId: 'hanging-leg-raise', sets: 4, repMin: 12, repMax: 15, restSeconds: 45 },
         { exerciseId: 'ab-wheel-rollout', sets: 3, repMin: 10, repMax: 12, restSeconds: 60 },
@@ -314,7 +384,13 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'cable-crunch', sets: 3, repMin: 15, repMax: 20, restSeconds: 45 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'Total Core Sculpt & V-Taper', [
+        { exerciseId: 'cable-crunch', sets: 4, repMin: 15, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'ab-wheel-rollout', sets: 3, repMin: 10, repMax: 12, restSeconds: 45 },
+        { exerciseId: 'woodchopper', sets: 3, repMin: 12, repMax: 12, restSeconds: 45, perSide: true },
+        { exerciseId: 'mountain-climbers', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+        { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -327,10 +403,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 60,
     category: 'strength',
     equipment: 'Full Gym',
-    daysCount: 5,
+    daysCount: 6,
     description:
       'Maximum intensity program combining heavy barbell compounds, high volume dropsets, and grueling athletic conditioning.',
-    tags: ['Hardcore', 'Advanced', 'High Intensity', 'Heavy Volume'],
+    tags: ['Hardcore', 'Advanced', 'High Intensity', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Hardcore Chest & Triceps Brutal', [
         { exerciseId: 'flat-barbell-bench', sets: 5, repMin: 6, repMax: 8, restSeconds: 150 },
@@ -370,7 +446,21 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'box-jump', sets: 4, repMin: 12, repMax: 12, restSeconds: 60 },
         { exerciseId: 'battle-ropes', sets: 4, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
       ]),
-      sat: makeDay('sat', 'Active Mobility Flow', []),
+      sat: makeDay('sat', 'Hardcore Beast HIIT & Grip', [
+        { exerciseId: 'burpees', sets: 4, repMin: 15, repMax: 15, restSeconds: 60 },
+        { exerciseId: 'kb-swing', sets: 4, repMin: 20, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'box-jump', sets: 4, repMin: 12, repMax: 12, restSeconds: 60 },
+        {
+          exerciseId: 'battle-ropes',
+          sets: 4,
+          repMin: 0,
+          repMax: 0,
+          restSeconds: 30,
+          intervalWorkSeconds: 30,
+          intervalRestSeconds: 30,
+        },
+        { exerciseId: 'farmers-walk', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 60 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -383,10 +473,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 45,
     category: 'strength',
     equipment: 'Dumbbells, Barbells & Cables',
-    daysCount: 4,
+    daysCount: 6,
     description:
       'Specialized arm hypertrophy routine designed for explosive bicep peaks, thick tricep horseshoes, and dense forearms.',
-    tags: ['Biceps', 'Triceps', 'Forearms', 'Arm Blast'],
+    tags: ['Biceps', 'Triceps', 'Forearms', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Biceps & Triceps Superset Blast', [
         { exerciseId: 'barbell-curl', sets: 4, repMin: 8, repMax: 10, restSeconds: 60 },
@@ -401,7 +491,13 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'incline-db-press', sets: 3, repMin: 10, repMax: 12, restSeconds: 75 },
         { exerciseId: 'dumbbell-row', sets: 3, repMin: 10, repMax: 12, restSeconds: 75 },
       ]),
-      wed: makeDay('wed', 'Rest Day', []),
+      wed: makeDay('wed', 'Forearms, Grip & Shoulders', [
+        { exerciseId: 'overhead-press', sets: 4, repMin: 8, repMax: 10, restSeconds: 90 },
+        { exerciseId: 'lateral-raise', sets: 4, repMin: 12, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'face-pull', sets: 4, repMin: 15, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'wrist-curls', sets: 4, repMin: 15, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'farmers-walk', sets: 3, repMin: 0, repMax: 0, restSeconds: 60, durationSeconds: 45 },
+      ]),
       thu: makeDay('thu', 'Arm Peak & Forearm Isolation', [
         { exerciseId: 'preacher-curl', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
         { exerciseId: 'overhead-tricep-ext', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
@@ -414,7 +510,13 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'lateral-raise', sets: 4, repMin: 12, repMax: 15, restSeconds: 45 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'High-Rep Arm Pump & Core Finisher', [
+        { exerciseId: 'barbell-curl', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'skull-crushers', sets: 4, repMin: 10, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'hammer-curl', sets: 3, repMin: 12, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'tricep-rope-pushdowns', sets: 3, repMin: 12, repMax: 15, restSeconds: 45 },
+        { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },
@@ -427,10 +529,10 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
     durationMinutes: 45,
     category: 'strength',
     equipment: 'Barbell & Machines',
-    daysCount: 4,
+    daysCount: 6,
     description:
       'High-impact lower body routine focusing on barbell hip thrusts, deep squats, lunges, and glute shaping.',
-    tags: ['Glutes', 'Legs', 'Booty Sculpt', 'Lower Body'],
+    tags: ['Glutes', 'Legs', 'Booty Sculpt', '6 Days/Week'],
     days: {
       mon: makeDay('mon', 'Glutes & Hamstrings Heavy', [
         { exerciseId: 'hip-thrust', sets: 4, repMin: 10, repMax: 12, restSeconds: 120 },
@@ -444,7 +546,12 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'leg-press', sets: 3, repMin: 12, repMax: 12, restSeconds: 90 },
         { exerciseId: 'leg-extension', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
       ]),
-      wed: makeDay('wed', 'Rest / Hip Mobility', []),
+      wed: makeDay('wed', 'Glute Isolation & Calves', [
+        { exerciseId: 'hip-thrust', sets: 4, repMin: 12, repMax: 15, restSeconds: 90 },
+        { exerciseId: 'goblet-squat', sets: 3, repMin: 12, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'walking-lunge', sets: 3, repMin: 12, repMax: 12, restSeconds: 60, perSide: true },
+        { exerciseId: 'standing-calf-raise', sets: 4, repMin: 15, repMax: 20, restSeconds: 45 },
+      ]),
       thu: makeDay('thu', 'Full Lower & Booty Pump', [
         { exerciseId: 'hip-thrust', sets: 4, repMin: 12, repMax: 15, restSeconds: 90 },
         { exerciseId: 'goblet-squat', sets: 3, repMin: 12, repMax: 15, restSeconds: 60 },
@@ -457,7 +564,12 @@ export const WORKOUT_PRESETS: WorkoutPreset[] = [
         { exerciseId: 'overhead-press', sets: 3, repMin: 10, repMax: 10, restSeconds: 75 },
         { exerciseId: 'plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 60 },
       ]),
-      sat: makeDay('sat', 'Rest Day', []),
+      sat: makeDay('sat', 'Explosive Lower Body & HIIT', [
+        { exerciseId: 'box-jump', sets: 4, repMin: 12, repMax: 12, restSeconds: 60 },
+        { exerciseId: 'kb-swing', sets: 4, repMin: 20, repMax: 20, restSeconds: 45 },
+        { exerciseId: 'bulgarian-split-squat', sets: 3, repMin: 10, repMax: 10, restSeconds: 90, perSide: true },
+        { exerciseId: 'side-plank', sets: 3, repMin: 0, repMax: 0, restSeconds: 45, durationSeconds: 45 },
+      ]),
       sun: makeDay('sun', 'Rest Day', []),
     },
   },

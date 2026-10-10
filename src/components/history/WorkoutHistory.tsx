@@ -81,7 +81,7 @@ export function WorkoutHistory() {
   const streak = computeStreak(sessions, plan ?? undefined, new Date())
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="w-full min-w-0 flex flex-col gap-6">
       <header className="flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-xs font-bold uppercase tracking-widest text-primary">

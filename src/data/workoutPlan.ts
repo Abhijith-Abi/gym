@@ -157,7 +157,7 @@ export function createDefaultPlan(uid: string): WorkoutPlan {
     uid,
     name: 'ForgeFit Weekly Split',
     isTemplate: true,
-    days,
+    days: { ...days },
     createdAt: now,
     updatedAt: now,
   }

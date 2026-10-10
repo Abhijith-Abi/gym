@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { safeJSONStorage } from './safeStorage'
-import { createDefaultPlan } from '@/data/workoutPlan'
+import { createDefaultPlan, SEED_PLAN_DAYS } from '@/data/workoutPlan'
 import { getPresetForGoal, type WorkoutPreset } from '@/data/workoutPresets'
 import type { DayOfWeek, Goal, Experience, PlanDay, WorkoutPlan } from '@/types'
 
@@ -16,6 +16,54 @@ const DAY_ORDER: DayOfWeek[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 export function todayDayId(now: Date = new Date()): DayOfWeek {
   const map: DayOfWeek[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
   return map[now.getDay()]
+}
+
+/**
+ * Ensures Monday through Saturday are training days with populated exercises,
+ * and Sunday is strictly the only rest day.
+ */
+export function normalizePlanDays(
+  plan: WorkoutPlan,
+  goal?: Goal,
+  experience?: Experience,
+): WorkoutPlan {
+  const trainDays: DayOfWeek[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+  const fallbackDays = goal ? getPresetForGoal(goal, experience).days : SEED_PLAN_DAYS
+  let modified = false
+  const updatedDays = { ...plan.days }
+
+  for (const day of trainDays) {
+    const current = updatedDays[day]
+    if (!current || current.isRest || !current.entries || current.entries.length === 0) {
+      const fallback = fallbackDays[day] || SEED_PLAN_DAYS[day]
+      updatedDays[day] = {
+        ...fallback,
+        dayId: day,
+        isRest: false,
+      }
+      modified = true
+    }
+  }
+
+  // Ensure Sunday is strictly a rest day
+  if (!updatedDays.sun || !updatedDays.sun.isRest) {
+    updatedDays.sun = {
+      dayId: 'sun',
+      workoutName: 'Rest / Active Recovery',
+      isRest: true,
+      entries: [],
+    }
+    modified = true
+  }
+
+  if (modified) {
+    return {
+      ...plan,
+      days: updatedDays,
+      updatedAt: new Date(),
+    }
+  }
+  return plan
 }
 
 interface WorkoutStoreState {
@@ -40,27 +88,34 @@ export const useWorkoutStore = create<WorkoutStoreState>()(
       plan: null,
       selectedDay: todayDayId(),
 
-      setPlan: (plan) => set({ plan }),
+      setPlan: (plan) => set({ plan: normalizePlanDays(plan) }),
 
       ensureSeedPlan: (uid, goal, experience) =>
         set((s) => {
-          if (s.plan) {
-            // If the plan is already for this user, keep it
-            if (s.plan.uid === uid) return {}
+          if (s.plan && s.plan.uid === uid) {
+            const normalized = normalizePlanDays(s.plan, goal, experience)
+            if (normalized !== s.plan) {
+              return { plan: normalized }
+            }
+            return {}
           }
           if (goal) {
             const preset = getPresetForGoal(goal, experience)
             const now = new Date()
             return {
-              plan: {
-                id: `plan_${preset.id}`,
-                uid,
-                name: preset.title,
-                isTemplate: false,
-                days: preset.days,
-                createdAt: now,
-                updatedAt: now,
-              },
+              plan: normalizePlanDays(
+                {
+                  id: `plan_${preset.id}`,
+                  uid,
+                  name: preset.title,
+                  isTemplate: false,
+                  days: preset.days,
+                  createdAt: now,
+                  updatedAt: now,
+                },
+                goal,
+                experience,
+              ),
             }
           }
           return { plan: createDefaultPlan(uid) }
@@ -77,7 +132,7 @@ export const useWorkoutStore = create<WorkoutStoreState>()(
           createdAt: now,
           updatedAt: now,
         }
-        set({ plan: newPlan })
+        set({ plan: normalizePlanDays(newPlan) })
       },
 
       selectDay: (day) => set({ selectedDay: day }),
@@ -100,6 +155,11 @@ export const useWorkoutStore = create<WorkoutStoreState>()(
         plan: s.plan,
         selectedDay: s.selectedDay,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.plan) {
+          state.plan = normalizePlanDays(state.plan)
+        }
+      },
     },
   ),
 )

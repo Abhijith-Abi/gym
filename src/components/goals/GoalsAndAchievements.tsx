@@ -104,7 +104,7 @@ export function GoalsAndAchievements() {
   }, [unlockedSet, activeTab])
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="w-full min-w-0 flex flex-col gap-8">
       {/* Trophy Room Banner */}
       <header className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 shadow-lg">
         <div className="flex items-center justify-between">
@@ -220,7 +220,7 @@ export function GoalsAndAchievements() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {filteredAchievements.map((def) => (
             <AchievementCard
               key={def.key}

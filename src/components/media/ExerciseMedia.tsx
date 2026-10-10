@@ -162,30 +162,30 @@ export function ExerciseMedia({
   // ---- PLAYER / DETAIL MODE ----
   return (
     <div
-      className={`relative flex flex-col overflow-hidden rounded-2xl border border-border bg-[#171A17] shadow-xl ${className}`}
+      className={`relative flex flex-col overflow-hidden rounded-2xl border border-border bg-[#171A17] shadow-xl w-full min-w-0 max-w-full ${className}`}
     >
       {/* Top Media Header & Controls */}
-      <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-border bg-[#111311] px-4 py-2.5">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-primary/15 text-primary border border-primary/30">
+      <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-border bg-[#111311] px-3.5 sm:px-4 py-2.5 min-w-0 w-full">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary border border-primary/30">
             {mediaType === 'video' ? (
               <Video className="size-3.5" />
             ) : (
               <ImageIcon className="size-3.5" />
             )}
           </div>
-          <div className="flex flex-col min-w-0">
+          <div className="flex flex-col min-w-0 flex-1">
             <span className="text-xs font-black uppercase tracking-wider text-white truncate">
               {media.name}
             </span>
-            <span className="text-[10px] font-medium text-muted-foreground">
+            <span className="text-[10px] font-medium text-muted-foreground truncate">
               {media.mediaVerified ? 'Verified 1080p HD Video' : 'Movement Guide'}
             </span>
           </div>
         </div>
 
         {/* Right side toggles: Video/Poster switch & Gender switch */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
           {/* Video / Poster Mode Switch */}
           {hasVideo && hasPoster && (
             <div className="flex rounded-lg bg-[#202420] border border-border p-0.5">
@@ -325,17 +325,17 @@ export function ExerciseMedia({
         )}
 
         {/* Bottom Bar Info & Replay Action (Non-blocking) */}
-        <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-1.5">
+        <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+          <div className="flex items-center gap-1.5 min-w-0">
             {media.mediaVerified ? (
-              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary border border-primary/30 shadow-md">
-                <ShieldCheck className="size-3" />
-                Verified 1080p
+              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-primary border border-primary/30 shadow-md truncate">
+                <ShieldCheck className="size-3 shrink-0" />
+                <span className="truncate">Verified 1080p</span>
               </span>
             ) : (
-              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground border border-border">
-                <AlertCircle className="size-3 text-primary" />
-                Cued Demo
+              <span className="flex items-center gap-1 rounded-lg bg-[#0A0A0A]/90 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground border border-border truncate">
+                <AlertCircle className="size-3 text-primary shrink-0" />
+                <span className="truncate">Cued Demo</span>
               </span>
             )}
           </div>
@@ -345,7 +345,7 @@ export function ExerciseMedia({
               type="button"
               onClick={handleRestart}
               aria-label="Restart video"
-              className="pointer-events-auto flex size-7 items-center justify-center rounded-lg bg-[#0A0A0A]/85 text-white border border-border transition-all hover:bg-black hover:text-primary active:scale-95"
+              className="pointer-events-auto flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#0A0A0A]/85 text-white border border-border transition-all hover:bg-black hover:text-primary active:scale-95"
             >
               <RotateCcw className="size-3" />
             </button>
@@ -355,25 +355,25 @@ export function ExerciseMedia({
 
       {/* Detail Mode: Key Execution Cues */}
       {mode === 'detail' && media.formCues && media.formCues.length > 0 && (
-        <div className="flex flex-col gap-2 border-t border-border bg-[#111311] p-4">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-black uppercase tracking-wider text-primary">
+        <div className="flex flex-col gap-2 border-t border-border bg-[#111311] p-3.5 sm:p-4 min-w-0 w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 min-w-0">
+            <span className="text-[11px] font-black uppercase tracking-wider text-primary shrink-0">
               ⚡ Key Execution Cues
             </span>
-            <span className="text-[10px] font-medium text-muted-foreground">
+            <span className="text-[10px] font-medium text-muted-foreground break-words sm:truncate sm:max-w-[280px]">
               {media.mediaAttribution}
             </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1 min-w-0">
             {media.formCues.slice(0, 4).map((cue, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-2 rounded-xl bg-[#202420] p-2.5 border border-border"
+                className="flex items-start gap-2 rounded-xl bg-[#202420] p-2.5 border border-border min-w-0"
               >
                 <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold text-primary">
                   {idx + 1}
                 </div>
-                <span className="text-xs text-secondary-foreground leading-snug">
+                <span className="text-xs text-secondary-foreground leading-snug break-words min-w-0">
                   {cue}
                 </span>
               </div>
